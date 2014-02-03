@@ -15,7 +15,7 @@
 
 * **Size of frame**: Expand and contract as required to fit the exact dimensions of the parent element, less the reserved space at the bottom for any minimum height caption.
 * **Size of item**: Items are displayed so they they are as large as possible whilst ensuring that both dimensions are inside the frame.
-* **Previous/next nav**: Buttons overlaid on top of the image on the left and right edges, vertically centered.
+* **Previous/next nav**: Buttons overlaid on top of the image on the left and right edges, vertically centered.  On devices that support hover, buttons will appear briefly and then fade out, while on devices that do not support hover, they remain visible at all times.  Clicking or tapping on the button or anywhere in the navgiation zone (leftmost and rightmost 15% of the frame) will navigate to the next or previous item.
 * **Captions**: Each item should support a caption, which is displayed at the bottom of the image, on a solid background below the frame, and if necessary partly on a translucent background on top of the image.  The caption area that extends below the frame must have a fixed height.
 * **Touch**: The gallery should have the option to enable touch handling.  If touch handling is enabled, swiping should be supported to move to the next or previous page, snapping to page boundaries.
 * **Sync**: It should be possible to join together multiple galleries so that when an item is selected in one, it is also selected and displayed in all the other galleries in the set (this enables thumbstrips to be used to navigate galleries)
