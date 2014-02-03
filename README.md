@@ -9,6 +9,8 @@
 
 ## UI
 
+The following wireframes show two example galleries: A) a gallery with single items per page, with a title and caption; B) a gallery with multiple items per page and no captions (ie, a thumbstrip).  Galleries would often be used together in these forms to create a single coherent interface for viewing and navigating slideshows of images.
+
 ![Wireframe](wireframe.png)
 
 ## Requirements
