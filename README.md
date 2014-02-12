@@ -57,7 +57,7 @@ The gallery should emit DOM events on its root element as follows:
 _Showing_ and _selecting_ are two separate concepts and are independent of each other:
 
 * **Showing** only means _bring into view_.
-* **Selecting** only means _chosen_. There must always been one item selected, even if the selected is not made visible in the UI.
+* **Selecting** only means _chosen_. There must always been one item selected, even if the selected item is not made visible in the UI.
 
 Each item in gallery has an index number. Pages do not have index numbers as the number of pages can vary when a gallery has a variable width (e.g. in a responsive layout).
 
@@ -69,7 +69,7 @@ Each item in gallery has an index number. Pages do not have index numbers as the
 * `selectItem(idx, show)`: Selects item, and optionally shows it too.
 * `selectNextItem(show)`: Selects next item, and optionally shows it too.
 * `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
-* `getCurrentSelectedItem()`: Returns the index of the currently selected item (integer)
+* `getSelectedItem()`: Returns the index of the currently selected item (integer)
 
 The desired behaviour of the UI arrow controls for single- and multiple-item-per-page galleries will be different. For example, in a slideshow (single item per page), the right arrow control should select and show the next item, but in a thumbnail strip (multiple items per page), it should show the next page without affecting what it selected.
 
