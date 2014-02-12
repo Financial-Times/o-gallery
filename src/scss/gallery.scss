@@ -1,0 +1,43 @@
+
+@mixin oGalleryListReset() {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.o-gallery {
+  position: relative;
+}
+
+.no-js .o-gallery {
+  position: static;
+}
+
+.o-gallery__items {
+  position: absolute;
+  @include oGalleryListReset();
+}
+
+.no-js .o-gallery__items {
+  position: relateive;
+}
+
+.o-gallery__item {
+  float: left;
+  clear: none;
+  @include oGalleryListReset();
+}
+
+.no-js .o-gallery__item {
+  margin: 0 0 20px 0;
+  float: none;
+  clear: both;
+}
+
+.o-gallery__caption {
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif; // TODO: Add style to o-ft-typography?
+  font-size: 12px;
+  color: _oColorsGetPaletteColor(cool-grey2); // TODO: Replace with use case.
+  background-color: _oColorsGetPaletteColor(charcoal); // TODO: Replace with use case.
+}
