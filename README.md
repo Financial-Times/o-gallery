@@ -54,14 +54,36 @@ The gallery should emit DOM events on its root element as follows:
 
 ## JavaScript API
 
-* `goto(idx)`: Navigates the gallery to the specified item index (starting from zero)
-* `next()`: Navigates the gallery forward one item (or to the first item if currently on the last)
-* `prev()`: Navigates the gallery backwards one item (or to the last item if currently on the last)
-* `getCurrent()`: Returns the index of the current active item (integer)
+_Showing_ and _selecting_ are two separate concepts and are independent of each other:
 
+* **Showing** only means _bring into view_.
+* **Selecting** only means _chosen_. There must always been one item selected, even if the selected is not made visible in the UI.
+
+Each item in gallery has an index number. Pages do not have index numbers as the number of pages can vary when a gallery has a variable width (e.g. in a responsive layout).
+
+* `showItem(idx)`: Navigates the gallery to the specified item index (starting from zero)
+* `showNextItem()`: Navigates the gallery forward one item (or to the first item if currently on the last)
+* `showPrevItem()`: Navigates the gallery backwards one item (or to the last item if currently on the last)
+* `showNextPage()`: Navigates the gallery forward one page (or to the first page if currently on the last)
+* `showPrevPage()`: Navigates the gallery backward one page (or to the last page if currently on the first)
+* `selectItem(idx, show)`: Selects item, and optionally shows it too.
+* `selectNextItem(show)`: Selects next item, and optionally shows it too.
+* `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
+* `getCurrentSelectedItem()`: Returns the index of the currently selected item (integer)
+
+The desired behaviour of the UI arrow controls for single- and multiple-item-per-page galleries will be different. For example, in a slideshow (single item per page), the right arrow control should select and show the next item, but in a thumbnail strip (multiple items per page), it should show the next page without affecting what it selected.
+
+The following simplified methods are provided to handle this logic for you:
+
+* `next()`:
+    * multiple: false - `selectNextItem(true); // select & show`
+    * multiple: true - `showNextPage(); // doesn't affect selection`
+* `prev()`:
+    * multiple: false - `selectPrevItem(true); // select & show`
+    * multiple: true - `showPrevPage(); // doesn't affect selection`
 
 ## Markup
 
-	<div class='o-gallery' data-o-component='o-gallery' data-o-version='1.0.0'>
+    <div class='o-gallery' data-o-component='o-gallery' data-o-version='1.0.0'>
 		TODO
 	</div>
