@@ -43,7 +43,7 @@
                     <div class="o-gallery__caption">Demo caption 2.</div>
                 </li>
                 
-                <li class="o-gallery__item">
+                <li class="o-gallery__item o-gallery__item--selected">
                     <div class="o-gallery__content"><div class="demo__gallery__item--slideshow">Demo item 3</div></div>
                     <div class="o-gallery__caption">Demo caption 3.</div>
                 </li>
@@ -100,7 +100,7 @@
                         <div class="o-gallery__caption">Demo caption 2.</div>
                     </li>
                 
-                    <li class="o-gallery__item">
+                    <li class="o-gallery__item o-gallery__item--selected">
                         <div class="o-gallery__content"><div class="demo__gallery__item--slideshow">Demo item 3</div></div>
                         <div class="o-gallery__caption">Demo caption 3.</div>
                     </li>
@@ -137,7 +137,7 @@
                 
             </ol>
         </div>
-        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="10">
+        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="10" data-o-gallery-multipleitemsperpage="true">
             <ol class="o-gallery__items">
                 
                     <li class="o-gallery__item">
@@ -152,7 +152,7 @@
                         <div class="o-gallery__content"><div class="demo__gallery__item--thumbnail">Thumb item 2</div></div>
                     </li>
                 
-                    <li class="o-gallery__item">
+                    <li class="o-gallery__item o-gallery__item--selected">
                         <div class="o-gallery__content"><div class="demo__gallery__item--thumbnail">Thumb item 3</div></div>
                     </li>
                 
@@ -192,27 +192,34 @@
         <div class="demo__slideshow" id="imperative-standalone">
             <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
         </div>
-        <script>
-        var standaloneGalleryData = {
-            items: [{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 0</div>","itemCaption":"Demo caption 0."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 1</div>","itemCaption":"Demo caption 1."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 2</div>","itemCaption":"Demo caption 2."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 3</div>","itemCaption":"Demo caption 3."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 4</div>","itemCaption":"Demo caption 4."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 5</div>","itemCaption":"Demo caption 5."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 6</div>","itemCaption":"Demo caption 6."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 7</div>","itemCaption":"Demo caption 7."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 8</div>","itemCaption":"Demo caption 8."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 9</div>","itemCaption":"Demo caption 9."}]
-        }
-        </script>
 
         <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
 
         <div class="demo__slideshow" id="imperative-slideshow">
             <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
         </div>
-        <script>
-        var slideshowGalleryData = {
-            items: [{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 0</div>","itemCaption":"Demo caption 0."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 1</div>","itemCaption":"Demo caption 1."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 2</div>","itemCaption":"Demo caption 2."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 3</div>","itemCaption":"Demo caption 3."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 4</div>","itemCaption":"Demo caption 4."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 5</div>","itemCaption":"Demo caption 5."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 6</div>","itemCaption":"Demo caption 6."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 7</div>","itemCaption":"Demo caption 7."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 8</div>","itemCaption":"Demo caption 8."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 9</div>","itemCaption":"Demo caption 9."}]
-        }
-        </script>
         <div class="demo__thumbnails" id="imperative-thumbnails"></div>
+
         <script>
-        var thumbnailGalleryData = {
-            items: [{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 0</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 1</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 2</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 3</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 4</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 5</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 6</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 7</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 8</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 9</div>"}]
-        }
+        var standaloneGalleryConfig = {
+            container: document.getElementById("imperative-standalone"),
+            model: {
+                items: [{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 0</div>","itemCaption":"Demo caption 0."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 1</div>","itemCaption":"Demo caption 1."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 2</div>","itemCaption":"Demo caption 2."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 3</div>","itemCaption":"Demo caption 3.","selected":true},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 4</div>","itemCaption":"Demo caption 4."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 5</div>","itemCaption":"Demo caption 5."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 6</div>","itemCaption":"Demo caption 6."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 7</div>","itemCaption":"Demo caption 7."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 8</div>","itemCaption":"Demo caption 8."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 9</div>","itemCaption":"Demo caption 9."}]
+            }
+        };
+        var slideshowGalleryConfig = {
+            container: document.getElementById("imperative-slideshow"),
+            model: {
+                items: [{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 0</div>","itemCaption":"Demo caption 0."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 1</div>","itemCaption":"Demo caption 1."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 2</div>","itemCaption":"Demo caption 2."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 3</div>","itemCaption":"Demo caption 3.","selected":true},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 4</div>","itemCaption":"Demo caption 4."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 5</div>","itemCaption":"Demo caption 5."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 6</div>","itemCaption":"Demo caption 6."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 7</div>","itemCaption":"Demo caption 7."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 8</div>","itemCaption":"Demo caption 8."},{"itemContent":"<div class=\"demo__gallery__item--slideshow\">Demo item 9</div>","itemCaption":"Demo caption 9."}]
+            }
+        };
+        var thumbnailGalleryConfig = {
+            container: document.getElementById("imperative-thumbnails"),
+            model: {
+                items: [{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 0</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 1</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 2</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 3</div>","selected":true},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 4</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 5</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 6</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 7</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 8</div>"},{"itemContent":"<div class=\"demo__gallery__item--thumbnail\">Thumb item 9</div>"}],
+                multipleItemsPerPage: true
+            }
+        };
         </script>
 
     </div>

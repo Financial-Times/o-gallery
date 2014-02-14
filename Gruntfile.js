@@ -40,39 +40,46 @@ module.exports = function(grunt) {
 
     grunt.registerTask('demo', '', function() {
 
-        function getSlideshowItems(n) {
+        function getSlideshowItems(n, sel) {
             var items = [], c;
             for (c = 0; c < n; c++) {
-                items.push({
+                var item = {
                     itemContent: '<div class="demo__gallery__item--slideshow">Demo item ' + c + '</div>',
                     itemCaption: "Demo caption " + c + "."
-                });
+                };
+                if (c === sel) {
+                    item.selected = true;
+                }
+                items.push(item);
             }
             return items;
         }
 
-        function getThumbnailItems(n) {
+        function getThumbnailItems(n, sel) {
             var items = [], c;
             for (c = 0; c < n; c++) {
-                items.push({
+                var item = {
                     itemContent: '<div class="demo__gallery__item--thumbnail">Thumb item ' + c + '</div>'
-                });
+                };
+                if (c === sel) {
+                    item.selected = true;
+                }
+                items.push(item);
             }
             return items;
         }
 
-        var slideshowItems = getSlideshowItems(10),
-            thumbnailItems = getThumbnailItems(10);
-
         grunt.config.set("origami-demo.options.viewModel", {
-            items: slideshowItems,
-            itemsJSON: JSON.stringify(slideshowItems),
-            thumbnailItems: thumbnailItems,
-            thumbnailItemsJSON: JSON.stringify(thumbnailItems)
+            htmlStandaloneItems: getSlideshowItems(10, 3),
+            htmlSlideshowItems: getSlideshowItems(10, 3),
+            htmlThumbnailItems: getThumbnailItems(10, 3),
+            jsonStandaloneItems: JSON.stringify(getSlideshowItems(10, 3)),
+            jsonSlideshowItems: JSON.stringify(getSlideshowItems(10, 3)),
+            jsonThumbnailItems: JSON.stringify(getThumbnailItems(10, 3))
         });
-        grunt.task.run('origami-demo');
+        grunt.task.run('origami-demo', 'browserify');
     });
 
-    grunt.registerTask('default', ['demo', 'browserify']);
+    grunt.registerTask('default', ['demo']);
 
 };

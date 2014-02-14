@@ -15,33 +15,33 @@
         <h3 class="o-ft-typography-heading-medium">Standalone</h3>
         <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-standalone" data-o-gallery-captionminheight="50">
             <ol class="o-gallery__items">
-                {{#items}}
-                <li class="o-gallery__item">
+                {{#htmlStandaloneItems}}
+                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
                     <div class="o-gallery__content">{{{itemContent}}}</div>
                     <div class="o-gallery__caption">{{{itemCaption}}}</div>
                 </li>
-                {{/items}}
+                {{/htmlStandaloneItems}}
             </ol>
         </div>
 
         <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
         <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="50">
             <ol class="o-gallery__items">
-                {{#items}}
-                    <li class="o-gallery__item">
+                {{#htmlSlideshowItems}}
+                    <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
                         <div class="o-gallery__content">{{{itemContent}}}</div>
                         <div class="o-gallery__caption">{{{itemCaption}}}</div>
                     </li>
-                {{/items}}
+                {{/htmlSlideshowItems}}
             </ol>
         </div>
-        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="10">
+        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="10" data-o-gallery-multipleitemsperpage="true">
             <ol class="o-gallery__items">
-                {{#thumbnailItems}}
-                    <li class="o-gallery__item">
+                {{#htmlThumbnailItems}}
+                    <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
                         <div class="o-gallery__content">{{{itemContent}}}</div>
                     </li>
-                {{/thumbnailItems}}
+                {{/htmlThumbnailItems}}
             </ol>
         </div>
 
@@ -54,27 +54,34 @@
         <div class="demo__slideshow" id="imperative-standalone">
             <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
         </div>
-        <script>
-        var standaloneGalleryData = {
-            items: {{{itemsJSON}}}
-        }
-        </script>
 
         <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
 
         <div class="demo__slideshow" id="imperative-slideshow">
             <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
         </div>
-        <script>
-        var slideshowGalleryData = {
-            items: {{{itemsJSON}}}
-        }
-        </script>
         <div class="demo__thumbnails" id="imperative-thumbnails"></div>
+
         <script>
-        var thumbnailGalleryData = {
-            items: {{{thumbnailItemsJSON}}}
-        }
+        var standaloneGalleryConfig = {
+            container: document.getElementById("imperative-standalone"),
+            model: {
+                items: {{{jsonStandaloneItems}}}
+            }
+        };
+        var slideshowGalleryConfig = {
+            container: document.getElementById("imperative-slideshow"),
+            model: {
+                items: {{{jsonSlideshowItems}}}
+            }
+        };
+        var thumbnailGalleryConfig = {
+            container: document.getElementById("imperative-thumbnails"),
+            model: {
+                items: {{{jsonThumbnailItems}}},
+                multipleItemsPerPage: true
+            }
+        };
         </script>
 
     </div>

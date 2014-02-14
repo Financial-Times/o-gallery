@@ -5,8 +5,20 @@
   list-style-type: none;
 }
 
+@mixin user-select($v) {
+  -webkit-user-select: $v; /* webkit (safari, chrome) browsers */
+  -moz-user-select: $v; /* mozilla browsers */
+  -khtml-user-select: $v; /* webkit (konqueror) browsers */
+  -ms-user-select: $v; /* IE10+ */
+}
+
 .o-gallery {
   position: relative;
+  @include user-select(none);
+}
+
+.o-gallery__viewport {
+  overflow: hidden;
 }
 
 .no-js .o-gallery {
@@ -14,17 +26,16 @@
 }
 
 .o-gallery__items {
-  position: absolute;
   @include oGalleryListReset();
 }
 
 .no-js .o-gallery__items {
-  position: relateive;
 }
 
 .o-gallery__item {
   float: left;
   clear: none;
+  position: relative;
   @include oGalleryListReset();
 }
 
@@ -34,10 +45,43 @@
   clear: both;
 }
 
+.o-gallery__item--selected {
+  // Gets implemented in product
+}
+
+// TODO: Gallery styles should only be positioning/size etc, not content
 .o-gallery__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif; // TODO: Add style to o-ft-typography?
   font-size: 12px;
   color: _oColorsGetPaletteColor(cool-grey2); // TODO: Replace with use case.
   background-color: _oColorsGetPaletteColor(charcoal); // TODO: Replace with use case.
+}
+
+.o-gallery__control {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 110px;
+  line-height: 100px;
+  text-align: center;
+  color: #000;
+  background-color: rgba(0,0,0, 0.2);
+  cursor: pointer;
+}
+
+.o-gallery__control:hover {
+  color: #666;
+}
+
+.o-gallery__control--prev {
+  left: 0;
+}
+
+.o-gallery__control--next {
+  right: 0;
 }

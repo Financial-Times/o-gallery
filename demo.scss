@@ -8,6 +8,7 @@ $o-ft-typography-is-silent: false;
 @import "main.scss";
 
 body {
+  margin: 0 0 100px 0;
   background-color: oColorsGetColorFor(page-background);
 }
 
@@ -18,7 +19,6 @@ ol, ul, li {
 }
 
 .demo__slideshow {
-  margin: 0 0 50px 0;
   width: 100%;
   height: 400px;
   overflow: hidden;
@@ -26,27 +26,35 @@ ol, ul, li {
 
 %demo__gallery__item {
   display: block;
+  border: 1px solid _oColorsGetPaletteColor(warm-grey2);
   width: 100%;
   font-family: Arial, Helvetica;
-  font-size: 24px;
   text-align: center;
   overflow: hidden;
-  color: _oColorsGetPaletteColor(charcoal);
+  color: _oColorsGetPaletteColor(warm-grey2);
   background-color: _oColorsGetPaletteColor(cool-grey2);
 }
 
 .demo__gallery__item--slideshow {
   @extend %demo__gallery__item;
   width: 100%;
-  height: 400px;
+  height: 398px;
+  font-size: 24px;
   line-height: 400px;
 }
 
 .demo__gallery__item--thumbnail {
   @extend %demo__gallery__item;
-  width: 150px;
-  height: 110px;
+  width: 148px;
+  height: 108px;
+  font-size: 16px;
   line-height: 110px;
+}
+
+.o-gallery__item--selected .demo__gallery__item--slideshow,
+.o-gallery__item--selected .demo__gallery__item--thumbnail, {
+  font-weight: bold;
+  color: _oColorsGetPaletteColor(orange);
 }
 
 .demo__slideshow__poster {
@@ -64,9 +72,17 @@ ol, ul, li {
 
 .demo__thumbnails {
   width: 100%;
-  height: 130px;
+  height: 110px;
 }
 
 .no-js .demo__thumbnails {
   display: none;
+}
+
+.demo__thumbnails .o-gallery__viewport {
+  margin: 0 50px;
+}
+
+.demo__slideshow + .o-ft-typography-heading-medium {
+  margin-top: 50px;
 }
