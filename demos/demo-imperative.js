@@ -46,11 +46,10 @@ module.exports = {
 
 /*global require, module*/
 
-"use strict";
-
 var galleryDOM = require('./galleryDOM.js');
 
 function Gallery(config) {
+    "use strict";
     console.log("Constructed Gallery from " + (isDataSource() ? "JS" : "HTML"), config);
 
     // TODO: Set default model
@@ -63,6 +62,7 @@ function Gallery(config) {
         allItemsEl,
         itemEls,
         multipleItemsPerPage = config.model.multipleItemsPerPage || containerEl.getAttribute("data-o-gallery-multipleitemsperpage") || false,
+        transitionDuration = 300,
         selectedItemIndex,
         shownItemIndex,
         debounceOnResize;
@@ -124,30 +124,6 @@ function Gallery(config) {
         }
     }
 
-    function insertItemsInView() {
-        var itemsInView = getItemsInPageView(viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth, false);
-        insertItemContent(itemsInView);
-    }
-
-    function showItem(n) {
-        if (isValidItem(n)) {
-            insertItemContent([n]);
-            viewportEl.scrollLeft = itemEls[n].offsetLeft;
-            shownItemIndex = n;
-            insertItemsInView();
-        }
-    }
-
-    function showPrevItem() {
-        var prev = (shownItemIndex - 1 >= 0) ? shownItemIndex - 1 : itemEls.length - 1;
-        showItem(prev);
-    }
-
-    function showNextItem() {
-        var next = (shownItemIndex + 1 < itemEls.length) ? shownItemIndex + 1 : 0;
-        showItem(next);
-    }
-
     function isWholeItemInPageView(itemNum, l, r) {
         return itemEls[itemNum].offsetLeft >= l && itemEls[itemNum].offsetLeft + itemEls[itemNum].clientWidth <= r;
     }
@@ -165,6 +141,57 @@ function Gallery(config) {
             }
         }
         return itemsInView;
+    }
+
+    function transitionTo(newScrollLeft) {
+        var start = viewportEl.scrollLeft,
+            change = newScrollLeft - start,
+            currentTime = 0,
+            increment = 20,
+            timeout;
+
+        // t = current time, b = start value, c = change in value, d = duration
+        function easeInOutQuad(t, b, c, d) {
+            t /= d/2;
+            if (t < 1) { return c/2*t*t + b; }
+            t--;
+            return -c/2 * (t*(t-2) - 1) + b;
+        }
+
+        function animateScroll() {
+            currentTime += increment;
+            viewportEl.scrollLeft = easeInOutQuad(currentTime, start, change, transitionDuration);
+            if (currentTime < transitionDuration) {
+                clearTimeout(timeout);
+                timeout = setTimeout(animateScroll, increment);
+            }
+        }
+        animateScroll();
+
+    }
+
+    function showItem(n, transition) {
+        if (isValidItem(n)) {
+            insertItemContent([n]);
+            var newScrollLeft = itemEls[n].offsetLeft;
+            if (transition !== false) {
+                transitionTo(newScrollLeft);
+            } else {
+                viewportEl.scrollLeft = newScrollLeft;
+            }
+            shownItemIndex = n;
+            insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
+        }
+    }
+
+    function showPrevItem() {
+        var prev = (shownItemIndex - 1 >= 0) ? shownItemIndex - 1 : itemEls.length - 1;
+        showItem(prev);
+    }
+
+    function showNextItem() {
+        var next = (shownItemIndex + 1 < itemEls.length) ? shownItemIndex + 1 : 0;
+        showItem(next);
     }
 
     function showPrevPage() {
@@ -234,7 +261,8 @@ function Gallery(config) {
         if (!multipleItemsPerPage) { // correct the alignment of item in view
             showItem(shownItemIndex);
         } else {
-            insertItemsInView();
+            var newScrollLeft = viewportEl.scrollLeft;
+            insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
         }
     }
 
@@ -256,8 +284,8 @@ function Gallery(config) {
         debounceOnResize = setTimeout(onResize, 500); // Also call on item content insert (for JS source)?
     });
     insertItemContent(selectedItemIndex);
-    setWidths(); // selectedItem content must have been inserted before setWidths runs
-    showItem(selectedItemIndex);
+    setWidths();
+    showItem(selectedItemIndex, false);
     addUiControls();
 
     this.showItem = showItem;
