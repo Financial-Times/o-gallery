@@ -17,8 +17,8 @@
             <ol class="o-gallery__items">
                 {{#htmlStandaloneItems}}
                 <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                    <div class="o-gallery__content">{{{itemContent}}}</div>
-                    <div class="o-gallery__caption">{{{itemCaption}}}</div>
+                    <div class="o-gallery__item__content">{{{itemContent}}}</div>
+                    <div class="o-gallery__item__caption">{{{itemCaption}}}</div>
                 </li>
                 {{/htmlStandaloneItems}}
             </ol>
@@ -29,8 +29,8 @@
             <ol class="o-gallery__items">
                 {{#htmlSlideshowItems}}
                     <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                        <div class="o-gallery__content">{{{itemContent}}}</div>
-                        <div class="o-gallery__caption">{{{itemCaption}}}</div>
+                        <div class="o-gallery__item__content">{{{itemContent}}}</div>
+                        <div class="o-gallery__item__caption">{{{itemCaption}}}</div>
                     </li>
                 {{/htmlSlideshowItems}}
             </ol>
@@ -39,7 +39,7 @@
             <ol class="o-gallery__items">
                 {{#htmlThumbnailItems}}
                     <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                        <div class="o-gallery__content">{{{itemContent}}}</div>
+                        <div class="o-gallery__item__content">{{{itemContent}}}</div>
                     </li>
                 {{/htmlThumbnailItems}}
             </ol>

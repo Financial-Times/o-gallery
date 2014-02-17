@@ -8,12 +8,15 @@ window.galleries.push(new origamiGallery.Gallery(standaloneGalleryConfig));
 window.galleries.push(new origamiGallery.Gallery(slideshowGalleryConfig));
 window.galleries.push(new origamiGallery.Gallery(thumbnailGalleryConfig));
 },{"./main.js":2}],2:[function(require,module,exports){
+/*global require, module*/
+
 var Gallery = require('./src/js/Gallery'),
     galleryConstructor = require('./src/js/galleryConstructor');
 
 module.exports = {
     Gallery: Gallery,
     constructFromPage: function() {
+        "use strict";
         return galleryConstructor(Gallery);
     }
 };
@@ -41,16 +44,25 @@ module.exports = {
 
  */
 
+/*global require, module*/
+
+"use strict";
+
 var galleryDOM = require('./galleryDOM.js');
 
 function Gallery(config) {
     console.log("Constructed Gallery from " + (isDataSource() ? "JS" : "HTML"), config);
 
+    // TODO: Set default model
+    if (!config.model) {
+        config.model = {};
+    }
+
     var containerEl = config.container,
         viewportEl,
         allItemsEl,
         itemEls,
-        multipleItemsPerPage = config.multipleItemsPerPage || containerEl.getAttribute("data-o-gallery-multipleitemsperpage") || false,
+        multipleItemsPerPage = config.model.multipleItemsPerPage || containerEl.getAttribute("data-o-gallery-multipleitemsperpage") || false,
         selectedItemIndex,
         shownItemIndex,
         debounceOnResize;
@@ -60,14 +72,16 @@ function Gallery(config) {
     }
 
     function setWidths() {
-        var i, l, totalWidth = 0;
-        if (!multipleItemsPerPage) {
-            for (i = 0, l = itemEls.length; i < l; i++) {
-                itemEls[i].style.width = containerEl.clientWidth + "px";
-            }
+        var i,
+            l,
+            totalWidth = 0,
+            itemWidth = containerEl.clientWidth;
+        if (multipleItemsPerPage) {
+            itemWidth = parseInt(itemEls[selectedItemIndex].clientWidth, 10);
         }
         for (i = 0, l = itemEls.length; i < l; i++) {
-            totalWidth += parseInt(itemEls[i].clientWidth, 0); // items may be varying widths?
+            itemEls[i].style.width = itemWidth + "px";
+            totalWidth += itemWidth;
         }
         allItemsEl.style.width = totalWidth + "px";
     }
@@ -78,25 +92,15 @@ function Gallery(config) {
 
     function getSelectedItem() {
         var selectedItem = 0, c, l;
-        if (isDataSource()) {
-            for (c = 0, l = config.model.items.length; c < l; c++) {
-                if (config.model.items.selected) {
-                    selectedItem = c;
-                    break;
-                }
-            }
-        } else {
-            for (c = 0, l = itemEls.length; c < l; c++) {
-                if (itemEls[c].className.indexOf("o-gallery__item--selected") > 0) {
-                    selectedItem = c;
-                    break;
-                }
+        for (c = 0, l = itemEls.length; c < l; c++) {
+            if (itemEls[c].className.indexOf("o-gallery__item--selected") > 0) {
+                selectedItem = c;
+                break;
             }
         }
         return selectedItem;
     }
 
-    // Separate this out somewhere else?
     function addUiControls() {
         var prevControlDiv = galleryDOM.getPrevControl(),
             nextControlDiv = galleryDOM.getNextControl();
@@ -107,11 +111,30 @@ function Gallery(config) {
         nextControlDiv.addEventListener("click", next);
     }
 
+    function insertItemContent(n) {
+        var itemNums = (n instanceof Array) ? n : [n];
+        if (config.model.items) {
+            for (var c = 0, l = itemNums.length; c < l; c++) {
+                var itemNum = itemNums[c];
+                if (isValidItem(itemNum) && !config.model.items[itemNum].inserted) {
+                    galleryDOM.insertItemContent(config.model.items[itemNum], itemEls[itemNum]);
+                    config.model.items[itemNum].inserted = true;
+                }
+            }
+        }
+    }
+
+    function insertItemsInView() {
+        var itemsInView = getItemsInPageView(viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth, false);
+        insertItemContent(itemsInView);
+    }
+
     function showItem(n) {
         if (isValidItem(n)) {
-            // TODO: Build HTML item content from JS data, if JS data exists
-            shownItemIndex = n;
+            insertItemContent([n]);
             viewportEl.scrollLeft = itemEls[n].offsetLeft;
+            shownItemIndex = n;
+            insertItemsInView();
         }
     }
 
@@ -125,32 +148,50 @@ function Gallery(config) {
         showItem(next);
     }
 
-    // TODO: Make this and showNextPage more DRY
-    function showPrevPage() {
-        var newX = viewportEl.scrollLeft - parseInt(containerEl.clientWidth, 0),
-            maxX = parseInt(allItemsEl.clientWidth) - parseInt(viewportEl.clientWidth, 0);
-        newX = (newX < 0) ? 0 : newX;
-        if (newX === viewportEl.scrollLeft) { // wrap if at extreme left
-            newX = maxX;
+    function isWholeItemInPageView(itemNum, l, r) {
+        return itemEls[itemNum].offsetLeft >= l && itemEls[itemNum].offsetLeft + itemEls[itemNum].clientWidth <= r;
+    }
+
+    function isAnyPartOfItemInPageView(itemNum, l, r) {
+        return (itemEls[itemNum].offsetLeft >= l - itemEls[itemNum].clientWidth && itemEls[itemNum].offsetLeft <= r);
+    }
+
+    function getItemsInPageView(l, r, whole) {
+        var itemsInView = [],
+            onlyWhole = (typeof whole !== "boolean") ? true : whole;
+        for (var c = 0; c < itemEls.length; c++) {
+            if ((onlyWhole && isWholeItemInPageView(c, l, r)) || (!onlyWhole && isAnyPartOfItemInPageView(c, l, r))) {
+                itemsInView.push(c);
+            }
         }
-        viewportEl.scrollLeft = newX;
+        return itemsInView;
+    }
+
+    function showPrevPage() {
+        if (viewportEl.scrollLeft === 0) {
+            showItem(itemEls.length - 1);
+        } else {
+            var prevPageWholeItems = getItemsInPageView(viewportEl.scrollLeft - viewportEl.clientWidth, viewportEl.scrollLeft),
+                prevPageItem = prevPageWholeItems.shift() || 0;
+            showItem(prevPageItem);
+        }
     }
 
     function showNextPage() {
-        var newX = viewportEl.scrollLeft + parseInt(containerEl.clientWidth, 0),
-            maxX = parseInt(allItemsEl.clientWidth) - parseInt(viewportEl.clientWidth, 0);
-        newX = Math.min(newX, maxX);
-        if (newX === viewportEl.scrollLeft) { // wrap if at extreme right
-            newX = 0;
+        if (viewportEl.scrollLeft === allItemsEl.clientWidth - viewportEl.clientWidth) {
+            showItem(0);
+        } else {
+            var currentWholeItemsInView = getItemsInPageView(viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth),
+                lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
+            showItem(lastWholeItemInView + 1);
         }
-        viewportEl.scrollLeft = newX;
     }
 
     function selectItem(n, show) {
         if (isValidItem(n)) {
             selectedItemIndex = n;
             for (var c = 0, l = itemEls.length; c < l; c++) {
-                if (c == selectedItemIndex) {
+                if (c === selectedItemIndex) {
                     itemEls[c].className = itemEls[c].className + " o-gallery__item--selected";
                 } else {
                     itemEls[c].className = itemEls[c].className.replace(/\bo-gallery__item--selected\b/,'');
@@ -190,39 +231,41 @@ function Gallery(config) {
 
     function onResize() {
         setWidths();
-        if (!multipleItemsPerPage) { // correct alignment of item in view
+        if (!multipleItemsPerPage) { // correct the alignment of item in view
             showItem(shownItemIndex);
+        } else {
+            insertItemsInView();
         }
     }
 
     if (isDataSource()) {
-        // container element will contain 'poster/fallback content'
+        galleryDOM.emptyElement(containerEl);
+        // TODO: Set origami attributes on containerEl
         containerEl.className = containerEl.className + " o-gallery";
-        // Set origami attributes on containerEl
         allItemsEl = galleryDOM.createItemsList(containerEl);
-        itemEls = galleryDOM.createItems(allItemsEl, config.model.items.length);
-        // Loop over data items, construct <li> for each one
-    } else {
-        // container element contains gallery markup
-        allItemsEl = containerEl.querySelector(".o-gallery__items");
-        viewportEl = galleryDOM.createViewport(allItemsEl);
-        itemEls = containerEl.querySelectorAll(".o-gallery__item");
-        selectedItemIndex = getSelectedItem();
-        shownItemIndex = selectedItemIndex;
-        setWidths();
-        window.addEventListener("resize", function() {
-            clearTimeout(debounceOnResize);
-            debounceOnResize = setTimeout(onResize, 500); // Also call on item content insert (for JS source)?
-        });
-        showItem(selectedItemIndex);
+        itemEls = galleryDOM.createItems(allItemsEl, config.model.items);
     }
-    // In either case, create UI controls, add selected class, add js class
+
+    allItemsEl = containerEl.querySelector(".o-gallery__items");
+    viewportEl = galleryDOM.createViewport(allItemsEl);
+    itemEls = containerEl.querySelectorAll(".o-gallery__item");
+    selectedItemIndex = getSelectedItem();
+    shownItemIndex = selectedItemIndex;
+    window.addEventListener("resize", function() {
+        clearTimeout(debounceOnResize);
+        debounceOnResize = setTimeout(onResize, 500); // Also call on item content insert (for JS source)?
+    });
+    insertItemContent(selectedItemIndex);
+    setWidths(); // selectedItem content must have been inserted before setWidths runs
+    showItem(selectedItemIndex);
     addUiControls();
 
     this.showItem = showItem;
     this.getSelectedItem = getSelectedItem;
     this.showPrevItem = showPrevItem;
     this.showNextItem = showNextItem;
+    this.showPrevPage = showPrevPage;
+    this.showNextPage = showNextPage;
     this.selectItem = selectItem;
     this.selectPrevItem = selectPrevItem;
     this.selectNextItem = selectNextItem;
@@ -244,6 +287,16 @@ module.exports = function(Gallery) {
     return galleries;
 }
 },{}],5:[function(require,module,exports){
+/*global module*/
+
+"use strict";
+
+function emptyElement(targetEl) {
+    while (targetEl.firstChild) {
+        targetEl.removeChild(targetEl.firstChild);
+    }
+}
+
 function createViewport(targetEl) {
     var parentEl = targetEl.parentNode,
         viewportEl = document.createElement('div');
@@ -254,10 +307,9 @@ function createViewport(targetEl) {
 }
 
 function createElement(nodeName, content, classes) {
-    var el = document.createElement(nodeName),
-        cont = document.createTextNode(content);
+    var el = document.createElement(nodeName);
+    el.innerHTML = content;
     el.setAttribute("class", classes);
-    el.appendChild(cont);
     return el;
 }
 
@@ -267,11 +319,23 @@ function createItemsList(containerEl) {
     return itemsList;
 }
 
-function createItems(containerEl, n) {
-    for (var c = 0; c < n; c++) {
-        containerEl.appendChild(createElement("li", "", "o-gallery__item"));
+function createItems(containerEl, items) {
+    var itemClass;
+    for (var c = 0, l = items.length; c < l; c++) {
+        itemClass = "o-gallery__item" + ((items[c].selected) ? " o-gallery__item--selected" : "" );
+        containerEl.appendChild(createElement("li", "&nbsp;", itemClass));
     }
     return containerEl.querySelectorAll(".o-gallery__item");
+}
+
+function insertItemContent(item, itemEl) {
+    emptyElement(itemEl);
+    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content"); // TODO: Rename to o-gallery__item__content
+    itemEl.appendChild(contentEl);
+    if (item.itemCaption) {
+        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption"); // TODO: Rename to o-gallery__item__caption
+        itemEl.appendChild(captionEl);
+    }
 }
 
 function getPrevControl() {
@@ -282,8 +346,10 @@ function getNextControl() {
 }
 
 module.exports = {
+    emptyElement: emptyElement,
     createItemsList: createItemsList,
     createItems: createItems,
+    insertItemContent: insertItemContent,
     createViewport: createViewport,
     getPrevControl: getPrevControl,
     getNextControl: getNextControl

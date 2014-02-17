@@ -83,7 +83,3 @@ The following simplified methods are provided to handle this logic for you:
     * multiple: true - `showPrevPage(); // doesn't affect selection`
 
 ## Markup
-
-    <div class='o-gallery' data-o-component='o-gallery' data-o-version='1.0.0'>
-		TODO
-	</div>

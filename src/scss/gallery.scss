@@ -18,6 +18,7 @@
 }
 
 .o-gallery__viewport {
+  position: relative;
   overflow: hidden;
 }
 
@@ -49,17 +50,11 @@
   // Gets implemented in product
 }
 
-// TODO: Gallery styles should only be positioning/size etc, not content
-.o-gallery__caption {
+.o-gallery__item__caption {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px;
-  font-family: Arial, Helvetica, sans-serif; // TODO: Add style to o-ft-typography?
-  font-size: 12px;
-  color: _oColorsGetPaletteColor(cool-grey2); // TODO: Replace with use case.
-  background-color: _oColorsGetPaletteColor(charcoal); // TODO: Replace with use case.
 }
 
 .o-gallery__control {

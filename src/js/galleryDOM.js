@@ -1,3 +1,13 @@
+/*global module*/
+
+"use strict";
+
+function emptyElement(targetEl) {
+    while (targetEl.firstChild) {
+        targetEl.removeChild(targetEl.firstChild);
+    }
+}
+
 function createViewport(targetEl) {
     var parentEl = targetEl.parentNode,
         viewportEl = document.createElement('div');
@@ -8,10 +18,9 @@ function createViewport(targetEl) {
 }
 
 function createElement(nodeName, content, classes) {
-    var el = document.createElement(nodeName),
-        cont = document.createTextNode(content);
+    var el = document.createElement(nodeName);
+    el.innerHTML = content;
     el.setAttribute("class", classes);
-    el.appendChild(cont);
     return el;
 }
 
@@ -21,11 +30,23 @@ function createItemsList(containerEl) {
     return itemsList;
 }
 
-function createItems(containerEl, n) {
-    for (var c = 0; c < n; c++) {
-        containerEl.appendChild(createElement("li", "", "o-gallery__item"));
+function createItems(containerEl, items) {
+    var itemClass;
+    for (var c = 0, l = items.length; c < l; c++) {
+        itemClass = "o-gallery__item" + ((items[c].selected) ? " o-gallery__item--selected" : "" );
+        containerEl.appendChild(createElement("li", "&nbsp;", itemClass));
     }
     return containerEl.querySelectorAll(".o-gallery__item");
+}
+
+function insertItemContent(item, itemEl) {
+    emptyElement(itemEl);
+    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content"); // TODO: Rename to o-gallery__item__content
+    itemEl.appendChild(contentEl);
+    if (item.itemCaption) {
+        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption"); // TODO: Rename to o-gallery__item__caption
+        itemEl.appendChild(captionEl);
+    }
 }
 
 function getPrevControl() {
@@ -36,8 +57,10 @@ function getNextControl() {
 }
 
 module.exports = {
+    emptyElement: emptyElement,
     createItemsList: createItemsList,
     createItems: createItems,
+    insertItemContent: insertItemContent,
     createViewport: createViewport,
     getPrevControl: getPrevControl,
     getNextControl: getNextControl
