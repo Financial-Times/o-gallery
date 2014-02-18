@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                 tasks: ['browserify']
             },
             'origami-demo': {
-                files: ['main.scss', 'src/scss/*.scss', 'main.js', 'src/js/*.js', 'demo.scss', 'demo.mustache'],
+                files: ['main.scss', 'src/scss/*.scss', 'main.js', 'src/js/*.js', 'demo.scss', 'demo.mustache', 'Gruntfile.js'],
                 tasks: ['demo']
             }
         }
@@ -71,11 +71,11 @@ module.exports = function(grunt) {
 
         grunt.config.set("origami-demo.options.viewModel", {
             htmlStandaloneItems: getSlideshowItems(10, 3),
-            htmlSlideshowItems: getSlideshowItems(10, 3),
-            htmlThumbnailItems: getThumbnailItems(10, 3),
+            htmlSlideshowItems: getSlideshowItems(20, 3),
+            htmlThumbnailItems: getThumbnailItems(20, 3),
             jsonStandaloneItems: JSON.stringify(getSlideshowItems(10, 3)),
-            jsonSlideshowItems: JSON.stringify(getSlideshowItems(10, 3)),
-            jsonThumbnailItems: JSON.stringify(getThumbnailItems(10, 3))
+            jsonSlideshowItems: JSON.stringify(getSlideshowItems(20, 3)),
+            jsonThumbnailItems: JSON.stringify(getThumbnailItems(20, 3))
         });
         grunt.task.run('origami-demo', 'browserify');
     });

@@ -91,7 +91,7 @@ function Gallery(config) {
     }
 
     function addUiControls() {
-        prevControlDiv = galleryDOM.getPrevControl(),
+        prevControlDiv = galleryDOM.getPrevControl();
         nextControlDiv = galleryDOM.getNextControl();
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
@@ -144,7 +144,6 @@ function Gallery(config) {
             currentTime = 0,
             increment = 20,
             timeout;
-
         // t = current time, b = start value, c = change in value, d = duration
         function easeInOutQuad(t, b, c, d) {
             t /= d/2;
@@ -152,7 +151,6 @@ function Gallery(config) {
             t--;
             return -c/2 * (t*(t-2) - 1) + b;
         }
-
         function animateScroll() {
             currentTime += increment;
             viewportEl.scrollLeft = easeInOutQuad(currentTime, start, change, transitionDuration);
@@ -185,19 +183,46 @@ function Gallery(config) {
         containerEl.dispatchEvent(event);
     }
 
+    function moveViewport(left, transition) {
+        if (transition !== false) {
+            transitionTo(left);
+        } else {
+            viewportEl.scrollLeft = left;
+        }
+        insertItemContent(getItemsInPageView(left, left + viewportEl.clientWidth, false));
+    }
+
+    function alignItemLeft(n, transition) {
+        moveViewport(itemEls[n].offsetLeft, transition);
+    }
+
+    function alignItemRight(n, transition) {
+        var newScrollLeft = itemEls[n].offsetLeft - (viewportEl.clientWidth - itemEls[n].clientWidth);
+        moveViewport(newScrollLeft, transition);
+    }
+
+    function bringItemIntoView(n, transition) {
+        if (!isValidItem(n)) {
+            return;
+        }
+        var viewportL = viewportEl.scrollLeft,
+            viewportR = viewportL + viewportEl.clientWidth,
+            itemL = itemEls[n].offsetLeft,
+            itemR = itemL + itemEls[n].clientWidth;
+        if (itemL > viewportL && itemR < viewportR) {
+            return;
+        }
+        if (itemL < viewportL) {
+            alignItemLeft(n, transition);
+        } else if (itemR > viewportR) {
+            alignItemRight(n, transition);
+        }
+    }
+
     function showItem(n, transition) {
         if (isValidItem(n)) {
-            insertItemContent([n]);
-            if (!config.multipleItemsPerPage || !isWholeItemInPageView(n, viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth)) {
-                var newScrollLeft = itemEls[n].offsetLeft;
-                if (transition !== false) {
-                    transitionTo(newScrollLeft);
-                } else {
-                    viewportEl.scrollLeft = newScrollLeft;
-                }
-                shownItemIndex = n;
-                insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
-            }
+            bringItemIntoView(n, transition);
+            shownItemIndex = n;
         }
     }
 
@@ -216,8 +241,8 @@ function Gallery(config) {
             showItem(itemEls.length - 1);
         } else {
             var prevPageWholeItems = getItemsInPageView(viewportEl.scrollLeft - viewportEl.clientWidth, viewportEl.scrollLeft),
-                prevPageItem = prevPageWholeItems.shift() || 0;
-            showItem(prevPageItem);
+                prevPageItem = prevPageWholeItems.pop() || 0;
+            alignItemRight(prevPageItem);
         }
     }
 
@@ -227,7 +252,7 @@ function Gallery(config) {
         } else {
             var currentWholeItemsInView = getItemsInPageView(viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth),
                 lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
-            showItem(lastWholeItemInView + 1);
+            alignItemLeft(lastWholeItemInView + 1);
         }
     }
 
@@ -338,7 +363,6 @@ function Gallery(config) {
     }
     config = extendObjects([defaultConfig, galleryDOM.getConfigDataAttributes(containerEl), config]);
     galleryDOM.setConfigDataAttributes(containerEl, config);
-
     allItemsEl = containerEl.querySelector(".o-gallery__items");
     viewportEl = galleryDOM.createViewport(allItemsEl);
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
