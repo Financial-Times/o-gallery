@@ -1,8 +1,18 @@
 // Demo code. Does what a product will have to do to construct a slideshow from data
 var origamiGallery = require('./main.js');
 
-// TODO: Don't put these in the global scope
-window.galleries = origamiGallery.constructFromPage();
-window.galleries.push(new origamiGallery.Gallery(standaloneGalleryConfig));
-window.galleries.push(new origamiGallery.Gallery(slideshowGalleryConfig));
-window.galleries.push(new origamiGallery.Gallery(thumbnailGalleryConfig));
+document.addEventListener("oGalleryReady", function (evt) {
+    console.log("Gallery ready", evt.detail.gallery);
+});
+
+window.galleries = origamiGallery.constructFromPage(document.body);
+
+var standaloneImperative = new origamiGallery.Gallery(standaloneGalleryConfig),
+    slideshowImperative = new origamiGallery.Gallery(slideshowGalleryConfig),
+    thumbnailImperative = new origamiGallery.Gallery(thumbnailGalleryConfig);
+
+window.galleries.push(standaloneImperative);
+window.galleries.push(slideshowImperative);
+window.galleries.push(thumbnailImperative);
+
+thumbnailImperative.syncWith(slideshowImperative);

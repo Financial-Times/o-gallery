@@ -17,6 +17,14 @@ function createViewport(targetEl) {
     return viewportEl;
 }
 
+function destroyViewport(viewportEl) {
+    var parentEl = viewportEl.parentNode;
+    while (viewportEl.childNodes.length > 0) {
+        parentEl.appendChild(viewportEl.childNodes[0]);
+    }
+    parentEl.removeChild(viewportEl);
+}
+
 function createElement(nodeName, content, classes) {
     var el = document.createElement(nodeName);
     el.innerHTML = content;
@@ -65,13 +73,6 @@ function setConfigDataAttributes(el, config) {
     el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
 }
 
-function setPropertyIfAttributeExists(obj, propName, el, attrName) {
-    var v = el.getAttribute(attrName);
-    if (v !== null) {
-        obj[propName] = v;
-    }
-}
-
 function getConfigDataAttributes(el) {
     var config = {};
     setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
@@ -82,14 +83,50 @@ function getConfigDataAttributes(el) {
     return config;
 }
 
+function removeConfigDataAttributes(el) {
+    el.removeAttribute("data-o-component");
+    el.removeAttribute("data-o-version");
+    el.removeAttribute("data-o-gallery-syncid");
+    el.removeAttribute("data-o-gallery-multipleitemsperpage");
+    el.removeAttribute("data-o-gallery-touch");
+    el.removeAttribute("data-o-gallery-captionminheight");
+    el.removeAttribute("data-o-gallery-captionmaxheight");
+}
+
+function setPropertyIfAttributeExists(obj, propName, el, attrName) {
+    var v = el.getAttribute(attrName);
+    if (v !== null) {
+        obj[propName] = v;
+    }
+}
+
+function getItemNumberFromElement(el) {
+    var itemEl = el,
+        itemNum = -1;
+    while (itemEl.parentNode.className.indexOf("o-gallery__items") === -1) {
+        itemEl = itemEl.parentNode;
+    }
+    var itemEls = itemEl.parentNode.querySelectorAll(".o-gallery__item");
+    for (var c = 0, l = itemEls.length; c < l; c++) {
+        if (itemEls[c] === itemEl) {
+            itemNum = c;
+            break;
+        }
+    }
+    return itemNum;
+}
+
 module.exports = {
     emptyElement: emptyElement,
     createItemsList: createItemsList,
     createItems: createItems,
     insertItemContent: insertItemContent,
     createViewport: createViewport,
+    destroyViewport: destroyViewport,
     getPrevControl: getPrevControl,
     getNextControl: getNextControl,
     setConfigDataAttributes: setConfigDataAttributes,
-    getConfigDataAttributes: getConfigDataAttributes
+    getConfigDataAttributes: getConfigDataAttributes,
+    removeConfigDataAttributes: removeConfigDataAttributes,
+    getItemNumberFromElement: getItemNumberFromElement
 };

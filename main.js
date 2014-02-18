@@ -5,8 +5,8 @@ var Gallery = require('./src/js/Gallery'),
 
 module.exports = {
     Gallery: Gallery,
-    constructFromPage: function() {
+    constructFromPage: function(el) {
         "use strict";
-        return galleryConstructor(Gallery);
+        return galleryConstructor(el || document);
     }
 };
