@@ -21,54 +21,31 @@ module.exports = {
     }
 };
 },{"./src/js/Gallery":3,"./src/js/galleryConstructor":4}],3:[function(require,module,exports){
-/*
-    ALWAYS: JS config takes precedence over HTML source
-
-
-    INITIALISATION:
-        1. [optional] If constructing from JS config:
-            1. Build HTML item containers from JS config
-            2. Add/update HTML data attributes from JS config (so HTML is in sync with data)
-            3. Build selected (+ next/prev) item HTML from JS config
-
-        2. Build JS config from HTML (except item data), don't overwrite anything already in the JS config
-
-    SETUP
-        1. Build UI controls
-        2. Bind UI events
-        3. Listen for events from other Galleries
-
-    RUNNING
-        1. Build item content on demand (selected + next/prev item), if it exists in JSON config
-        2. Emit events
-
- */
-
 /*global require, module*/
 
 var galleryDOM = require('./galleryDOM.js');
 
 function Gallery(config) {
     "use strict";
-    console.log("Constructed Gallery from " + (isDataSource() ? "JS" : "HTML"), config);
-
-    // TODO: Set default model
-    if (!config.model) {
-        config.model = {};
-    }
 
     var containerEl = config.container,
         viewportEl,
         allItemsEl,
         itemEls,
-        multipleItemsPerPage = config.model.multipleItemsPerPage || containerEl.getAttribute("data-o-gallery-multipleitemsperpage") || false,
         transitionDuration = 300,
         selectedItemIndex,
         shownItemIndex,
-        debounceOnResize;
+        debounceOnResize,
+        defaultConfig = {
+            multipleItemsPerPage: false,
+            captionMinHeight: 10,
+            captionMaxHeight: 50,
+            touch: false,
+            syncID: new Date().getTime()
+        };
 
     function isDataSource() {
-        return (config.model && config.model.items && config.model.items.length > 0);
+        return (config.items && config.items.length > 0);
     }
 
     function setWidths() {
@@ -76,7 +53,7 @@ function Gallery(config) {
             l,
             totalWidth = 0,
             itemWidth = containerEl.clientWidth;
-        if (multipleItemsPerPage) {
+        if (config.multipleItemsPerPage) {
             itemWidth = parseInt(itemEls[selectedItemIndex].clientWidth, 10);
         }
         for (i = 0, l = itemEls.length; i < l; i++) {
@@ -113,12 +90,12 @@ function Gallery(config) {
 
     function insertItemContent(n) {
         var itemNums = (n instanceof Array) ? n : [n];
-        if (config.model.items) {
+        if (config.items) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
-                if (isValidItem(itemNum) && !config.model.items[itemNum].inserted) {
-                    galleryDOM.insertItemContent(config.model.items[itemNum], itemEls[itemNum]);
-                    config.model.items[itemNum].inserted = true;
+                if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
+                    galleryDOM.insertItemContent(config.items[itemNum], itemEls[itemNum]);
+                    config.items[itemNum].inserted = true;
                 }
             }
         }
@@ -241,7 +218,7 @@ function Gallery(config) {
     }
 
     function prev() {
-        if (multipleItemsPerPage) {
+        if (config.multipleItemsPerPage) {
             showPrevPage();
         } else {
             selectPrevItem(true);
@@ -249,7 +226,7 @@ function Gallery(config) {
     }
 
     function next() {
-        if (multipleItemsPerPage) {
+        if (config.multipleItemsPerPage) {
             showNextPage();
         } else {
             selectNextItem(true);
@@ -258,21 +235,35 @@ function Gallery(config) {
 
     function onResize() {
         setWidths();
-        if (!multipleItemsPerPage) { // correct the alignment of item in view
-            showItem(shownItemIndex);
+        if (!config.multipleItemsPerPage) { // correct the alignment of item in view
+            showItem(shownItemIndex, false);
         } else {
             var newScrollLeft = viewportEl.scrollLeft;
             insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
         }
     }
 
+    function extendObjects(objs) {
+        var newObj = {};
+        for (var c = 0, l = objs.length; c < l; c++) {
+            var obj = objs[c];
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    newObj[prop] = obj[prop];
+                }
+            }
+        }
+        return newObj;
+    }
+
     if (isDataSource()) {
         galleryDOM.emptyElement(containerEl);
-        // TODO: Set origami attributes on containerEl
         containerEl.className = containerEl.className + " o-gallery";
         allItemsEl = galleryDOM.createItemsList(containerEl);
-        itemEls = galleryDOM.createItems(allItemsEl, config.model.items);
+        itemEls = galleryDOM.createItems(allItemsEl, config.items);
     }
+    config = extendObjects([defaultConfig, galleryDOM.getConfigDataAttributes(containerEl), config]);
+    galleryDOM.setConfigDataAttributes(containerEl, config);
 
     allItemsEl = containerEl.querySelector(".o-gallery__items");
     viewportEl = galleryDOM.createViewport(allItemsEl);
@@ -358,10 +349,10 @@ function createItems(containerEl, items) {
 
 function insertItemContent(item, itemEl) {
     emptyElement(itemEl);
-    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content"); // TODO: Rename to o-gallery__item__content
+    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content");
     itemEl.appendChild(contentEl);
     if (item.itemCaption) {
-        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption"); // TODO: Rename to o-gallery__item__caption
+        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption");
         itemEl.appendChild(captionEl);
     }
 }
@@ -373,6 +364,32 @@ function getNextControl() {
     return createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
 }
 
+function setConfigDataAttributes(el, config) {
+    el.setAttribute("data-o-component", "o-gallery");
+    el.setAttribute("data-o-gallery-syncid", config.syncID);
+    el.setAttribute("data-o-gallery-multipleitemsperpage", config.multipleItemsPerPage);
+    el.setAttribute("data-o-gallery-touch", config.touch);
+    el.setAttribute("data-o-gallery-captionminheight", config.captionMinHeight);
+    el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
+}
+
+function setPropertyIfAttributeExists(obj, propName, el, attrName) {
+    var v = el.getAttribute(attrName);
+    if (v !== null) {
+        obj[propName] = v;
+    }
+}
+
+function getConfigDataAttributes(el) {
+    var config = {};
+    setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
+    setPropertyIfAttributeExists(config, "multipleItemsPerPage", el, "data-o-gallery-multipleitemsperpage");
+    setPropertyIfAttributeExists(config, "touch", el, "data-o-gallery-touch");
+    setPropertyIfAttributeExists(config, "captionMinHeight", el, "data-o-gallery-captionminheight");
+    setPropertyIfAttributeExists(config, "captionMaxHeight", el, "data-o-gallery-captionmaxheight");
+    return config;
+}
+
 module.exports = {
     emptyElement: emptyElement,
     createItemsList: createItemsList,
@@ -380,6 +397,8 @@ module.exports = {
     insertItemContent: insertItemContent,
     createViewport: createViewport,
     getPrevControl: getPrevControl,
-    getNextControl: getNextControl
+    getNextControl: getNextControl,
+    setConfigDataAttributes: setConfigDataAttributes,
+    getConfigDataAttributes: getConfigDataAttributes
 };
 },{}]},{},[1])

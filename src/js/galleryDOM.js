@@ -41,10 +41,10 @@ function createItems(containerEl, items) {
 
 function insertItemContent(item, itemEl) {
     emptyElement(itemEl);
-    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content"); // TODO: Rename to o-gallery__item__content
+    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content");
     itemEl.appendChild(contentEl);
     if (item.itemCaption) {
-        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption"); // TODO: Rename to o-gallery__item__caption
+        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption");
         itemEl.appendChild(captionEl);
     }
 }
@@ -56,6 +56,32 @@ function getNextControl() {
     return createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
 }
 
+function setConfigDataAttributes(el, config) {
+    el.setAttribute("data-o-component", "o-gallery");
+    el.setAttribute("data-o-gallery-syncid", config.syncID);
+    el.setAttribute("data-o-gallery-multipleitemsperpage", config.multipleItemsPerPage);
+    el.setAttribute("data-o-gallery-touch", config.touch);
+    el.setAttribute("data-o-gallery-captionminheight", config.captionMinHeight);
+    el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
+}
+
+function setPropertyIfAttributeExists(obj, propName, el, attrName) {
+    var v = el.getAttribute(attrName);
+    if (v !== null) {
+        obj[propName] = v;
+    }
+}
+
+function getConfigDataAttributes(el) {
+    var config = {};
+    setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
+    setPropertyIfAttributeExists(config, "multipleItemsPerPage", el, "data-o-gallery-multipleitemsperpage");
+    setPropertyIfAttributeExists(config, "touch", el, "data-o-gallery-touch");
+    setPropertyIfAttributeExists(config, "captionMinHeight", el, "data-o-gallery-captionminheight");
+    setPropertyIfAttributeExists(config, "captionMaxHeight", el, "data-o-gallery-captionmaxheight");
+    return config;
+}
+
 module.exports = {
     emptyElement: emptyElement,
     createItemsList: createItemsList,
@@ -63,5 +89,7 @@ module.exports = {
     insertItemContent: insertItemContent,
     createViewport: createViewport,
     getPrevControl: getPrevControl,
-    getNextControl: getNextControl
+    getNextControl: getNextControl,
+    setConfigDataAttributes: setConfigDataAttributes,
+    getConfigDataAttributes: getConfigDataAttributes
 };

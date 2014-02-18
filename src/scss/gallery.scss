@@ -28,6 +28,7 @@
 
 .o-gallery__items {
   @include oGalleryListReset();
+  float: left;
 }
 
 .no-js .o-gallery__items {
