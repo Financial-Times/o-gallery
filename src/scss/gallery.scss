@@ -1,20 +1,6 @@
-
-@mixin oGalleryListReset() {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-@mixin user-select($v) {
-  -webkit-user-select: $v; /* webkit (safari, chrome) browsers */
-  -moz-user-select: $v; /* mozilla browsers */
-  -khtml-user-select: $v; /* webkit (konqueror) browsers */
-  -ms-user-select: $v; /* IE10+ */
-}
-
 .o-gallery {
   position: relative;
-  @include user-select(none);
+  @include oGalleryUserSelect(none);
 }
 
 .o-gallery__viewport {
@@ -27,8 +13,8 @@
 }
 
 .o-gallery__items {
-  @include oGalleryListReset();
   float: left;
+  @include oGalleryListReset();
 }
 
 .no-js .o-gallery__items {
@@ -56,6 +42,13 @@
   left: 0;
   right: 0;
   bottom: 0;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 14px;
+  color: _oColorsGetPaletteColor(cool-grey2); // TODO: Add use case to colors module
+  background-color: _oColorsGetPaletteColor(charcoal); // TODO: Add use case to colors module
 }
 
 .o-gallery__control {

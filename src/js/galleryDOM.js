@@ -47,12 +47,12 @@ function createItems(containerEl, items) {
     return containerEl.querySelectorAll(".o-gallery__item");
 }
 
-function insertItemContent(item, itemEl) {
+function insertItemContent(config, item, itemEl) {
     emptyElement(itemEl);
     var contentEl = createElement("div", item.itemContent, "o-gallery__item__content");
     itemEl.appendChild(contentEl);
-    if (item.itemCaption) {
-        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption");
+    if (config.captions) {
+        var captionEl = createElement("div", item.itemCaption || "", "o-gallery__item__caption");
         itemEl.appendChild(captionEl);
     }
 }
@@ -69,6 +69,7 @@ function setConfigDataAttributes(el, config) {
     el.setAttribute("data-o-gallery-syncid", config.syncID);
     el.setAttribute("data-o-gallery-multipleitemsperpage", config.multipleItemsPerPage);
     el.setAttribute("data-o-gallery-touch", config.touch);
+    el.setAttribute("data-o-gallery-captions", config.captions);
     el.setAttribute("data-o-gallery-captionminheight", config.captionMinHeight);
     el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
 }
@@ -78,6 +79,7 @@ function getConfigDataAttributes(el) {
     setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
     setPropertyIfAttributeExists(config, "multipleItemsPerPage", el, "data-o-gallery-multipleitemsperpage");
     setPropertyIfAttributeExists(config, "touch", el, "data-o-gallery-touch");
+    setPropertyIfAttributeExists(config, "captions", el, "data-o-gallery-captions");
     setPropertyIfAttributeExists(config, "captionMinHeight", el, "data-o-gallery-captionminheight");
     setPropertyIfAttributeExists(config, "captionMaxHeight", el, "data-o-gallery-captionmaxheight");
     return config;
@@ -89,6 +91,7 @@ function removeConfigDataAttributes(el) {
     el.removeAttribute("data-o-gallery-syncid");
     el.removeAttribute("data-o-gallery-multipleitemsperpage");
     el.removeAttribute("data-o-gallery-touch");
+    el.removeAttribute("data-o-gallery-captions");
     el.removeAttribute("data-o-gallery-captionminheight");
     el.removeAttribute("data-o-gallery-captionmaxheight");
 }
@@ -96,6 +99,11 @@ function removeConfigDataAttributes(el) {
 function setPropertyIfAttributeExists(obj, propName, el, attrName) {
     var v = el.getAttribute(attrName);
     if (v !== null) {
+        if (v === "true") {
+            v = true;
+        } else if (v === "false") {
+            v = false;
+        }
         obj[propName] = v;
     }
 }

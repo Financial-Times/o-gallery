@@ -1,6 +1,6 @@
 /*global require, module*/
 
-var galleryDOM = require('./galleryDOM.js');
+var galleryDOM = require('./galleryDOM');
 
 function Gallery(config) {
     "use strict";
@@ -17,8 +17,9 @@ function Gallery(config) {
         nextControlDiv,
         defaultConfig = {
             multipleItemsPerPage: false,
-            captionMinHeight: 10,
-            captionMaxHeight: 50,
+            captions: true,
+            captionMinHeight: 24,
+            captionMaxHeight: 52,
             touch: false,
             syncID: "o-gallery-" + new Date().getTime()
         };
@@ -68,8 +69,20 @@ function Gallery(config) {
         if (config.multipleItemsPerPage) {
             viewportEl.addEventListener("click", function (evt) {
                 var clickedItemNum = galleryDOM.getItemNumberFromElement(evt.srcElement);
-                selectItem(clickedItemNum, false, "user");
+                selectItem(clickedItemNum, true, "user");
             });
+        }
+    }
+
+    function setCaptionSizes() {
+        for (var c = 0, l = itemEls.length; c < l; c++) {
+            var itemEl = itemEls[c];
+            itemEl.style.paddingBottom = config.captionMinHeight + "px";
+            var captionEl = itemEl.querySelector(".o-gallery__item__caption");
+            if (captionEl) {
+                captionEl.style.minHeight = config.captionMinHeight + "px";
+                captionEl.style.maxHeight = config.captionMaxHeight + "px";
+            }
         }
     }
 
@@ -79,8 +92,9 @@ function Gallery(config) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
                 if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
-                    galleryDOM.insertItemContent(config.items[itemNum], itemEls[itemNum]);
+                    galleryDOM.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
                     config.items[itemNum].inserted = true;
+                    setCaptionSizes();
                 }
             }
         }
@@ -338,6 +352,7 @@ function Gallery(config) {
     window.addEventListener("resize", resizeHandler);
     insertItemContent(selectedItemIndex);
     setWidths();
+    setCaptionSizes();
     showItem(selectedItemIndex, false);
     addUiControls();
     listenForSyncEvents();

@@ -6,7 +6,8 @@
   "supportStatus": "not implemented",
   "browserFeatures": {
       "required": [
-          "queryselector"
+          "queryselector",
+          "css-boxsizing"
       ]
   }
 }

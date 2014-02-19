@@ -13,7 +13,7 @@
         <h2 class="o-ft-typography-heading-large">Declarative (HTML source)</h2>
 
         <h3 class="o-ft-typography-heading-medium">Standalone</h3>
-        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-standalone" data-o-gallery-captionminheight="50">
+        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-standalone" data-o-gallery-captionminheight="10">
             <ol class="o-gallery__items">
                 {{#htmlStandaloneItems}}
                 <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
@@ -25,7 +25,7 @@
         </div>
 
         <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
-        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="50">
+        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="20" data-o-gallery-captionmaxheight="50">
             <ol class="o-gallery__items">
                 {{#htmlSlideshowItems}}
                     <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
@@ -35,7 +35,7 @@
                 {{/htmlSlideshowItems}}
             </ol>
         </div>
-        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="10" data-o-gallery-multipleitemsperpage="true">
+        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-multipleitemsperpage="true">
             <ol class="o-gallery__items">
                 {{#htmlThumbnailItems}}
                     <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
@@ -69,12 +69,15 @@
         };
         var slideshowGalleryConfig = {
             container: document.getElementById("imperative-slideshow"),
-            items: {{{jsonSlideshowItems}}}
+            items: {{{jsonSlideshowItems}}},
+            captionMinHeight: 30,
+            captionMaxHeight: 60
         };
         var thumbnailGalleryConfig = {
             container: document.getElementById("imperative-thumbnails"),
             items: {{{jsonThumbnailItems}}},
-            multipleItemsPerPage: true
+            multipleItemsPerPage: true,
+            captions: false
         };
         </script>
 

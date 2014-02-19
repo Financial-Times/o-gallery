@@ -40,12 +40,21 @@ module.exports = function(grunt) {
 
     grunt.registerTask('demo', '', function() {
 
+        function getCaptionText(n) {
+            var ct = "Demo caption text for item " + n + ". ",
+                str = "";
+            for (var c = 0; c < n; c++) {
+                str = str + ct;
+            }
+            return str;
+        }
+
         function getSlideshowItems(n, sel) {
             var items = [], c;
             for (c = 0; c < n; c++) {
                 var item = {
                     itemContent: '<div class="demo__gallery__item--slideshow">Demo item ' + c + '</div>',
-                    itemCaption: "Demo caption " + c + "."
+                    itemCaption: getCaptionText(c)
                 };
                 if (c === sel) {
                     item.selected = true;

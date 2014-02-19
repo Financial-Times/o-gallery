@@ -33,7 +33,7 @@ module.exports = {
 },{"./src/js/Gallery":3,"./src/js/galleryConstructor":4}],3:[function(require,module,exports){
 /*global require, module*/
 
-var galleryDOM = require('./galleryDOM.js');
+var galleryDOM = require('./galleryDOM');
 
 function Gallery(config) {
     "use strict";
@@ -50,8 +50,9 @@ function Gallery(config) {
         nextControlDiv,
         defaultConfig = {
             multipleItemsPerPage: false,
-            captionMinHeight: 10,
-            captionMaxHeight: 50,
+            captions: true,
+            captionMinHeight: 24,
+            captionMaxHeight: 52,
             touch: false,
             syncID: "o-gallery-" + new Date().getTime()
         };
@@ -101,8 +102,20 @@ function Gallery(config) {
         if (config.multipleItemsPerPage) {
             viewportEl.addEventListener("click", function (evt) {
                 var clickedItemNum = galleryDOM.getItemNumberFromElement(evt.srcElement);
-                selectItem(clickedItemNum, false, "user");
+                selectItem(clickedItemNum, true, "user");
             });
+        }
+    }
+
+    function setCaptionSizes() {
+        for (var c = 0, l = itemEls.length; c < l; c++) {
+            var itemEl = itemEls[c];
+            itemEl.style.paddingBottom = config.captionMinHeight + "px";
+            var captionEl = itemEl.querySelector(".o-gallery__item__caption");
+            if (captionEl) {
+                captionEl.style.minHeight = config.captionMinHeight + "px";
+                captionEl.style.maxHeight = config.captionMaxHeight + "px";
+            }
         }
     }
 
@@ -112,8 +125,9 @@ function Gallery(config) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
                 if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
-                    galleryDOM.insertItemContent(config.items[itemNum], itemEls[itemNum]);
+                    galleryDOM.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
                     config.items[itemNum].inserted = true;
+                    setCaptionSizes();
                 }
             }
         }
@@ -371,6 +385,7 @@ function Gallery(config) {
     window.addEventListener("resize", resizeHandler);
     insertItemContent(selectedItemIndex);
     setWidths();
+    setCaptionSizes();
     showItem(selectedItemIndex, false);
     addUiControls();
     listenForSyncEvents();
@@ -397,9 +412,9 @@ function Gallery(config) {
 }
 
 module.exports = Gallery;
-},{"./galleryDOM.js":5}],4:[function(require,module,exports){
+},{"./galleryDOM":5}],4:[function(require,module,exports){
 /*global require, module */
-var Gallery = require('./Gallery.js');
+var Gallery = require('./Gallery');
 
 module.exports = function(el) {
     "use strict";
@@ -412,7 +427,7 @@ module.exports = function(el) {
     }
     return galleries;
 };
-},{"./Gallery.js":3}],5:[function(require,module,exports){
+},{"./Gallery":3}],5:[function(require,module,exports){
 /*global module*/
 
 "use strict";
@@ -462,12 +477,12 @@ function createItems(containerEl, items) {
     return containerEl.querySelectorAll(".o-gallery__item");
 }
 
-function insertItemContent(item, itemEl) {
+function insertItemContent(config, item, itemEl) {
     emptyElement(itemEl);
     var contentEl = createElement("div", item.itemContent, "o-gallery__item__content");
     itemEl.appendChild(contentEl);
-    if (item.itemCaption) {
-        var captionEl = createElement("div", item.itemCaption, "o-gallery__item__caption");
+    if (config.captions) {
+        var captionEl = createElement("div", item.itemCaption || "", "o-gallery__item__caption");
         itemEl.appendChild(captionEl);
     }
 }
@@ -484,6 +499,7 @@ function setConfigDataAttributes(el, config) {
     el.setAttribute("data-o-gallery-syncid", config.syncID);
     el.setAttribute("data-o-gallery-multipleitemsperpage", config.multipleItemsPerPage);
     el.setAttribute("data-o-gallery-touch", config.touch);
+    el.setAttribute("data-o-gallery-captions", config.captions);
     el.setAttribute("data-o-gallery-captionminheight", config.captionMinHeight);
     el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
 }
@@ -493,6 +509,7 @@ function getConfigDataAttributes(el) {
     setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
     setPropertyIfAttributeExists(config, "multipleItemsPerPage", el, "data-o-gallery-multipleitemsperpage");
     setPropertyIfAttributeExists(config, "touch", el, "data-o-gallery-touch");
+    setPropertyIfAttributeExists(config, "captions", el, "data-o-gallery-captions");
     setPropertyIfAttributeExists(config, "captionMinHeight", el, "data-o-gallery-captionminheight");
     setPropertyIfAttributeExists(config, "captionMaxHeight", el, "data-o-gallery-captionmaxheight");
     return config;
@@ -504,6 +521,7 @@ function removeConfigDataAttributes(el) {
     el.removeAttribute("data-o-gallery-syncid");
     el.removeAttribute("data-o-gallery-multipleitemsperpage");
     el.removeAttribute("data-o-gallery-touch");
+    el.removeAttribute("data-o-gallery-captions");
     el.removeAttribute("data-o-gallery-captionminheight");
     el.removeAttribute("data-o-gallery-captionmaxheight");
 }
@@ -511,6 +529,11 @@ function removeConfigDataAttributes(el) {
 function setPropertyIfAttributeExists(obj, propName, el, attrName) {
     var v = el.getAttribute(attrName);
     if (v !== null) {
+        if (v === "true") {
+            v = true;
+        } else if (v === "false") {
+            v = false;
+        }
         obj[propName] = v;
     }
 }

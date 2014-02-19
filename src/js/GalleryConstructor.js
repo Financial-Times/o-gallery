@@ -1,5 +1,5 @@
 /*global require, module */
-var Gallery = require('./Gallery.js');
+var Gallery = require('./Gallery');
 
 module.exports = function(el) {
     "use strict";
