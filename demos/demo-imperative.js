@@ -1,16 +1,17 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // Demo code. Does what a product will have to do to construct a slideshow from data
-var origamiGallery = require('./main.js');
+/*global require*/
+var Gallery = require('./main.js');
 
 document.addEventListener("oGalleryReady", function (evt) {
     console.log("Gallery ready", evt.detail.gallery);
 });
 
-window.galleries = origamiGallery.constructFromPage(document.body);
+window.galleries = Gallery.createAllIn(document.body);
 
-var standaloneImperative = new origamiGallery.Gallery(standaloneGalleryConfig),
-    slideshowImperative = new origamiGallery.Gallery(slideshowGalleryConfig),
-    thumbnailImperative = new origamiGallery.Gallery(thumbnailGalleryConfig);
+var standaloneImperative = new Gallery(standaloneGalleryConfig),
+    slideshowImperative = new Gallery(slideshowGalleryConfig),
+    thumbnailImperative = new Gallery(thumbnailGalleryConfig);
 
 window.galleries.push(standaloneImperative);
 window.galleries.push(slideshowImperative);
@@ -19,18 +20,8 @@ window.galleries.push(thumbnailImperative);
 thumbnailImperative.syncWith(slideshowImperative);
 },{"./main.js":2}],2:[function(require,module,exports){
 /*global require, module*/
-
-var Gallery = require('./src/js/Gallery'),
-    galleryConstructor = require('./src/js/galleryConstructor');
-
-module.exports = {
-    Gallery: Gallery,
-    constructFromPage: function(el) {
-        "use strict";
-        return galleryConstructor(el || document);
-    }
-};
-},{"./src/js/Gallery":3,"./src/js/galleryConstructor":4}],3:[function(require,module,exports){
+module.exports = require('./src/js/Gallery');
+},{"./src/js/Gallery":3}],3:[function(require,module,exports){
 /*global require, module*/
 
 var galleryDOM = require('./galleryDOM');
@@ -331,7 +322,7 @@ function Gallery(config) {
 
     function resizeHandler() {
         clearTimeout(debounceOnResize);
-        debounceOnResize = setTimeout(onResize, 500); // Also call on item content insert (for JS source)?
+        debounceOnResize = setTimeout(onResize, 500);
     }
 
     function extendObjects(objs) {
@@ -411,12 +402,7 @@ function Gallery(config) {
 
 }
 
-module.exports = Gallery;
-},{"./galleryDOM":5}],4:[function(require,module,exports){
-/*global require, module */
-var Gallery = require('./Gallery');
-
-module.exports = function(el) {
+Gallery.createAllIn = function(el) {
     "use strict";
     var gEls = el.querySelectorAll("[data-o-component=o-gallery]"),
         galleries = [];
@@ -427,7 +413,9 @@ module.exports = function(el) {
     }
     return galleries;
 };
-},{"./Gallery":3}],5:[function(require,module,exports){
+
+module.exports = Gallery;
+},{"./galleryDOM":4}],4:[function(require,module,exports){
 /*global module*/
 
 "use strict";

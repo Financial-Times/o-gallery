@@ -298,7 +298,7 @@ function Gallery(config) {
 
     function resizeHandler() {
         clearTimeout(debounceOnResize);
-        debounceOnResize = setTimeout(onResize, 500); // Also call on item content insert (for JS source)?
+        debounceOnResize = setTimeout(onResize, 500);
     }
 
     function extendObjects(objs) {
@@ -377,5 +377,17 @@ function Gallery(config) {
     });
 
 }
+
+Gallery.createAllIn = function(el) {
+    "use strict";
+    var gEls = el.querySelectorAll("[data-o-component=o-gallery]"),
+        galleries = [];
+    for (var c = 0, l = gEls.length; c < l; c++) {
+        galleries.push(new Gallery({
+            container: gEls[c]
+        }));
+    }
+    return galleries;
+};
 
 module.exports = Gallery;
