@@ -39,7 +39,19 @@ function Gallery(config) {
         debounceOnResize,
         prevControlDiv,
         nextControlDiv,
+        propertyAttributeMap = {
+            component: "data-o-component",
+            version: "data-o-version",
+            syncID: "data-o-gallery-syncid",
+            multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
+            touch: "data-o-gallery-touch",
+            captions: "data-o-gallery-captions",
+            captionMinHeight: "data-o-gallery-captionminheight",
+            captionMaxHeight: "data-o-gallery-captionmaxheight"
+        },
         defaultConfig = {
+            component: "o-gallery",
+            version: "0.0.0",
             multipleItemsPerPage: false,
             captions: true,
             captionMinHeight: 24,
@@ -74,7 +86,7 @@ function Gallery(config) {
     function getSelectedItem() {
         var selectedItem = 0, c, l;
         for (c = 0, l = itemEls.length; c < l; c++) {
-            if (itemEls[c].className.indexOf("o-gallery__item--selected") > 0) {
+            if (galleryDOM.hasClass(itemEls[c], "o-gallery__item--selected")) {
                 selectedItem = c;
                 break;
             }
@@ -83,8 +95,8 @@ function Gallery(config) {
     }
 
     function addUiControls() {
-        prevControlDiv = galleryDOM.getPrevControl();
-        nextControlDiv = galleryDOM.getNextControl();
+        prevControlDiv = galleryDOM.createElement("div", "PREV", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = galleryDOM.createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
         prevControlDiv.addEventListener("click", prev);
@@ -92,7 +104,7 @@ function Gallery(config) {
 
         if (config.multipleItemsPerPage) {
             viewportEl.addEventListener("click", function (evt) {
-                var clickedItemNum = galleryDOM.getItemNumberFromElement(evt.srcElement);
+                var clickedItemNum = galleryDOM.getElementIndex(galleryDOM.getClosest(evt.srcElement, "o-gallery__item"));
                 selectItem(clickedItemNum, true, "user");
             });
         }
@@ -269,9 +281,9 @@ function Gallery(config) {
             selectedItemIndex = n;
             for (var c = 0, l = itemEls.length; c < l; c++) {
                 if (c === selectedItemIndex) {
-                    itemEls[c].className = itemEls[c].className + " o-gallery__item--selected";
+                    galleryDOM.addClass(itemEls[c], "o-gallery__item--selected");
                 } else {
-                    itemEls[c].className = itemEls[c].className.replace(/\bo-gallery__item--selected\b/,'');
+                    galleryDOM.removeClass(itemEls[c], "o-gallery__item--selected");
                 }
             }
             if (show) {
@@ -338,9 +350,13 @@ function Gallery(config) {
         return newObj;
     }
 
+    function updateDataAttributes() {
+        galleryDOM.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["container", "items"]);
+    }
+
     function setSyncID(id) {
         config.syncID = id;
-        galleryDOM.setConfigDataAttributes(containerEl, config);
+        updateDataAttributes();
     }
 
     function getSyncID() {
@@ -354,22 +370,27 @@ function Gallery(config) {
     function destroy() {
         prevControlDiv.parentNode.removeChild(prevControlDiv);
         nextControlDiv.parentNode.removeChild(nextControlDiv);
-        galleryDOM.destroyViewport(viewportEl);
-        galleryDOM.removeConfigDataAttributes(containerEl);
+        galleryDOM.unwrapElement(allItemsEl);
+        for (var prop in propertyAttributeMap) {
+            if (propertyAttributeMap.hasOwnProperty(prop)) {
+                containerEl.removeAttribute(propertyAttributeMap[prop]);
+            }
+        }
         document.removeEventListener("oGalleryItemSelected", onGalleryCustomEvent);
         window.removeEventListener("resize", resizeHandler);
     }
 
     if (isDataSource()) {
         galleryDOM.emptyElement(containerEl);
-        containerEl.className = containerEl.className + " o-gallery";
+        galleryDOM.addClass(containerEl, "o-gallery");
         allItemsEl = galleryDOM.createItemsList(containerEl);
         itemEls = galleryDOM.createItems(allItemsEl, config.items);
     }
-    config = extendObjects([defaultConfig, galleryDOM.getConfigDataAttributes(containerEl), config]);
-    galleryDOM.setConfigDataAttributes(containerEl, config);
+    config = extendObjects([defaultConfig, galleryDOM.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
+    updateDataAttributes();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
-    viewportEl = galleryDOM.createViewport(allItemsEl);
+    viewportEl = galleryDOM.createElement("div", "", "o-gallery__viewport");
+    galleryDOM.wrapElement(allItemsEl, viewportEl);
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
@@ -426,21 +447,19 @@ function emptyElement(targetEl) {
     }
 }
 
-function createViewport(targetEl) {
-    var parentEl = targetEl.parentNode,
-        viewportEl = document.createElement('div');
-    viewportEl.setAttribute("class", "o-gallery__viewport");
-    viewportEl.appendChild(targetEl);
-    parentEl.appendChild(viewportEl);
-    return viewportEl;
+function wrapElement(targetEl, wrapEl) {
+    var parentEl = targetEl.parentNode;
+    wrapEl.appendChild(targetEl);
+    parentEl.appendChild(wrapEl);
 }
 
-function destroyViewport(viewportEl) {
-    var parentEl = viewportEl.parentNode;
-    while (viewportEl.childNodes.length > 0) {
-        parentEl.appendChild(viewportEl.childNodes[0]);
+function unwrapElement(targetEl) {
+    var wrappingEl = targetEl.parentNode,
+        wrappingElParent = wrappingEl.parentNode;
+    while (wrappingEl.childNodes.length > 0) {
+        wrappingElParent.appendChild(wrappingEl.childNodes[0]);
     }
-    parentEl.removeChild(viewportEl);
+    wrappingElParent.removeChild(wrappingEl);
 }
 
 function createElement(nodeName, content, classes) {
@@ -448,6 +467,23 @@ function createElement(nodeName, content, classes) {
     el.innerHTML = content;
     el.setAttribute("class", classes);
     return el;
+}
+
+function hasClass(el, c) {
+    return (' ' + el.className + ' ').indexOf(' ' + c + ' ') > -1;
+}
+
+function addClass(el, c) {
+    if (!hasClass(el, c)) {
+        el.className = el.className + " " + c;
+    }
+}
+
+function removeClass(el, c) {
+    if (hasClass(el, c)) {
+        var reg = new RegExp('(\\s|^)' + c + '(\\s|$)');
+        el.className = el.className.replace(reg,' ');
+    }
 }
 
 function createItemsList(containerEl) {
@@ -475,45 +511,6 @@ function insertItemContent(config, item, itemEl) {
     }
 }
 
-function getPrevControl() {
-    return createElement("div", "PREV", "o-gallery__control o-gallery__control--prev");
-}
-function getNextControl() {
-    return createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
-}
-
-function setConfigDataAttributes(el, config) {
-    el.setAttribute("data-o-component", "o-gallery");
-    el.setAttribute("data-o-gallery-syncid", config.syncID);
-    el.setAttribute("data-o-gallery-multipleitemsperpage", config.multipleItemsPerPage);
-    el.setAttribute("data-o-gallery-touch", config.touch);
-    el.setAttribute("data-o-gallery-captions", config.captions);
-    el.setAttribute("data-o-gallery-captionminheight", config.captionMinHeight);
-    el.setAttribute("data-o-gallery-captionmaxheight", config.captionMaxHeight);
-}
-
-function getConfigDataAttributes(el) {
-    var config = {};
-    setPropertyIfAttributeExists(config, "syncID", el, "data-o-gallery-syncid");
-    setPropertyIfAttributeExists(config, "multipleItemsPerPage", el, "data-o-gallery-multipleitemsperpage");
-    setPropertyIfAttributeExists(config, "touch", el, "data-o-gallery-touch");
-    setPropertyIfAttributeExists(config, "captions", el, "data-o-gallery-captions");
-    setPropertyIfAttributeExists(config, "captionMinHeight", el, "data-o-gallery-captionminheight");
-    setPropertyIfAttributeExists(config, "captionMaxHeight", el, "data-o-gallery-captionmaxheight");
-    return config;
-}
-
-function removeConfigDataAttributes(el) {
-    el.removeAttribute("data-o-component");
-    el.removeAttribute("data-o-version");
-    el.removeAttribute("data-o-gallery-syncid");
-    el.removeAttribute("data-o-gallery-multipleitemsperpage");
-    el.removeAttribute("data-o-gallery-touch");
-    el.removeAttribute("data-o-gallery-captions");
-    el.removeAttribute("data-o-gallery-captionminheight");
-    el.removeAttribute("data-o-gallery-captionmaxheight");
-}
-
 function setPropertyIfAttributeExists(obj, propName, el, attrName) {
     var v = el.getAttribute(attrName);
     if (v !== null) {
@@ -526,34 +523,57 @@ function setPropertyIfAttributeExists(obj, propName, el, attrName) {
     }
 }
 
-function getItemNumberFromElement(el) {
-    var itemEl = el,
-        itemNum = -1;
-    while (itemEl.parentNode.className.indexOf("o-gallery__items") === -1) {
-        itemEl = itemEl.parentNode;
-    }
-    var itemEls = itemEl.parentNode.querySelectorAll(".o-gallery__item");
-    for (var c = 0, l = itemEls.length; c < l; c++) {
-        if (itemEls[c] === itemEl) {
-            itemNum = c;
-            break;
+function getPropertiesFromAttributes(el, map) {
+    var obj = {},
+        prop;
+    for (prop in map) {
+        if (map.hasOwnProperty(prop)) {
+            setPropertyIfAttributeExists(obj, prop, el, map[prop]);
         }
     }
-    return itemNum;
+    return obj;
+}
+
+function setAttributesFromProperties(el, obj, map, excl) {
+    var exclude = excl || [];
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop) && exclude.indexOf(prop) < 0) {
+            el.setAttribute(map[prop], obj[prop]);
+        }
+    }
+}
+
+function getClosest(el, c) {
+    while (!hasClass(el, c)) {
+        el = el.parentNode;
+    }
+    return el;
+}
+
+function getElementIndex(el) {
+    var i = 0;
+    while (el = el.previousSibling) {
+        if (el.nodeType === 1) {
+            ++i;
+        }
+    }
+    return i;
 }
 
 module.exports = {
     emptyElement: emptyElement,
+    createElement: createElement,
+    hasClass: hasClass,
+    addClass: addClass,
+    removeClass: removeClass,
     createItemsList: createItemsList,
     createItems: createItems,
     insertItemContent: insertItemContent,
-    createViewport: createViewport,
-    destroyViewport: destroyViewport,
-    getPrevControl: getPrevControl,
-    getNextControl: getNextControl,
-    setConfigDataAttributes: setConfigDataAttributes,
-    getConfigDataAttributes: getConfigDataAttributes,
-    removeConfigDataAttributes: removeConfigDataAttributes,
-    getItemNumberFromElement: getItemNumberFromElement
+    wrapElement: wrapElement,
+    unwrapElement: unwrapElement,
+    setAttributesFromProperties: setAttributesFromProperties,
+    getPropertiesFromAttributes: getPropertiesFromAttributes,
+    getClosest: getClosest,
+    getElementIndex: getElementIndex
 };
 },{}]},{},[1])

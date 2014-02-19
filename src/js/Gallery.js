@@ -15,7 +15,19 @@ function Gallery(config) {
         debounceOnResize,
         prevControlDiv,
         nextControlDiv,
+        propertyAttributeMap = {
+            component: "data-o-component",
+            version: "data-o-version",
+            syncID: "data-o-gallery-syncid",
+            multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
+            touch: "data-o-gallery-touch",
+            captions: "data-o-gallery-captions",
+            captionMinHeight: "data-o-gallery-captionminheight",
+            captionMaxHeight: "data-o-gallery-captionmaxheight"
+        },
         defaultConfig = {
+            component: "o-gallery",
+            version: "0.0.0",
             multipleItemsPerPage: false,
             captions: true,
             captionMinHeight: 24,
@@ -50,7 +62,7 @@ function Gallery(config) {
     function getSelectedItem() {
         var selectedItem = 0, c, l;
         for (c = 0, l = itemEls.length; c < l; c++) {
-            if (itemEls[c].className.indexOf("o-gallery__item--selected") > 0) {
+            if (galleryDOM.hasClass(itemEls[c], "o-gallery__item--selected")) {
                 selectedItem = c;
                 break;
             }
@@ -59,8 +71,8 @@ function Gallery(config) {
     }
 
     function addUiControls() {
-        prevControlDiv = galleryDOM.getPrevControl();
-        nextControlDiv = galleryDOM.getNextControl();
+        prevControlDiv = galleryDOM.createElement("div", "PREV", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = galleryDOM.createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
         prevControlDiv.addEventListener("click", prev);
@@ -68,7 +80,7 @@ function Gallery(config) {
 
         if (config.multipleItemsPerPage) {
             viewportEl.addEventListener("click", function (evt) {
-                var clickedItemNum = galleryDOM.getItemNumberFromElement(evt.srcElement);
+                var clickedItemNum = galleryDOM.getElementIndex(galleryDOM.getClosest(evt.srcElement, "o-gallery__item"));
                 selectItem(clickedItemNum, true, "user");
             });
         }
@@ -245,9 +257,9 @@ function Gallery(config) {
             selectedItemIndex = n;
             for (var c = 0, l = itemEls.length; c < l; c++) {
                 if (c === selectedItemIndex) {
-                    itemEls[c].className = itemEls[c].className + " o-gallery__item--selected";
+                    galleryDOM.addClass(itemEls[c], "o-gallery__item--selected");
                 } else {
-                    itemEls[c].className = itemEls[c].className.replace(/\bo-gallery__item--selected\b/,'');
+                    galleryDOM.removeClass(itemEls[c], "o-gallery__item--selected");
                 }
             }
             if (show) {
@@ -314,9 +326,13 @@ function Gallery(config) {
         return newObj;
     }
 
+    function updateDataAttributes() {
+        galleryDOM.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["container", "items"]);
+    }
+
     function setSyncID(id) {
         config.syncID = id;
-        galleryDOM.setConfigDataAttributes(containerEl, config);
+        updateDataAttributes();
     }
 
     function getSyncID() {
@@ -330,22 +346,27 @@ function Gallery(config) {
     function destroy() {
         prevControlDiv.parentNode.removeChild(prevControlDiv);
         nextControlDiv.parentNode.removeChild(nextControlDiv);
-        galleryDOM.destroyViewport(viewportEl);
-        galleryDOM.removeConfigDataAttributes(containerEl);
+        galleryDOM.unwrapElement(allItemsEl);
+        for (var prop in propertyAttributeMap) {
+            if (propertyAttributeMap.hasOwnProperty(prop)) {
+                containerEl.removeAttribute(propertyAttributeMap[prop]);
+            }
+        }
         document.removeEventListener("oGalleryItemSelected", onGalleryCustomEvent);
         window.removeEventListener("resize", resizeHandler);
     }
 
     if (isDataSource()) {
         galleryDOM.emptyElement(containerEl);
-        containerEl.className = containerEl.className + " o-gallery";
+        galleryDOM.addClass(containerEl, "o-gallery");
         allItemsEl = galleryDOM.createItemsList(containerEl);
         itemEls = galleryDOM.createItems(allItemsEl, config.items);
     }
-    config = extendObjects([defaultConfig, galleryDOM.getConfigDataAttributes(containerEl), config]);
-    galleryDOM.setConfigDataAttributes(containerEl, config);
+    config = extendObjects([defaultConfig, galleryDOM.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
+    updateDataAttributes();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
-    viewportEl = galleryDOM.createViewport(allItemsEl);
+    viewportEl = galleryDOM.createElement("div", "", "o-gallery__viewport");
+    galleryDOM.wrapElement(allItemsEl, viewportEl);
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
