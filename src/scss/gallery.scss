@@ -1,43 +1,38 @@
-.o-gallery {
+@include oGallerySelectors(o-gallery) {
   position: relative;
   @include oGalleryUserSelect(none);
+  .no-js & {
+    position: static;
+  }
 }
 
-.o-gallery__viewport {
+@include oGallerySelectors(o-gallery__viewport) {
   position: relative;
   overflow: hidden;
 }
 
-.no-js .o-gallery {
-  position: static;
-}
-
-.o-gallery__items {
+@include oGallerySelectors(o-gallery__items) {
   float: left;
   @include oGalleryListReset();
 }
 
-.no-js .o-gallery__items {
-}
-
-.o-gallery__item {
+@include oGallerySelectors(o-gallery__item) {
   float: left;
   clear: none;
   position: relative;
   @include oGalleryListReset();
+  .no-js & {
+    margin: 0 0 20px 0;
+    float: none;
+    clear: both;
+  }
 }
 
-.no-js .o-gallery__item {
-  margin: 0 0 20px 0;
-  float: none;
-  clear: both;
-}
-
-.o-gallery__item--selected {
+@include oGallerySelectors(o-gallery__item--selected) {
   // Gets implemented in product
 }
 
-.o-gallery__item__caption {
+@include oGallerySelectors(o-gallery__item__caption) {
   position: absolute;
   left: 0;
   right: 0;
@@ -51,7 +46,7 @@
   background-color: _oColorsGetPaletteColor(charcoal); // TODO: Add use case to colors module
 }
 
-.o-gallery__control {
+@include oGallerySelectors(o-gallery__control) {
   position: absolute;
   top: 0;
   width: 50px;
@@ -61,16 +56,15 @@
   color: #000;
   background-color: rgba(0,0,0, 0.2);
   cursor: pointer;
+  &:hover {
+    color: #666;
+  }
 }
 
-.o-gallery__control:hover {
-  color: #666;
-}
-
-.o-gallery__control--prev {
+@include oGallerySelectors(o-gallery__control--prev) {
   left: 0;
 }
 
-.o-gallery__control--next {
+@include oGallerySelectors(o-gallery__control--next) {
   right: 0;
 }

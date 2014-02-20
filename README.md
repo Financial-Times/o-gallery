@@ -1,4 +1,4 @@
-# Gallery
+# Gallery [![Build Status](https://travis-ci.org/Financial-Times/o-gallery.png?branch=master)](https://travis-ci.org/Financial-Times/o-gallery)
 
 ## Definitions
 

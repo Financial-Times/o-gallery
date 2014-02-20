@@ -857,76 +857,14 @@ html {
   list-style-position: outside;
   padding-left: 20px; }
 
-.o-gallery {
-  position: relative;
-  -webkit-user-select: none;
-  /* webkit (safari, chrome) browsers */
-  -moz-user-select: none;
-  /* mozilla browsers */
-  -khtml-user-select: none;
-  /* webkit (konqueror) browsers */
-  -ms-user-select: none;
-  /* IE10+ */ }
-
-.o-gallery__viewport {
-  position: relative;
-  overflow: hidden; }
-
-.no-js .o-gallery {
-  position: static; }
-
-.o-gallery__items {
-  float: left;
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-
-.o-gallery__item {
-  float: left;
-  clear: none;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-
-.no-js .o-gallery__item {
-  margin: 0 0 20px 0;
-  float: none;
-  clear: both; }
-
-.o-gallery__item__caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  line-height: 14px;
-  color: #dfded8;
-  background-color: #333333; }
-
-.o-gallery__control {
-  position: absolute;
-  top: 0;
-  width: 50px;
-  height: 110px;
-  line-height: 100px;
-  text-align: center;
-  color: #000;
-  background-color: rgba(0, 0, 0, 0.2);
-  cursor: pointer; }
-
-.o-gallery__control:hover {
-  color: #666; }
-
-.o-gallery__control--prev {
-  left: 0; }
-
-.o-gallery__control--next {
-  right: 0; }
-
+/**
+  Wrap styles in module-name prefixed SASS placeholders and CSS classes (if not in silent mode),
+  and optionally CSS selectors (if not in silent mode)
+  $names:         SASS list of placeholder/class names in the format "name1 name2" but without the quotes.
+                  Will automatically by prefixed with module name.
+  $cssSelectors:  [optional] string. CSS selectors which should also receive the same styles.
+                  Does not get auto-prefixed, so must be exactly as you want output on the CSS.
+*/
 body {
   margin: 0 0 100px 0;
   background-color: #fff1e0; }
@@ -1835,76 +1773,14 @@ html {
   list-style-position: outside;
   padding-left: 20px; }
 
-.o-gallery {
-  position: relative;
-  -webkit-user-select: none;
-  /* webkit (safari, chrome) browsers */
-  -moz-user-select: none;
-  /* mozilla browsers */
-  -khtml-user-select: none;
-  /* webkit (konqueror) browsers */
-  -ms-user-select: none;
-  /* IE10+ */ }
-
-.o-gallery__viewport {
-  position: relative;
-  overflow: hidden; }
-
-.no-js .o-gallery {
-  position: static; }
-
-.o-gallery__items {
-  float: left;
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-
-.o-gallery__item {
-  float: left;
-  clear: none;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-
-.no-js .o-gallery__item {
-  margin: 0 0 20px 0;
-  float: none;
-  clear: both; }
-
-.o-gallery__item__caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  line-height: 14px;
-  color: #dfded8;
-  background-color: #333333; }
-
-.o-gallery__control {
-  position: absolute;
-  top: 0;
-  width: 50px;
-  height: 110px;
-  line-height: 100px;
-  text-align: center;
-  color: #000;
-  background-color: rgba(0, 0, 0, 0.2);
-  cursor: pointer; }
-
-.o-gallery__control:hover {
-  color: #666; }
-
-.o-gallery__control--prev {
-  left: 0; }
-
-.o-gallery__control--next {
-  right: 0; }
-
+/**
+  Wrap styles in module-name prefixed SASS placeholders and CSS classes (if not in silent mode),
+  and optionally CSS selectors (if not in silent mode)
+  $names:         SASS list of placeholder/class names in the format "name1 name2" but without the quotes.
+                  Will automatically by prefixed with module name.
+  $cssSelectors:  [optional] string. CSS selectors which should also receive the same styles.
+                  Does not get auto-prefixed, so must be exactly as you want output on the CSS.
+*/
 body {
   margin: 0 0 100px 0;
   background-color: #fff1e0; }

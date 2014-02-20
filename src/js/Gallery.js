@@ -253,22 +253,24 @@ function Gallery(config) {
         if (!source) {
             source = "api";
         }
-        if (isValidItem(n) && n !== selectedItemIndex) {
-            selectedItemIndex = n;
-            for (var c = 0, l = itemEls.length; c < l; c++) {
-                if (c === selectedItemIndex) {
-                    galleryDOM.addClass(itemEls[c], "o-gallery__item--selected");
-                } else {
-                    galleryDOM.removeClass(itemEls[c], "o-gallery__item--selected");
-                }
-            }
+        if (isValidItem(n)) {
             if (show) {
-                showItem(selectedItemIndex);
+                showItem(n);
             }
-            triggerEvent("oGalleryItemSelected", {
-                itemID: selectedItemIndex,
-                source: source
-            });
+            if (n !== selectedItemIndex) {
+                selectedItemIndex = n;
+                for (var c = 0, l = itemEls.length; c < l; c++) {
+                    if (c === selectedItemIndex) {
+                        galleryDOM.addClass(itemEls[c], "o-gallery__item--selected");
+                    } else {
+                        galleryDOM.removeClass(itemEls[c], "o-gallery__item--selected");
+                    }
+                }
+                triggerEvent("oGalleryItemSelected", {
+                    itemID: selectedItemIndex,
+                    source: source
+                });
+            }
         }
     }
 
