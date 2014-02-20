@@ -2,11 +2,10 @@
 
 var galleryDOM = require('./galleryDOM');
 
-function Gallery(config) {
+function Gallery(containerEl, config) {
     "use strict";
 
-    var containerEl = config.container,
-        viewportEl,
+    var viewportEl,
         allItemsEl,
         itemEls,
         transitionDuration = 300,
@@ -329,7 +328,7 @@ function Gallery(config) {
     }
 
     function updateDataAttributes() {
-        galleryDOM.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["container", "items"]);
+        galleryDOM.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
     }
 
     function setSyncID(id) {
@@ -401,14 +400,13 @@ function Gallery(config) {
 
 }
 
-Gallery.createAllIn = function(el) {
+Gallery.createAllIn = function(el, config) {
     "use strict";
-    var gEls = el.querySelectorAll("[data-o-component=o-gallery]"),
+    var conf = config || {},
+        gEls = el.querySelectorAll("[data-o-component=o-gallery]"),
         galleries = [];
     for (var c = 0, l = gEls.length; c < l; c++) {
-        galleries.push(new Gallery({
-            container: gEls[c]
-        }));
+        galleries.push(new Gallery(gEls[c], conf));
     }
     return galleries;
 };

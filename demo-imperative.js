@@ -8,9 +8,9 @@ document.addEventListener("oGalleryReady", function (evt) {
 
 window.galleries = Gallery.createAllIn(document.body);
 
-var standaloneImperative = new Gallery(standaloneGalleryConfig),
-    slideshowImperative = new Gallery(slideshowGalleryConfig),
-    thumbnailImperative = new Gallery(thumbnailGalleryConfig);
+var standaloneImperative = new Gallery(document.getElementById("imperative-standalone"), standaloneGalleryConfig),
+    slideshowImperative = new Gallery(document.getElementById("imperative-slideshow"), slideshowGalleryConfig),
+    thumbnailImperative = new Gallery(document.getElementById("imperative-thumbnails"), thumbnailGalleryConfig);
 
 window.galleries.push(standaloneImperative);
 window.galleries.push(slideshowImperative);
