@@ -8,21 +8,6 @@ function emptyElement(targetEl) {
     }
 }
 
-function wrapElement(targetEl, wrapEl) {
-    var parentEl = targetEl.parentNode;
-    wrapEl.appendChild(targetEl);
-    parentEl.appendChild(wrapEl);
-}
-
-function unwrapElement(targetEl) {
-    var wrappingEl = targetEl.parentNode,
-        wrappingElParent = wrappingEl.parentNode;
-    while (wrappingEl.childNodes.length > 0) {
-        wrappingElParent.appendChild(wrappingEl.childNodes[0]);
-    }
-    wrappingElParent.removeChild(wrappingEl);
-}
-
 function createElement(nodeName, content, classes) {
     var el = document.createElement(nodeName);
     el.innerHTML = content;
@@ -130,8 +115,6 @@ module.exports = {
     createItemsList: createItemsList,
     createItems: createItems,
     insertItemContent: insertItemContent,
-    wrapElement: wrapElement,
-    unwrapElement: unwrapElement,
     setAttributesFromProperties: setAttributesFromProperties,
     getPropertiesFromAttributes: getPropertiesFromAttributes,
     getClosest: getClosest,
