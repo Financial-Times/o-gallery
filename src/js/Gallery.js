@@ -1,6 +1,8 @@
-/*global require, module*/
+/*global require, module, Modernizr*/
 
-var galleryDOM = require('./galleryDOM');
+var galleryDOM = require('./galleryDOM'),
+    FTScroller = require('FTScroller'),
+    SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
     "use strict";
@@ -8,10 +10,12 @@ function Gallery(containerEl, config) {
     var viewportEl,
         allItemsEl,
         itemEls,
-        transitionDuration = 300,
         selectedItemIndex,
         shownItemIndex,
         debounceOnResize,
+        scroller,
+        debounceScroll,
+        transitionInProgress = false,
         prevControlDiv,
         nextControlDiv,
         propertyAttributeMap = {
@@ -34,6 +38,11 @@ function Gallery(containerEl, config) {
             touch: false,
             syncID: "o-gallery-" + new Date().getTime()
         };
+
+    function supportsCssTransforms() {
+        var htmlEl = document.getElementsByTagName('html')[0];
+        return galleryDOM.hasClass(htmlEl, "csstransforms") || galleryDOM.hasClass(htmlEl, "csstransforms3d") || galleryDOM.hasClass(htmlEl, "csstransitions") || (Modernizr && (Modernizr.csstransforms || Modernizr.csstransforms3d || Modernizr.csstransitions));
+    }
 
     function isDataSource() {
         return (config.items && config.items.length > 0);
@@ -130,33 +139,9 @@ function Gallery(containerEl, config) {
         return itemsInView;
     }
 
-    function transitionTo(newScrollLeft) {
-        var start = viewportEl.scrollLeft,
-            change = newScrollLeft - start,
-            currentTime = 0,
-            increment = 20,
-            timeout;
-        // t = current time, b = start value, c = change in value, d = duration
-        function easeInOutQuad(t, b, c, d) {
-            t /= d/2;
-            if (t < 1) { return c/2*t*t + b; }
-            t--;
-            return -c/2 * (t*(t-2) - 1) + b;
-        }
-        function animateScroll() {
-            currentTime += increment;
-            viewportEl.scrollLeft = easeInOutQuad(currentTime, start, change, transitionDuration);
-            if (currentTime < transitionDuration) {
-                clearTimeout(timeout);
-                timeout = setTimeout(animateScroll, increment);
-            }
-        }
-        animateScroll();
-    }
-
     function onGalleryCustomEvent(evt) {
-        if (evt.srcElement !== containerEl && evt.detail.syncID === config.syncID && evt.detail.source === "user") {
-            selectItem(evt.detail.itemID, true);
+        if (evt.srcElement !== containerEl && evt.syncID === config.syncID && evt.oGallerySource === "user") {
+            selectItem(evt.itemID, true);
         }
     }
 
@@ -165,22 +150,17 @@ function Gallery(containerEl, config) {
     }
 
     function triggerEvent(name, data) {
-        data = data || {};
-        data.syncID = config.syncID;
-        var event = new CustomEvent(name, {
-            bubbles: true,
-            cancelable: false,
-            detail: data
-        });
+        var event = document.createEvent('Event');
+        event.initEvent(name, true, true);
+        event.syncID = config.syncID;
+        event.gallery = data.gallery;
+        event.itemID = data.itemID;
+        event.oGallerySource = data.source;
         containerEl.dispatchEvent(event);
     }
 
     function moveViewport(left, transition) {
-        if (transition !== false) {
-            transitionTo(left);
-        } else {
-            viewportEl.scrollLeft = left;
-        }
+        scroller.scrollTo(left, 0, transition !== false);
         insertItemContent(getItemsInPageView(left, left + viewportEl.clientWidth, false));
     }
 
@@ -197,7 +177,7 @@ function Gallery(containerEl, config) {
         if (!isValidItem(n)) {
             return;
         }
-        var viewportL = viewportEl.scrollLeft,
+        var viewportL = scroller.scrollLeft,
             viewportR = viewportL + viewportEl.clientWidth,
             itemL = itemEls[n].offsetLeft,
             itemR = itemL + itemEls[n].clientWidth;
@@ -229,20 +209,20 @@ function Gallery(containerEl, config) {
     }
 
     function showPrevPage() {
-        if (viewportEl.scrollLeft === 0) {
+        if (scroller.scrollLeft === 0) {
             showItem(itemEls.length - 1);
         } else {
-            var prevPageWholeItems = getItemsInPageView(viewportEl.scrollLeft - viewportEl.clientWidth, viewportEl.scrollLeft),
+            var prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft),
                 prevPageItem = prevPageWholeItems.pop() || 0;
             alignItemRight(prevPageItem);
         }
     }
 
     function showNextPage() {
-        if (viewportEl.scrollLeft === allItemsEl.clientWidth - viewportEl.clientWidth) {
+        if (scroller.scrollLeft === allItemsEl.clientWidth - viewportEl.clientWidth) {
             showItem(0);
         } else {
-            var currentWholeItemsInView = getItemsInPageView(viewportEl.scrollLeft, viewportEl.scrollLeft + viewportEl.clientWidth),
+            var currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth),
                 lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
             alignItemLeft(lastWholeItemInView + 1);
         }
@@ -284,6 +264,9 @@ function Gallery(containerEl, config) {
     }
 
     function prev() {
+        if (transitionInProgress) {
+            return;
+        }
         if (config.multipleItemsPerPage) {
             showPrevPage();
         } else {
@@ -292,6 +275,9 @@ function Gallery(containerEl, config) {
     }
 
     function next() {
+        if (transitionInProgress) {
+            return;
+        }
         if (config.multipleItemsPerPage) {
             showNextPage();
         } else {
@@ -304,7 +290,7 @@ function Gallery(containerEl, config) {
         if (!config.multipleItemsPerPage) { // correct the alignment of item in view
             showItem(shownItemIndex, false);
         } else {
-            var newScrollLeft = viewportEl.scrollLeft;
+            var newScrollLeft = scroller.scrollLeft;
             insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
         }
     }
@@ -344,10 +330,15 @@ function Gallery(containerEl, config) {
         setSyncID(galleryInstance.getSyncID());
     }
 
+    function onScroll(evt) {
+        transitionInProgress = false;
+        insertItemContent(getItemsInPageView(evt.scrollLeft, evt.scrollLeft + viewportEl.clientWidth, false));
+    }
+
     function destroy() {
         prevControlDiv.parentNode.removeChild(prevControlDiv);
         nextControlDiv.parentNode.removeChild(nextControlDiv);
-        galleryDOM.unwrapElement(allItemsEl);
+        scroller.destroy(true);
         for (var prop in propertyAttributeMap) {
             if (propertyAttributeMap.hasOwnProperty(prop)) {
                 containerEl.removeAttribute(propertyAttributeMap[prop]);
@@ -366,8 +357,6 @@ function Gallery(containerEl, config) {
     config = extendObjects([defaultConfig, galleryDOM.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
     updateDataAttributes();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
-    viewportEl = galleryDOM.createElement("div", "", "o-gallery__viewport");
-    galleryDOM.wrapElement(allItemsEl, viewportEl);
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
@@ -375,6 +364,40 @@ function Gallery(containerEl, config) {
     insertItemContent(selectedItemIndex);
     setWidths();
     setCaptionSizes();
+    if (supportsCssTransforms()) {
+        scroller = new FTScroller(containerEl, {
+            scrollbars: false,
+            scrollingY: false,
+            updateOnWindowResize: true,
+            snapping: !config.multipleItemsPerPage,
+            /* Can't use fling/inertial scroll as after user input is finished and scroll continues, scroll events are no
+             longer fired, and value of scrollLeft doesn't change until scrollend. */
+            flinging: false,
+            disableInputMethods: {
+                touch: !config.touch
+            }
+        });
+        scroller.addEventListener("scrollstart", function() {
+            transitionInProgress = true;
+        });
+        scroller.addEventListener("scroll", function(evt) {
+            clearTimeout(debounceScroll);
+            debounceScroll = setTimeout(function () {
+                onScroll(evt);
+            }, 50);
+        });
+        scroller.addEventListener("scrollend", onScroll);
+        scroller.addEventListener("segmentwillchange", function() {
+            if (!config.multipleItemsPerPage) {
+                selectItem(scroller.currentSegment.x, false, "user");
+            }
+        });
+    } else {
+        scroller = new SimpleScroller(containerEl, {});
+    }
+    viewportEl = scroller.contentContainerNode.parentNode;
+    galleryDOM.addClass(viewportEl, "o-gallery__viewport");
+    insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     showItem(selectedItemIndex, false);
     addUiControls();
     listenForSyncEvents();
