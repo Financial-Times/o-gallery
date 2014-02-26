@@ -54,11 +54,13 @@
   line-height: 100px;
   text-align: center;
   color: #000;
+  background-color: #bbb;
   background-color: rgba(0,0,0, 0.2);
   cursor: pointer;
   &:hover {
     color: #666;
   }
+
 }
 
 @include oGallerySelectors(o-gallery__control--prev) {

@@ -15,6 +15,21 @@ function createElement(nodeName, content, classes) {
     return el;
 }
 
+function wrapElement(targetEl, wrapEl) {
+    var parentEl = targetEl.parentNode;
+    wrapEl.appendChild(targetEl);
+    parentEl.appendChild(wrapEl);
+}
+
+function unwrapElement(targetEl) {
+    var wrappingEl = targetEl.parentNode,
+        wrappingElParent = wrappingEl.parentNode;
+    while (wrappingEl.childNodes.length > 0) {
+        wrappingElParent.appendChild(wrappingEl.childNodes[0]);
+    }
+    wrappingElParent.removeChild(wrappingEl);
+}
+
 function hasClass(el, c) {
     return (' ' + el.className + ' ').indexOf(' ' + c + ' ') > -1;
 }
@@ -80,17 +95,31 @@ function getPropertiesFromAttributes(el, map) {
     return obj;
 }
 
+function arrayIndexOf(a, v) {
+    var i = -1;
+    if (Array.prototype.indexOf) {
+        return a.indexOf(v);
+    } else {
+        for (var c = 0, l = a.length; c < l; c++) {
+            if (a[c] === v) {
+                i = c;
+            }
+        }
+    }
+    return i;
+}
+
 function setAttributesFromProperties(el, obj, map, excl) {
     var exclude = excl || [];
     for (var prop in obj) {
-        if (obj.hasOwnProperty(prop) && exclude.indexOf(prop) < 0) {
+        if (obj.hasOwnProperty(prop) && arrayIndexOf(exclude, prop) < 0) {
             el.setAttribute(map[prop], obj[prop]);
         }
     }
 }
 
 function getClosest(el, c) {
-    while (!hasClass(el, c)) {
+    while (!hasClass(el, c) && el.parentNode) {
         el = el.parentNode;
     }
     return el;
@@ -109,6 +138,8 @@ function getElementIndex(el) {
 module.exports = {
     emptyElement: emptyElement,
     createElement: createElement,
+    wrapElement: wrapElement,
+    unwrapElement: unwrapElement,
     hasClass: hasClass,
     addClass: addClass,
     removeClass: removeClass,

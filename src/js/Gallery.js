@@ -1,7 +1,8 @@
-/*global require, module*/
+/*global require, module, Modernizr*/
 
 var galleryDOM = require('./galleryDOM'),
-    FTScroller = require('FTScroller');
+    FTScroller = require('FTScroller'),
+    SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
     "use strict";
@@ -37,6 +38,11 @@ function Gallery(containerEl, config) {
             touch: false,
             syncID: "o-gallery-" + new Date().getTime()
         };
+
+    function supportsCssTransforms() {
+        var htmlEl = document.getElementsByTagName('html')[0];
+        return galleryDOM.hasClass(htmlEl, "csstransforms") || galleryDOM.hasClass(htmlEl, "csstransforms3d") || galleryDOM.hasClass(htmlEl, "csstransitions") || (Modernizr && (Modernizr.csstransforms || Modernizr.csstransforms3d || Modernizr.csstransitions));
+    }
 
     function isDataSource() {
         return (config.items && config.items.length > 0);
@@ -134,8 +140,8 @@ function Gallery(containerEl, config) {
     }
 
     function onGalleryCustomEvent(evt) {
-        if (evt.srcElement !== containerEl && evt.detail.syncID === config.syncID && evt.detail.source === "user") {
-            selectItem(evt.detail.itemID, true);
+        if (evt.srcElement !== containerEl && evt.syncID === config.syncID && evt.oGallerySource === "user") {
+            selectItem(evt.itemID, true);
         }
     }
 
@@ -144,13 +150,12 @@ function Gallery(containerEl, config) {
     }
 
     function triggerEvent(name, data) {
-        data = data || {};
-        data.syncID = config.syncID;
-        var event = new CustomEvent(name, {
-            bubbles: true,
-            cancelable: false,
-            detail: data
-        });
+        var event = document.createEvent('Event');
+        event.initEvent(name, true, true);
+        event.syncID = config.syncID;
+        event.gallery = data.gallery;
+        event.itemID = data.itemID;
+        event.oGallerySource = data.source;
         containerEl.dispatchEvent(event);
     }
 
@@ -359,33 +364,37 @@ function Gallery(containerEl, config) {
     insertItemContent(selectedItemIndex);
     setWidths();
     setCaptionSizes();
-    scroller = new FTScroller(containerEl, {
-        scrollbars: false,
-        scrollingY: false,
-        updateOnWindowResize: true,
-        snapping: !config.multipleItemsPerPage,
-        /* Can't use fling/inertial scroll as after user input is finished and scroll continues, scroll events are no
-         longer fired, and value of scrollLeft doesn't change until scrollend. */
-        flinging: false,
-        disableInputMethods: {
-            touch: !config.touch
-        }
-    });
-    scroller.addEventListener("scrollstart", function() {
-        transitionInProgress = true;
-    });
-    scroller.addEventListener("scroll", function(evt) {
-        clearTimeout(debounceScroll);
-        debounceScroll = setTimeout(function () {
-            onScroll(evt);
-        }, 50);
-    });
-    scroller.addEventListener("scrollend", onScroll);
-    scroller.addEventListener("segmentwillchange", function() {
-        if (!config.multipleItemsPerPage) {
-            selectItem(scroller.currentSegment.x, false, "user");
-        }
-    });
+    if (supportsCssTransforms()) {
+        scroller = new FTScroller(containerEl, {
+            scrollbars: false,
+            scrollingY: false,
+            updateOnWindowResize: true,
+            snapping: !config.multipleItemsPerPage,
+            /* Can't use fling/inertial scroll as after user input is finished and scroll continues, scroll events are no
+             longer fired, and value of scrollLeft doesn't change until scrollend. */
+            flinging: false,
+            disableInputMethods: {
+                touch: !config.touch
+            }
+        });
+        scroller.addEventListener("scrollstart", function() {
+            transitionInProgress = true;
+        });
+        scroller.addEventListener("scroll", function(evt) {
+            clearTimeout(debounceScroll);
+            debounceScroll = setTimeout(function () {
+                onScroll(evt);
+            }, 50);
+        });
+        scroller.addEventListener("scrollend", onScroll);
+        scroller.addEventListener("segmentwillchange", function() {
+            if (!config.multipleItemsPerPage) {
+                selectItem(scroller.currentSegment.x, false, "user");
+            }
+        });
+    } else {
+        scroller = new SimpleScroller(containerEl, {});
+    }
     viewportEl = scroller.contentContainerNode.parentNode;
     galleryDOM.addClass(viewportEl, "o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
