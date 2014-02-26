@@ -14,5 +14,6 @@
           "csstransforms3d",
           "csstransitions"
       ]
-  }
+  },
+  "demos": ["demos/main.html"]
 }
