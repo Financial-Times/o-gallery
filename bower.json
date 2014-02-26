@@ -2,8 +2,6 @@
     "name": "o-gallery",
     "main": ["main.js", "main.scss"],
     "ignore": [
-        "README.md",
-        "demos",
         "demo.mustache",
         "demo.scss",
         "Gruntfile.js",
