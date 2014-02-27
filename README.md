@@ -30,13 +30,13 @@ With the HTML already in the page, the following method can be called to search 
 
     var galleries = Gallery.createAllIn();
     
-Any gallery objects that are constructed will be returned;
+Any gallery objects that are constructed will be returned.
     
 Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
-    var galleries = Gallery.createAllIn(document.getElementByClassName(".ft-article-body")[0];
+    var galleries = Gallery.createAllIn(document.getElementByClassName(".ft-article-body")[0]);
     
-### 2. Imperatively from HTML source.
+### 2. Imperatively from HTML source
 
 With the HTML already in the page, a Gallery object can be constructed like so:
 
@@ -53,10 +53,34 @@ An optional configuration object can be passed as second argument:
 With just an HTML container element already in the page, a Gallery object can be constructed by passing the content as data via the config object:
 
     var gallery = new Gallery(document.getElementById('#gallery', {
-        items: [
-            // content objects
-        ]
+        items: [ <itemObject>, <itemObject>, <itemObject> ...]
     });
+
+Where an itemObject can consist of the following properties:
+
+#### itemContent
+
+Type: `String` (required)
+
+The HTML content of the item. For example:
+
+    itemContent: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />'
+
+#### itemCaption
+
+Type: `String` (optional)
+
+The HTML content of the item's caption. For example:
+
+    itemCaption: '<p>Slideshow caption text.</p>'
+
+#### selected
+
+Type: `Boolean`
+
+Default: `false`
+
+Whether this item is selected. If more than one item is set to be selected, then only the first one will be selected.
 
 ## Configuration
 
@@ -176,4 +200,4 @@ These method may be useful for adding keyboard control to a Gallery.
 
 ## CSS classes
 
-A `o-gallery__item--selected` class is applied to only the selected Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true.
+A `o-gallery__item--selected` class is applied to only the selected Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.
