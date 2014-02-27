@@ -1,5 +1,5 @@
 /* Modernizr (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-cssclasses-csstransforms3d-csstransitions-csstransforms-touch
+ * Build: http://modernizr.com/download/#-fontface-textshadow-css-boxsizing-queryselector-addeventlistener-csstransforms-csstransforms3d-csstransitions-cssclasses
  */
 ;
 
@@ -195,20 +195,10 @@ window.Modernizr = (function( window, document, undefined ) {
           props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
           return testDOMProps(props, prefixed, elem);
         }
-    }    tests['touch'] = function() {
-        var bool;
-
-        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-          bool = true;
-        } else {
-          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
-            bool = node.offsetTop === 9;
-          });
-        }
-
-        return bool;
+    }
+    tests['textshadow'] = function() {
+        return document.createElement('div').style.textShadow === '';
     };
-
 
 
     tests['csstransforms'] = function() {
@@ -235,6 +225,20 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
 
+
+    tests['fontface'] = function() {
+        var bool;
+
+        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
+          var style = document.getElementById('smodernizr'),
+              sheet = style.sheet || style.styleSheet,
+              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
+
+          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
+        });
+
+        return bool;
+    };
 
     for ( var feature in tests ) {
         if ( hasOwnProp(tests, feature) ) {
@@ -300,5 +304,9 @@ window.Modernizr = (function( window, document, undefined ) {
 
     return Modernizr;
 
-})(this, this.document);
+})(this, this.document);Modernizr.addTest("boxsizing",function(){
+    return Modernizr.testAllProps("boxSizing") && (document.documentMode === undefined || document.documentMode > 7);
+});
+
+
 ;

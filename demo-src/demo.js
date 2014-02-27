@@ -1,7 +1,7 @@
 // Demo code. Does what a product will have to do to construct a slideshow from data
 /*global require*/
 
-var Gallery = require('./main.js');
+var Gallery = require('./../main.js');
 
 document.addEventListener("oGalleryReady", function (evt) {
     if (typeof console === "object" && typeof console.log === "function") {

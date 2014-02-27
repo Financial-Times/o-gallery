@@ -5,7 +5,7 @@ $o-ft-typography-is-silent: false;
 @import "o-grid/main";
 @import "o-ft-typography/main";
 
-@import "main.scss";
+@import "../main";
 
 body {
   margin: 0 0 100px 0;

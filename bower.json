@@ -2,12 +2,11 @@
     "name": "o-gallery",
     "main": ["main.js", "main.scss"],
     "ignore": [
-        "demo.mustache",
-        "demo.scss",
+        "demo-src/",
         "Gruntfile.js",
         "package.json",
         ".travis.yml",
-        "test"
+        "test/"
     ],
     "dependencies": {
     },
