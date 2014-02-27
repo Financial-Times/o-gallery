@@ -12,6 +12,12 @@ A configurable content carousel. Can be used for slideshows and thumbnail strips
 
 A _shown_ item does not necessarily have to be _selected_, and vice versa.
 
+## Browser support
+
+Gallery supports the same browsers as [FTScroller](https://github.com/ftlabs/ftscroller) (which it uses for touch/mouse input and transition behaviour), but also adds graceful degradation for IE8.
+
+In IE8 there is no option for touch input support and there are no transitions (items & pages will change instantly). Polyfills for `addEventListener`, `removeEventListener`, `dispatchEvent` are necessary if Gallery sync behaviour is required.
+
 ## Creating Galleries
 
 Gallery content can come from either HTML already in the DOM, or data passed explicitly to Gallery javascript via a configuration object.
