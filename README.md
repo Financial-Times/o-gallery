@@ -1,65 +1,155 @@
-# Gallery [![Build Status](https://travis-ci.org/Financial-Times/o-gallery.png?branch=master)](https://travis-ci.org/Financial-Times/o-gallery)
+# o-gallery
+
+A configurable content carousel. Can be used for slideshows and thumbnail strips, for example.
 
 ## Definitions
 
 * **Item**: One of many objects to be displayed in the gallery.  Likely to be an image.  Must support being forcibly scaled to any size.
-* **Frame**: A fixed element through which the items move
-* **Page**: A set of items that may be displayed in the frame at the same time (for normal galleries, pages are likely to contain only one item, while thumbstrips will contain more than one)
-* **Thumbstrip**: A gallery that has more than one item per page, and which is usually linked to another gallery to control it.
+* **Page**: A set of items that may be displayed in the frame at the same time (for normal slideshows, pages are likely to contain only one item, while thumbnail strips will contain more than one)
+* **Viewport**: A fixed element through which the items move.
+* **Shown**: only means _in view_.
+* **Selected**: only means _chosen_.
 
-## UI
+A _shown_ item does not necessarily have to be _selected_, and vice versa.
 
-The following wireframes show two example galleries: A) a gallery with single items per page, with a title and caption; B) a gallery with multiple items per page and no captions (ie, a thumbstrip).  Galleries would often be used together in these forms to create a single coherent interface for viewing and navigating slideshows of images.
+## Creating Galleries
 
-![Wireframe](wireframe.png)
+Gallery content can come from either HTML already in the DOM, or data passed explicitly to Gallery javascript via a configuration object.
 
-## Requirements
+In both cases there must be an HTML element already in the DOM to construct the Gallery in.
 
-* **Size of frame**: Expand and contract as required to fit the exact dimensions of the parent element, less the reserved space at the bottom for any minimum height caption.
-* **Size of item**: Items are displayed so they they are as large as possible whilst ensuring that both dimensions are inside the frame.
-* **Previous/next nav**: Buttons overlaid on top of the image on the left and right edges, vertically centered.  On devices that support hover, buttons will appear briefly and then fade out, while on devices that do not support hover, they remain visible at all times.  Clicking or tapping on the button or anywhere in the navgiation zone (leftmost and rightmost 15% of the frame) will navigate to the next or previous item.
-* **Captions**: Each item should support a caption, which is displayed at the bottom of the image, on a solid background below the frame, and if necessary partly on a translucent background on top of the image.  The caption area that extends below the frame must have a fixed height.
-* **Touch**: The gallery should have the option to enable touch handling.  If touch handling is enabled, swiping should be supported to move to the next or previous page, snapping to page boundaries.
-* **Sync**: It should be possible to join together multiple galleries so that when an item is selected in one, it is also selected and displayed in all the other galleries in the set (this enables thumbstrips to be used to navigate galleries)
-* **Active item class**: A class should be used to mark the current item, and enable galleries to have a specific item as active on initalisation.
-* **Invocation**: Must be possible to invoke the gallery by a) writing markup and adding classes or data attributes to prompt auto-discovery, b) writing markup and calling a JS API passing the containing element, and c) calling a JS API passing a containing element and a JSON array of items as HTML.
-* **On demand loading**: If items are passed as JSON, the markup for the third and subsequent items should not be created in the DOM until the user iteracts with the gallery.
-* **JavaScript API**: Each gallery should provide a JavaScript API as detailed below
-* **Events**: Gallery must emit events as detailed below
+Galleries can be constructed in three ways:
 
+1. Declaratively from HTML source
+2. Imperatively from HTML source
+3. Imperatively from JS data
 
-### Out of scope
+### 1. Declaratively from HTML source
 
-The following are out of scope for gallery, and recorded here as likely requirements for products which are not catered for internally by gallery:
+With the HTML already in the page, the following method can be called to search for Gallery HTML elements and automatically construct a Gallery for each one:
 
-* Maintaining an aspect ratio: The gallery will flex to the exact size of its parent, so the product must take responsibility for maintaining the aspect ratio of the container, if desired.
+    var galleries = Gallery.createAllIn();
+    
+Any gallery objects that are constructed will be returned;
+    
+Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
+    var galleries = Gallery.createAllIn(document.getElementByClassName(".ft-article-body")[0];
+    
+### 2. Imperatively from HTML source.
 
-## Configurable options
+With the HTML already in the page, a Gallery object can be constructed like so:
 
-* **Min caption height**: Minimum height of caption area, ie the amount reserved at the bottom of the gallery for a caption.  The frame should be reduced in height to allow this amount of space at the bottom of the containing element.
-* **Max caption height**: Maximum height of caption before it is truncated.  User will be required to hover or touch the caption to allow it to expand beyond this height.
-* **Enable/disable touch**: Whether to enable swiping (if true, will only be enabled on devices that support touch)
-* **Multiple items per page**: Whether to allow multiple items per page (typically true only for thumbstrips)
-* **Sync group ID**: Name of gallery group in which all galleries should sync up on the same image
+    var gallery1 = new Gallery(document.getElementById('#gallery1');
+    
+An optional configuration object can be passed as second argument:
+    
+    var gallery2 = new Gallery(document.getElementById('#gallery2', {
+        // config options
+    });
 
+### 3. Imperatively from JS data
+
+With just an HTML container element already in the page, a Gallery object can be constructed by passing the content as data via the config object:
+
+    var gallery = new Gallery(document.getElementById('#gallery', {
+        items: [
+            // content objects
+        ]
+    });
+
+## Configuration
+
+Galleries can be configured by HTML data-attributes or the JS configuration object, or a combination of the two. Where both are supplied, the JS values will take precedence.
+
+Once the config options have been gathered, the HTML data-attributes are added/updated to show the configuration actually in use.
+
+### Multiple items per page
+
+Data attribute: `data-o-gallery-multipleitemsperpage`
+
+JS property: `multipleItemsPerPage`
+
+Type: `Boolean`
+
+Default: `false`
+
+Sets whether multiple items should be allowed to show per page. For example a normal slideshow would set this to `false`, but its thumbnail strip would set it to `true`.
+
+### Sync ID
+
+Data attribute: `data-o-gallery-syncid`
+
+JS property: `syncID`
+
+Type: `String`
+
+Default: `o-gallery-[timestamp]`
+
+Sets the ID used in events fired and listened to by a Gallery instance. Setting two Gallery objects to the same sync ID will cause them to control each other - for example where Gallery 1 is a slideshow, and Gallery 2 is its thumbnail strip.
+
+### Touch
+
+Data attribute: `data-o-gallery-touch`
+
+JS property: `touch`
+
+Type: `Boolean`
+
+Default: `false`
+
+Controls whether touch events will be listened to. See [ftscroller](https://github.com/ftlabs/ftscroller) for more details.
+
+### Captions
+
+Data attribute: `data-o-gallery-captions`
+
+JS property: `captions`
+
+Type: `Boolean`
+
+Default: `true`
+
+Whether captions will be shown at all. With this set to true, a blank area will always be shown for every item, even if there is no caption data for an item.
+
+### Caption min/max height
+
+Data attribute: `data-o-gallery-captionminheight`, `data-o-gallery-captionmaxheight`
+
+JS property: `data-o-gallery-captionmaxheight`, `captionMaxHeight`
+
+Type: `Integer`
+
+Default: `24`, `52`
+
+The height constraints of the caption area. The min value is used to position the caption area below the gallery item. If the content of the caption forces the caption height to increase, then it will increase upwards, in front of the gallery item, up to the maximum height set.
+
+### Window resize
+
+Data attribute: `data-o-gallery-windowresize`
+
+JS property: `windowResize`
+
+Type: `Boolean`
+
+Default: `true`
+
+Galleries have to reset their display widths when their size changes. By default this will be done by listening to the window onResize event, but this can be turned off in favour of calling the `onResize()` method when necessary.
 
 ## Events
 
-The gallery should emit DOM events on its root element as follows:
+The following events will be dispatched on the Gallery's root DOM element:
 
-* `ready`: The gallery has initialised and made all required DOM changes
-* `itemChange`: The item in the gallery has changed.  Passes two arguments: the index of the newly active item, and what triggered the change ('user' or 'sync')
+* `oGalleryReady`: The Gallery has initialised and made all required DOM changes
+* `oGalleryItemSelected`: The selected item in the gallery has changed. Passes two arguments: the index of the newly active item, and what triggered the change ('user' or 'sync')
 
+## API
 
-## JavaScript API
+Note that _showing_ and _selecting_ are two separate concepts and are independent of each other.
 
-_Showing_ and _selecting_ are two separate concepts and are independent of each other:
+There must always be one item selected, even if the _selected_ state is not made visible in the UI.
 
-* **Showing** only means _bring into view_.
-* **Selecting** only means _chosen_. There must always been one item selected, even if the selected item is not made visible in the UI.
-
-Each item in gallery has an index number. Pages do not have index numbers as the number of pages can vary when a gallery has a variable width (e.g. in a responsive layout).
+Each gallery _item_ has an index number. _Pages_ do not have index numbers as the number of pages can vary when a gallery has a variable width (e.g. in a responsive layout).
 
 * `showItem(idx)`: Navigates the gallery to the specified item index (starting from zero)
 * `showNextItem()`: Navigates the gallery forward one item (or to the first item if currently on the last)
@@ -71,9 +161,9 @@ Each item in gallery has an index number. Pages do not have index numbers as the
 * `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
 * `getSelectedItem()`: Returns the index of the currently selected item (integer)
 
-The desired behaviour of the UI arrow controls for single- and multiple-item-per-page galleries will be different. For example, in a slideshow (single item per page), the right arrow control should select and show the next item, but in a thumbnail strip (multiple items per page), it should show the next page without affecting what it selected.
+The desired behaviour of the left & right UI controls for single- and multiple-item-per-page galleries will be different. For example, in a slideshow (single item per page), the right arrow control should select _and_ show the next item, but in a thumbnail strip (multiple items per page), it should show the next page without affecting what it selected.
 
-The following simplified methods are provided to handle this logic for you:
+The following simplified methods are provided to handle this logic:
 
 * `next()`:
     * multiple: false - `selectNextItem(true); // select & show`
@@ -82,4 +172,8 @@ The following simplified methods are provided to handle this logic for you:
     * multiple: false - `selectPrevItem(true); // select & show`
     * multiple: true - `showPrevPage(); // doesn't affect selection`
 
-## Markup
+These method may be useful for adding keyboard control to a Gallery.
+
+## CSS classes
+
+A `o-gallery__item--selected` class is applied to only the selected Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true.

@@ -26,7 +26,8 @@ function Gallery(containerEl, config) {
             touch: "data-o-gallery-touch",
             captions: "data-o-gallery-captions",
             captionMinHeight: "data-o-gallery-captionminheight",
-            captionMaxHeight: "data-o-gallery-captionmaxheight"
+            captionMaxHeight: "data-o-gallery-captionmaxheight",
+            windowResize: "data-o-gallery-windowresize"
         },
         defaultConfig = {
             component: "o-gallery",
@@ -36,7 +37,8 @@ function Gallery(containerEl, config) {
             captionMinHeight: 24,
             captionMaxHeight: 52,
             touch: false,
-            syncID: "o-gallery-" + new Date().getTime()
+            syncID: "o-gallery-" + new Date().getTime(),
+            windowResize: true
         };
 
     function supportsCssTransforms() {
@@ -360,7 +362,9 @@ function Gallery(containerEl, config) {
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
-    window.addEventListener("resize", resizeHandler);
+    if (config.windowResize) {
+        window.addEventListener("resize", resizeHandler);
+    }
     insertItemContent(selectedItemIndex);
     setWidths();
     setCaptionSizes();
@@ -374,7 +378,8 @@ function Gallery(containerEl, config) {
              longer fired, and value of scrollLeft doesn't change until scrollend. */
             flinging: false,
             disableInputMethods: {
-                touch: !config.touch
+                touch: !config.touch,
+                scroll: true
             }
         });
         scroller.addEventListener("scrollstart", function() {
@@ -415,6 +420,7 @@ function Gallery(containerEl, config) {
     this.prev = prev;
     this.getSyncID = getSyncID;
     this.syncWith = syncWith;
+    this.onResize = onResize;
     this.destroy = destroy;
 
     triggerEvent("oGalleryReady", {
