@@ -8,6 +8,11 @@ if (document.addEventListener) {
         "use strict";
         if (typeof console === "object" && typeof console.log === "function") {
             console.log("Gallery ready", evt.gallery);
+            parent && parent.postMessage(JSON.stringify({
+                type: 'resize',
+                url: location.href,
+                height: document.body.scrollHeight
+            }), '*');
         }
     });
 }
@@ -2354,7 +2359,7 @@ var FTScroller, CubicBezier;
 			addEventListener: addEventListener,
 			removeEventListener: removeEventListener
 		};
-		
+
 		if (Object.defineProperties) {
 			Object.defineProperties(_publicSelf, {
 				'scrollHeight': {
@@ -2395,7 +2400,7 @@ var FTScroller, CubicBezier;
 				}
 			});
 		};
-		
+
 		// Return the public interface.
 		return _publicSelf;
 	};
