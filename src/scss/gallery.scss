@@ -1,8 +1,8 @@
 @include oGallerySelectors(o-gallery) {
-  position: relative;
+  position: static;
   @include oGalleryUserSelect(none);
-  .no-js & {
-    position: static;
+  &.o-gallery--js {
+    position: relative;
   }
 }
 
@@ -12,24 +12,33 @@
 }
 
 @include oGallerySelectors(o-gallery__items) {
-  float: left;
-  @include oGalleryListReset();
+  float: none;
+  clear: both;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  .o-gallery--js & {
+    float: left;
+    clear: none;
+  }
 }
 
 @include oGallerySelectors(o-gallery__item) {
-  float: left;
-  clear: none;
+  float: none;
+  clear: both;
   position: relative;
-  @include oGalleryListReset();
-  .no-js & {
-    margin: 0 0 20px 0;
-    float: none;
-    clear: both;
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style-type: none;
+  .o-gallery--js & {
+    float: left;
+    clear: none;
+    margin: 0;
   }
 }
 
 @include oGallerySelectors(o-gallery__item--selected) {
-  // Gets implemented in product
+  // Implemented by consumer
 }
 
 @include oGallerySelectors(o-gallery__item__caption) {

@@ -1,6 +1,6 @@
 # o-gallery
 
-A configurable content carousel. Can be used for slideshows and thumbnail strips, for example.
+A configurable content gallery. For carousels, slideshows and thumbnail strips.
 
 ## Definitions
 
@@ -171,7 +171,9 @@ Galleries have to reset their display widths when their size changes. By default
 The following events will be dispatched on the Gallery's root DOM element:
 
 * `oGalleryReady`: The Gallery has initialised and made all required DOM changes
-* `oGalleryItemSelected`: The selected item in the gallery has changed. Passes two arguments: the index of the newly active item, and what triggered the change ('user' or 'sync')
+* `oGalleryItemSelected`: The selected item in the gallery has changed. Passes two arguments: the index of the newly active item, and the source of the change ('user' or 'api').
+
+In IE8, these events will only be dispatched if the [EventTarget API](https://developer.mozilla.org/en/docs/Web/API/EventTarget) has been polyfilled.
 
 ## API
 

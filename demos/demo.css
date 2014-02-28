@@ -870,7 +870,7 @@ html {
                   Does not get auto-prefixed, so must be exactly as you want output on the CSS.
 */
 .o-gallery {
-  position: relative;
+  position: static;
   -webkit-user-select: none;
   /* webkit (safari, chrome) browsers */
   -moz-user-select: none;
@@ -879,30 +879,34 @@ html {
   /* webkit (konqueror) browsers */
   -ms-user-select: none;
   /* IE10+ */ }
-  .no-js .o-gallery {
-    position: static; }
+  .o-gallery.o-gallery--js {
+    position: relative; }
 
 .o-gallery__viewport {
   position: relative;
   overflow: hidden; }
 
 .o-gallery__items {
-  float: left;
+  float: none;
+  clear: both;
   margin: 0;
   padding: 0;
   list-style-type: none; }
+  .o-gallery--js .o-gallery__items {
+    float: left;
+    clear: none; }
 
 .o-gallery__item {
-  float: left;
-  clear: none;
+  float: none;
+  clear: both;
   position: relative;
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 0;
   list-style-type: none; }
-  .no-js .o-gallery__item {
-    margin: 0 0 20px 0;
-    float: none;
-    clear: both; }
+  .o-gallery--js .o-gallery__item {
+    float: left;
+    clear: none;
+    margin: 0; }
 
 .o-gallery__item__caption {
   position: absolute;

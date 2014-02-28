@@ -135,6 +135,22 @@ function getElementIndex(el) {
     return i;
 }
 
+function listenForEvent(el, name, handler) {
+    if (el.addEventListener) {
+        el.addEventListener(name, handler, false);
+    } else if (el.attachEvent) {
+        el.attachEvent("on" + name, handler);
+    }
+}
+
+function unlistenForEvent(el, name, handler) {
+    if (el.removeEventListener) {
+        el.removeEventListener(name, handler, false);
+    } else if (el.detachEvent) {
+        el.detachEvent("on" + name, handler);
+    }
+}
+
 module.exports = {
     emptyElement: emptyElement,
     createElement: createElement,
@@ -149,5 +165,7 @@ module.exports = {
     setAttributesFromProperties: setAttributesFromProperties,
     getPropertiesFromAttributes: getPropertiesFromAttributes,
     getClosest: getClosest,
-    getElementIndex: getElementIndex
+    getElementIndex: getElementIndex,
+    listenForEvent: listenForEvent,
+    unlistenForEvent: unlistenForEvent
 };
