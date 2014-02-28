@@ -7,6 +7,11 @@ if (document.addEventListener) {
         "use strict";
         if (typeof console === "object" && typeof console.log === "function") {
             console.log("Gallery ready", evt.gallery);
+            parent && parent.postMessage(JSON.stringify({
+                type: 'resize',
+                url: location.href,
+                height: document.body.scrollHeight
+            }), '*');
         }
     });
 }
