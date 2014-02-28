@@ -16,5 +16,8 @@
           "csstransitions"
       ]
   },
-  "demos": ["demos/main.html"]
+  "demos": [
+      "demos/declarative.html",
+      "demos/imperative.html"
+  ]
 }

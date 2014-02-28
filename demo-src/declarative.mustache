@@ -1,28 +1,14 @@
 <script>
-(function(d){
-    var h = d.getElementsByTagName("html")[0];
-    h.className = h.className.replace(/\bno-js\b/,'');
-}(document));
+    (function(d){
+        var h = d.getElementsByTagName("html")[0];
+        h.className = h.className.replace(/\bno-js\b/,'');
+    }(document));
 </script>
 
 <div class="o-grid-row">
     <div data-o-grid-colspan="6 S12 M12">
-        <h2 class="o-ft-typography-heading-large">Declarative (HTML source)</h2>
 
-        <h3 class="o-ft-typography-heading-medium">Standalone</h3>
-        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-standalone" data-o-gallery-captionminheight="10">
-            <ol class="o-gallery__items">
-                {{#htmlStandaloneItems}}
-                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                    <div class="o-gallery__item__content">{{{itemContent}}}</div>
-                    <div class="o-gallery__item__caption">{{{itemCaption}}}</div>
-                </li>
-                {{/htmlStandaloneItems}}
-            </ol>
-        </div>
-
-        <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
-        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="20" data-o-gallery-captionmaxheight="50">
+        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
             <ol class="o-gallery__items">
                 {{#htmlSlideshowItems}}
                     <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
@@ -41,39 +27,6 @@
                 {{/htmlThumbnailItems}}
             </ol>
         </div>
-
-    </div>
-    <div data-o-grid-colspan="6 S12 M12">
-        <h2 class="o-ft-typography-heading-large">Imperative (JS source)</h2>
-
-        <h3 class="o-ft-typography-heading-medium">Standalone</h3>
-
-        <div class="demo__slideshow" id="imperative-standalone">
-            <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
-        </div>
-
-        <h3 class="o-ft-typography-heading-medium">Two, synced</h3>
-
-        <div class="demo__slideshow" id="imperative-slideshow">
-            <div class="demo__slideshow__poster">Slideshow poster (shown if JS doesn't run)</div>
-        </div>
-        <div class="demo__thumbnails" id="imperative-thumbnails"></div>
-
-        <script>
-        var standaloneGalleryConfig = {
-            items: {{{jsonStandaloneItems}}}
-        };
-        var slideshowGalleryConfig = {
-            items: {{{jsonSlideshowItems}}},
-            captionMinHeight: 30,
-            captionMaxHeight: 60
-        };
-        var thumbnailGalleryConfig = {
-            items: {{{jsonThumbnailItems}}},
-            multipleItemsPerPage: true,
-            captions: false
-        };
-        </script>
 
     </div>
 </div>

@@ -10,10 +10,15 @@ module.exports = function(grunt) {
                 scriptMode: 'browserify'
             },
             demos: {
-                'main': {
-                    template: 'demo.mustache',
+                'declarative': {
+                    template: 'declarative.mustache',
                     sass: 'demo.scss',
-                    js: 'demo.js'
+                    js: 'declarative.js'
+                },
+                'imperative': {
+                    template: 'imperative.mustache',
+                    sass: 'demo.scss',
+                    js: 'imperative.js'
                 }
             }
         },
@@ -70,10 +75,8 @@ module.exports = function(grunt) {
         }
 
         grunt.config.set("origami-demo.options.viewModel", {
-            htmlStandaloneItems: getSlideshowItems(10, 3),
             htmlSlideshowItems: getSlideshowItems(20, 3),
             htmlThumbnailItems: getThumbnailItems(20, 3),
-            jsonStandaloneItems: JSON.stringify(getSlideshowItems(10, 3)),
             jsonSlideshowItems: JSON.stringify(getSlideshowItems(20, 3)),
             jsonThumbnailItems: JSON.stringify(getThumbnailItems(20, 3))
         });
