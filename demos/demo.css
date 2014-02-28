@@ -2,30 +2,6 @@ body {
   margin: 0;
   padding: 0; }
 
-/**
- * Colour palette
- *
- * These are the colours that make up the FT palette.  We don't use these colours directly, but instead assign them to 'use cases', which are defined in use-cases.scss.  In the list below, each line contains a color name and a colour code, and is finished with a comma:
- *
- *  <colorname>   <colour code>,
- *
- * The colour name must be a single word comprising just letters, numbers, and dashes.  You can have as many spaces between the colour name and the colour code as you like (so you can line them up neatly), and you *MUST* finish the line with a comma (except the final entry, which should not have a comma)
- */
-/**
- * Colour use cases
- *
- * These mappings define what we use our colours for.
- *
- * Use case:           Must be a single word comprising just letters, numbers, and dashes.
- * Color name:         Must be an exact match for a name of a colour defined in palette.scss
- * CSS class property: Should be 'text', 'border', 'background', or 'all'.
- * Status:             Must be 'DEPRECATED' or absent
- *
- * You can have as many spaces between each entry as you like (so you can line them up neatly), and you *MUST* finish each line with a comma (except the final entry, which should not have a comma).
- *
- *
- *  <use case>                        <colorname>            <cssclassproperty>   [<status>]
- */
 /* 
 	Note: The identically named mixins and functions below is not a mistake; it means they can be used to either 
 	output a string or to wrap some style rules in a selector
@@ -428,6 +404,30 @@ html {
     display: block;
     width: 100%; } }
 /**
+ * Colour palette
+ *
+ * These are the colours that make up the FT palette.  We don't use these colours directly, but instead assign them to 'use cases', which are defined in use-cases.scss.  In the list below, each line contains a color name and a colour code, and is finished with a comma:
+ *
+ *  <colorname>   <colour code>,
+ *
+ * The colour name must be a single word comprising just letters, numbers, and dashes.  You can have as many spaces between the colour name and the colour code as you like (so you can line them up neatly), and you *MUST* finish the line with a comma (except the final entry, which should not have a comma)
+ */
+/**
+ * Colour use cases
+ *
+ * These mappings define what we use our colours for.
+ *
+ * Use case:           Must be a single word comprising just letters, numbers, and dashes.
+ * Color name:         Must be an exact match for a name of a colour defined in palette.scss
+ * CSS class property: Should be 'text', 'border', 'background', or 'all'.
+ * Status:             Must be 'DEPRECATED' or absent
+ *
+ * You can have as many spaces between each entry as you like (so you can line them up neatly), and you *MUST* finish each line with a comma (except the final entry, which should not have a comma).
+ *
+ *
+ *  <use case>                        <colorname>            <cssclassproperty>   [<status>]
+ */
+/**
   Wrap styles in SASS placeholders and CSS classes (if not in silent mode),
   and optionally CSS selectors (if not in silent mode)
   $names:         SASS list of placeholder/class names in the format "name1 name2" but without the quotes.
@@ -484,7 +484,7 @@ html {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 14px;
-  color: #dfded8;
+  color: white;
   background-color: #333333; }
 
 .o-gallery__control {
@@ -494,12 +494,12 @@ html {
   height: 110px;
   line-height: 100px;
   text-align: center;
-  color: #000;
-  background-color: #bbb;
-  background-color: rgba(0, 0, 0, 0.2);
+  color: #dfded8;
+  background-color: #333333;
+  background-color: rgba(51, 51, 51, 0.8);
   cursor: pointer; }
   .o-gallery__control:hover {
-    color: #666; }
+    color: white; }
 
 .o-gallery__control--prev {
   left: 0; }

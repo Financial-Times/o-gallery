@@ -51,8 +51,8 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   line-height: 14px;
-  color: _oColorsGetPaletteColor(cool-grey2); // TODO: Add use case to colors module
-  background-color: _oColorsGetPaletteColor(charcoal); // TODO: Add use case to colors module
+  color: oColorsGetColorFor(overlay, text);
+  background-color: oColorsGetColorFor(overlay, background);
 }
 
 @include oGallerySelectors(o-gallery__control) {
@@ -62,12 +62,12 @@
   height: 110px;
   line-height: 100px;
   text-align: center;
-  color: #000;
-  background-color: #bbb;
-  background-color: rgba(0,0,0, 0.2);
+  color: oColorsGetColorFor(control, text);
+  background-color: oColorsGetColorFor(control, background);
+  background-color: transparentize(oColorsGetColorFor(control, background), 0.2);
   cursor: pointer;
   &:hover {
-    color: #666;
+    color: oColorsGetColorFor(control-hover, text);
   }
 
 }
