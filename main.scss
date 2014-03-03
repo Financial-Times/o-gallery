@@ -2,9 +2,12 @@
 @import "o-colors/main";
 @import "o-ft-icons/main";
 
-@include oFtIconsFontFace();
-
 @import "src/scss/_variables";
 @import "src/scss/_functions";
 @import "src/scss/_mixins";
+
+@if (not $o-gallery-is-silent) {
+  @include oFtIconsFontFace();
+}
+
 @import "src/scss/gallery";
