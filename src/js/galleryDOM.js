@@ -64,10 +64,10 @@ function createItems(containerEl, items) {
 
 function insertItemContent(config, item, itemEl) {
     emptyElement(itemEl);
-    var contentEl = createElement("div", item.itemContent, "o-gallery__item__content");
+    var contentEl = createElement("div", item.content, "o-gallery__item__content");
     itemEl.appendChild(contentEl);
     if (config.captions) {
-        var captionEl = createElement("div", item.itemCaption || "", "o-gallery__item__caption");
+        var captionEl = createElement("div", item.caption || "", "o-gallery__item__caption");
         itemEl.appendChild(captionEl);
     }
 }

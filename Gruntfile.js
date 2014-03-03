@@ -1,8 +1,8 @@
-'use strict';
+/*global module */
 
 module.exports = function(grunt) {
+    'use strict';
 
-    // Project configuration.
     grunt.initConfig({
         'origami-demo': {
             options: {
@@ -36,49 +36,38 @@ module.exports = function(grunt) {
 
     grunt.registerTask('demo', '', function() {
 
-        function getCaptionText(n) {
-            var ct = "Demo caption text for item " + n + ". ",
-                str = "";
-            for (var c = 0; c < n; c++) {
-                str = str + ct;
+        function getSlideshowData(selected) {
+            var data = grunt.file.readJSON('./demo-src/demo-data.json', { encoding: 'utf-8' });
+            if (data[selected]) {
+                data[selected].selected = true;
             }
-            return str;
+            return data;
         }
 
-        function getSlideshowItems(n, sel) {
-            var items = [], c;
-            for (c = 0; c < n; c++) {
-                var item = {
-                    itemContent: '<div class="demo__gallery__item--slideshow">Demo item ' + c + '</div>',
-                    itemCaption: getCaptionText(c)
+        function getSlideshowItems(sel) {
+            return getSlideshowData(sel).map(function(v) {
+                return {
+                    content: v.large,
+                    caption: v.caption,
+                    selected: v.selected
                 };
-                if (c === sel) {
-                    item.selected = true;
-                }
-                items.push(item);
-            }
-            return items;
+            });
         }
 
-        function getThumbnailItems(n, sel) {
-            var items = [], c;
-            for (c = 0; c < n; c++) {
-                var item = {
-                    itemContent: '<div class="demo__gallery__item--thumbnail">Thumb item ' + c + '</div>'
+        function getThumbnailItems(sel) {
+            return getSlideshowData(sel).map(function(v) {
+                return {
+                    content: '<div class="demo__gallery__item--thumbnail">' + v.small + '</div>',
+                    selected: v.selected
                 };
-                if (c === sel) {
-                    item.selected = true;
-                }
-                items.push(item);
-            }
-            return items;
+            });
         }
 
         grunt.config.set("origami-demo.options.viewModel", {
-            htmlSlideshowItems: getSlideshowItems(20, 3),
-            htmlThumbnailItems: getThumbnailItems(20, 3),
-            jsonSlideshowItems: JSON.stringify(getSlideshowItems(20, 3)),
-            jsonThumbnailItems: JSON.stringify(getThumbnailItems(20, 3))
+            htmlSlideshowItems: getSlideshowItems(0),
+            htmlThumbnailItems: getThumbnailItems(0),
+            jsonSlideshowItems: JSON.stringify(getSlideshowItems(0)),
+            jsonThumbnailItems: JSON.stringify(getThumbnailItems(0))
         });
         grunt.task.run('origami-demo');
     });

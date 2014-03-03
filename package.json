@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "grunt": "0.4.x",
-    "grunt-origami-demoer": "https://github.com/Financial-Times/grunt-origami-demoer/tarball/master#1.2.0",
+    "grunt-origami-demoer": "https://github.com/Financial-Times/grunt-origami-demoer/tarball/master#1.3.0",
     "grunt-contrib-watch": "*",
     "browserify": "~3.28.2",
     "grunt-browserify": "~1.3.0",

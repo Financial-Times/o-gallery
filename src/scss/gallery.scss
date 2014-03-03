@@ -9,6 +9,9 @@
 @include oGallerySelectors(o-gallery__viewport) {
   position: relative;
   overflow: hidden;
+  .o-gallery[data-o-gallery-multipleitemsperpage=true] & {
+    margin: 0 $_o-gallery-control-width;
+  }
 }
 
 @include oGallerySelectors(o-gallery__items) {
@@ -57,25 +60,30 @@
 
 @include oGallerySelectors(o-gallery__control) {
   position: absolute;
-  top: 0;
-  width: 50px;
-  height: 110px;
-  line-height: 100px;
+  top: 50%;
+  margin-top: ($_o-gallery-control-height / 2) * -1;
+  width: $_o-gallery-control-width;
+  height: $_o-gallery-control-height;
+  font-size: 60px;
+  line-height: $_o-gallery-control-height;
   text-align: center;
   color: oColorsGetColorFor(control, text);
   background-color: oColorsGetColorFor(control, background);
   background-color: transparentize(oColorsGetColorFor(control, background), 0.2);
+  overflow: hidden;
   cursor: pointer;
   &:hover {
     color: oColorsGetColorFor(control-hover, text);
   }
-
+  @include oFtIconsBaseIconStyles();
 }
 
 @include oGallerySelectors(o-gallery__control--prev) {
   left: 0;
+  @extend %o-ft-icons-icon--back-chevron;
 }
 
 @include oGallerySelectors(o-gallery__control--next) {
   right: 0;
+  @extend %o-ft-icons-icon--back-chevron;
 }

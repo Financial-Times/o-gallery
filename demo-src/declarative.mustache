@@ -5,29 +5,25 @@
     }(document));
 </script>
 
-<div class="o-grid-row">
-    <div data-o-grid-colspan="6 S12 M12">
-
-        <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
-            <ol class="o-gallery__items">
-                {{#htmlSlideshowItems}}
-                    <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                        <div class="o-gallery__item__content">{{{itemContent}}}</div>
-                        <div class="o-gallery__item__caption">{{{itemCaption}}}</div>
-                    </li>
-                {{/htmlSlideshowItems}}
-            </ol>
-        </div>
-        <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-multipleitemsperpage="true">
-            <ol class="o-gallery__items">
-                {{#htmlThumbnailItems}}
-                    <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
-                        <div class="o-gallery__item__content">{{{itemContent}}}</div>
-                    </li>
-                {{/htmlThumbnailItems}}
-            </ol>
-        </div>
-
+<div class="demo__container">
+    <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+        <ol class="o-gallery__items">
+            {{#htmlSlideshowItems}}
+                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
+                    <div class="o-gallery__item__content">{{{content}}}</div>
+                    <div class="o-gallery__item__caption">{{{caption}}}</div>
+                </li>
+            {{/htmlSlideshowItems}}
+        </ol>
+    </div>
+    <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-multipleitemsperpage="true">
+        <ol class="o-gallery__items">
+            {{#htmlThumbnailItems}}
+                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
+                    <div class="o-gallery__item__content">{{{content}}}</div>
+                </li>
+            {{/htmlThumbnailItems}}
+        </ol>
     </div>
 </div>
 

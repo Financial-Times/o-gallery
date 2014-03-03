@@ -5,29 +5,25 @@
     }(document));
 </script>
 
-<div class="o-grid-row">
-    <div data-o-grid-colspan="6 S12 M12">
-
-        <div class="demo__slideshow" id="imperative-slideshow">
-            <div class="demo__slideshow__poster">Default (no-js) content</div>
-        </div>
-        <div class="demo__thumbnails" id="imperative-thumbnails"></div>
-
-        <script>
-        var slideshowGalleryConfig = {
-            items: {{{jsonSlideshowItems}}},
-            captionMinHeight: 30,
-            captionMaxHeight: 60
-        };
-        var thumbnailGalleryConfig = {
-            items: {{{jsonThumbnailItems}}},
-            multipleItemsPerPage: true,
-            captions: false
-        };
-        </script>
-
+<div class="demo__container">
+    <div class="demo__slideshow" id="imperative-slideshow">
+        <div class="demo__slideshow__poster">Default (no-js) content</div>
     </div>
+    <div class="demo__thumbnails" id="imperative-thumbnails"></div>
 </div>
+
+<script>
+var slideshowGalleryConfig = {
+    items: {{{jsonSlideshowItems}}},
+    captionMinHeight: 30,
+    captionMaxHeight: 60
+};
+var thumbnailGalleryConfig = {
+    items: {{{jsonThumbnailItems}}},
+    multipleItemsPerPage: true,
+    captions: false
+};
+</script>
 
 <!--[if IE 8 ]>
 <script>

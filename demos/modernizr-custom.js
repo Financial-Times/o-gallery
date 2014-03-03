@@ -1,5 +1,5 @@
 /* Modernizr (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-css-boxsizing-queryselector-addeventlistener-csstransforms-csstransforms3d-csstransitions-cssclasses
+ * Build: http://modernizr.com/download/#-fontface-queryselector-css-boxsizing-addeventlistener-csstransforms-csstransforms3d-csstransitions-cssclasses
  */
 ;
 
@@ -222,6 +222,20 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
 
+
+    tests['fontface'] = function() {
+        var bool;
+
+        injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function( node, rule ) {
+          var style = document.getElementById('smodernizr'),
+              sheet = style.sheet || style.styleSheet,
+              cssText = sheet ? (sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || '') : '';
+
+          bool = /src/i.test(cssText) && cssText.indexOf(rule.split(' ')[0]) === 0;
+        });
+
+        return bool;
+    };
 
     for ( var feature in tests ) {
         if ( hasOwnProp(tests, feature) ) {

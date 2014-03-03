@@ -85,8 +85,8 @@ function Gallery(containerEl, config) {
     }
 
     function addUiControls() {
-        prevControlDiv = galleryDOM.createElement("div", "PREV", "o-gallery__control o-gallery__control--prev");
-        nextControlDiv = galleryDOM.createElement("div", "NEXT", "o-gallery__control o-gallery__control--next");
+        prevControlDiv = galleryDOM.createElement("div", "", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = galleryDOM.createElement("div", "", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
         galleryDOM.listenForEvent(prevControlDiv, "click", prev);
@@ -340,7 +340,6 @@ function Gallery(containerEl, config) {
     }
 
     function onScroll(evt) {
-        transitionInProgress = false;
         insertItemContent(getItemsInPageView(evt.scrollLeft, evt.scrollLeft + viewportEl.clientWidth, false));
     }
 
@@ -405,7 +404,10 @@ function Gallery(containerEl, config) {
                 onScroll(evt);
             }, 50);
         });
-        scroller.addEventListener("scrollend", onScroll);
+        scroller.addEventListener("scrollend", function(evt) {
+            transitionInProgress = false;
+            onScroll(evt);
+        });
         scroller.addEventListener("segmentwillchange", function() {
             if (!config.multipleItemsPerPage) {
                 selectItem(scroller.currentSegment.x, false, "user");

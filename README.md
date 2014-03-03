@@ -64,21 +64,17 @@ With just an HTML container element already in the page, a Gallery object can be
 
 Where an itemObject can consist of the following properties:
 
-#### itemContent
+#### content
 
 Type: `String` (required)
 
-The HTML content of the item. For example:
+The HTML content of the item.
 
-    itemContent: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />'
-
-#### itemCaption
+#### caption
 
 Type: `String` (optional)
 
-The HTML content of the item's caption. For example:
-
-    itemCaption: '<p>Slideshow caption text.</p>'
+The HTML content of the item's caption.
 
 #### selected
 
@@ -87,6 +83,14 @@ Type: `Boolean`
 Default: `false`
 
 Whether this item is selected. If more than one item is set to be selected, then only the first one will be selected.
+
+For example:
+
+    {
+        content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+        caption: '<p>Slideshow caption text.</p>',
+        selected: true
+    }
 
 ## Configuration
 
