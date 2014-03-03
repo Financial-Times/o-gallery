@@ -19,7 +19,6 @@ function Gallery(containerEl, config) {
         debounceOnResize,
         scroller,
         debounceScroll,
-        transitionInProgress = false,
         prevControlDiv,
         nextControlDiv,
         propertyAttributeMap = {
@@ -99,6 +98,11 @@ function Gallery(containerEl, config) {
         }
     }
 
+    function updateControlStates() {
+        prevControlDiv.style.display = (scroller.scrollLeft > 0) ? "block" : "none";
+        nextControlDiv.style.display = (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) ? "block" : "none";
+    }
+
     function setCaptionSizes() {
         for (var c = 0, l = itemEls.length; c < l; c++) {
             var itemEl = itemEls[c];
@@ -169,7 +173,7 @@ function Gallery(containerEl, config) {
     }
 
     function moveViewport(left, transition) {
-        scroller.scrollTo(left, 0, transition !== false);
+        scroller.scrollTo(left, 0, config.multipleItemsPerPage);
         insertItemContent(getItemsInPageView(left, left + viewportEl.clientWidth, false));
     }
 
@@ -273,9 +277,6 @@ function Gallery(containerEl, config) {
     }
 
     function prev() {
-        if (transitionInProgress) {
-            return;
-        }
         if (config.multipleItemsPerPage) {
             showPrevPage();
         } else {
@@ -284,9 +285,6 @@ function Gallery(containerEl, config) {
     }
 
     function next() {
-        if (transitionInProgress) {
-            return;
-        }
         if (config.multipleItemsPerPage) {
             showNextPage();
         } else {
@@ -340,6 +338,7 @@ function Gallery(containerEl, config) {
     }
 
     function onScroll(evt) {
+        updateControlStates();
         insertItemContent(getItemsInPageView(evt.scrollLeft, evt.scrollLeft + viewportEl.clientWidth, false));
     }
 
@@ -390,13 +389,10 @@ function Gallery(containerEl, config) {
             /* Can't use fling/inertial scroll as after user input is finished and scroll continues, scroll events are no
              longer fired, and value of scrollLeft doesn't change until scrollend. */
             flinging: false,
-            disableInputMethods: {
+            disabledInputMethods: {
                 touch: !config.touch,
                 scroll: true
             }
-        });
-        scroller.addEventListener("scrollstart", function() {
-            transitionInProgress = true;
         });
         scroller.addEventListener("scroll", function(evt) {
             clearTimeout(debounceScroll);
@@ -405,7 +401,6 @@ function Gallery(containerEl, config) {
             }, 50);
         });
         scroller.addEventListener("scrollend", function(evt) {
-            transitionInProgress = false;
             onScroll(evt);
         });
         scroller.addEventListener("segmentwillchange", function() {
@@ -421,6 +416,7 @@ function Gallery(containerEl, config) {
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     showItem(selectedItemIndex, false);
     addUiControls();
+    updateControlStates();
     listenForSyncEvents();
 
     this.showItem = showItem;

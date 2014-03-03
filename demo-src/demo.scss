@@ -1,5 +1,3 @@
-$o-assets-global-path: '../bower_components/';
-
 @import "../main";
 
 ol, ul, li {
@@ -35,6 +33,7 @@ ol, ul, li {
   width: 100%;
   height: 74px;
   overflow: hidden;
+  background-color: oColorsGetColorFor(control, background);
 }
 
 .demo__slideshow + .demo__thumbnails {

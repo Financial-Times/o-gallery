@@ -86,4 +86,7 @@
 @include oGallerySelectors(o-gallery__control--next) {
   right: 0;
   @extend %o-ft-icons-icon--back-chevron;
+  transform: rotate(180deg); // Temporarily flip the left arrow, until we get the correct left/right arrows in o-ft-icons
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
 }

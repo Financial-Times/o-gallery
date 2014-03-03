@@ -40,8 +40,8 @@ body {
 */
 @font-face {
   font-family: "ft-icons";
-  src: url(../bower_components/o-ft-icons/build/ft-icons.eot);
-  src: url(../bower_components/o-ft-icons/build/ft-icons.eot?#iefix) format("embedded-opentype"), url(../bower_components/o-ft-icons/build/ft-icons.woff) format("woff"), url(../bower_components/o-ft-icons/build/ft-icons.ttf) format("truetype");
+  src: url(http://build.origami.ft.com/files/o-ft-icons/build/ft-icons.eot);
+  src: url(http://build.origami.ft.com/files/o-ft-icons/build/ft-icons.eot?#iefix) format("embedded-opentype"), url(http://build.origami.ft.com/files/o-ft-icons/build/ft-icons.woff) format("woff"), url(http://build.origami.ft.com/files/o-ft-icons/build/ft-icons.ttf) format("truetype");
   font-weight: normal;
   font-style: normal; }
 
@@ -131,7 +131,10 @@ body {
   left: 0; }
 
 .o-gallery__control--next {
-  right: 0; }
+  right: 0;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg); }
 
 ol, ul, li {
   margin: 0;
@@ -160,7 +163,8 @@ ol, ul, li {
   display: none;
   width: 100%;
   height: 74px;
-  overflow: hidden; }
+  overflow: hidden;
+  background-color: #333333; }
 
 .demo__slideshow + .demo__thumbnails {
   margin-top: -4px; }
