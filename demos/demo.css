@@ -30,13 +30,6 @@ body {
 .o-gallery__control--prev:before, .o-gallery__control--next:before {
   content: "\e004"; }
 
-@font-face {
-  font-family: "ft-icons";
-  src: url(../bower_components/o-ft-icons/build/ft-icons.eot);
-  src: url(../bower_components/o-ft-icons/build/ft-icons.eot?#iefix) format("embedded-opentype"), url(../bower_components/o-ft-icons/build/ft-icons.woff) format("woff"), url(../bower_components/o-ft-icons/build/ft-icons.ttf) format("truetype");
-  font-weight: normal;
-  font-style: normal; }
-
 /**
   Wrap styles in SASS placeholders and CSS classes (if not in silent mode),
   and optionally CSS selectors (if not in silent mode)
@@ -45,6 +38,13 @@ body {
   $cssSelectors:  [optional] string. CSS selectors which should also receive the same styles.
                   Does not get auto-prefixed, so must be exactly as you want output on the CSS.
 */
+@font-face {
+  font-family: "ft-icons";
+  src: url(../bower_components/o-ft-icons/build/ft-icons.eot);
+  src: url(../bower_components/o-ft-icons/build/ft-icons.eot?#iefix) format("embedded-opentype"), url(../bower_components/o-ft-icons/build/ft-icons.woff) format("woff"), url(../bower_components/o-ft-icons/build/ft-icons.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
 .o-gallery {
   position: static;
   -webkit-user-select: none;
