@@ -42,7 +42,8 @@ function Gallery(containerEl, config) {
             touch: false,
             syncID: "o-gallery-" + new Date().getTime(),
             windowResize: true
-        };
+        },
+        allowTransitions = false;
 
     function supportsCssTransforms() {
         var htmlEl = document.getElementsByTagName('html')[0];
@@ -99,8 +100,16 @@ function Gallery(containerEl, config) {
     }
 
     function updateControlStates() {
-        prevControlDiv.style.display = (scroller.scrollLeft > 0) ? "block" : "none";
-        nextControlDiv.style.display = (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) ? "block" : "none";
+        if (scroller.scrollLeft > 0) {
+            galleryDOM.addClass(prevControlDiv, "o-gallery__control--show");
+        } else {
+            galleryDOM.removeClass(prevControlDiv, "o-gallery__control--show");
+        }
+        if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
+            galleryDOM.addClass(nextControlDiv, "o-gallery__control--show");
+        } else {
+            galleryDOM.removeClass(nextControlDiv, "o-gallery__control--show");
+        }
     }
 
     function setCaptionSizes() {
@@ -172,21 +181,21 @@ function Gallery(containerEl, config) {
         }
     }
 
-    function moveViewport(left, transition) {
-        scroller.scrollTo(left, 0, config.multipleItemsPerPage);
+    function moveViewport(left) {
+        scroller.scrollTo(left, 0, (allowTransitions) ? true : 0);
         insertItemContent(getItemsInPageView(left, left + viewportEl.clientWidth, false));
     }
 
-    function alignItemLeft(n, transition) {
-        moveViewport(itemEls[n].offsetLeft, transition);
+    function alignItemLeft(n) {
+        moveViewport(itemEls[n].offsetLeft);
     }
 
-    function alignItemRight(n, transition) {
+    function alignItemRight(n) {
         var newScrollLeft = itemEls[n].offsetLeft - (viewportEl.clientWidth - itemEls[n].clientWidth);
-        moveViewport(newScrollLeft, transition);
+        moveViewport(newScrollLeft);
     }
 
-    function bringItemIntoView(n, transition) {
+    function bringItemIntoView(n) {
         if (!isValidItem(n)) {
             return;
         }
@@ -198,15 +207,15 @@ function Gallery(containerEl, config) {
             return;
         }
         if (itemL < viewportL) {
-            alignItemLeft(n, transition);
+            alignItemLeft(n);
         } else if (itemR > viewportR) {
-            alignItemRight(n, transition);
+            alignItemRight(n);
         }
     }
 
-    function showItem(n, transition) {
+    function showItem(n) {
         if (isValidItem(n)) {
-            bringItemIntoView(n, transition);
+            bringItemIntoView(n);
             shownItemIndex = n;
         }
     }
@@ -222,9 +231,7 @@ function Gallery(containerEl, config) {
     }
 
     function showPrevPage() {
-        if (scroller.scrollLeft === 0) {
-            showItem(itemEls.length - 1);
-        } else {
+        if (scroller.scrollLeft > 0) {
             var prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft),
                 prevPageItem = prevPageWholeItems.pop() || 0;
             alignItemRight(prevPageItem);
@@ -232,9 +239,7 @@ function Gallery(containerEl, config) {
     }
 
     function showNextPage() {
-        if (scroller.scrollLeft === allItemsEl.clientWidth - viewportEl.clientWidth) {
-            showItem(0);
-        } else {
+        if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
             var currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth),
                 lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
             alignItemLeft(lastWholeItemInView + 1);
@@ -295,7 +300,7 @@ function Gallery(containerEl, config) {
     function onResize() {
         setWidths();
         if (!config.multipleItemsPerPage) { // correct the alignment of item in view
-            showItem(shownItemIndex, false);
+            showItem(shownItemIndex);
         } else {
             var newScrollLeft = scroller.scrollLeft;
             insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
@@ -414,8 +419,11 @@ function Gallery(containerEl, config) {
     viewportEl = scroller.contentContainerNode.parentNode;
     galleryDOM.addClass(viewportEl, "o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
-    showItem(selectedItemIndex, false);
     addUiControls();
+    showItem(selectedItemIndex);
+    if (config.multipleItemsPerPage === true) {
+        allowTransitions = true;
+    }
     updateControlStates();
     listenForSyncEvents();
 

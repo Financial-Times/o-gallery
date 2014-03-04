@@ -20,9 +20,9 @@ In IE8 there is no option for touch input support and there are no transitions (
 
 ## Creating Galleries
 
-Gallery content can come from either HTML already in the DOM, or data passed explicitly to Gallery javascript via a configuration object.
+Gallery content can come from either HTML already in the DOM, or data passed explicitly to Gallery javascript via a configuration object. See the _declarative_ demo for an example of the HTML structure required.
 
-In both cases there must be an HTML element already in the DOM to construct the Gallery in.
+In both cases there must be an root element already in the DOM to construct the Gallery in.
 
 Galleries can be constructed in three ways:
 
@@ -188,14 +188,16 @@ There must always be one item selected, even if the _selected_ state is not made
 Each gallery _item_ has an index number. _Pages_ do not have index numbers as the number of pages can vary when a gallery has a variable width (e.g. in a responsive layout).
 
 * `showItem(idx)`: Navigates the gallery to the specified item index (starting from zero)
-* `showNextItem()`: Navigates the gallery forward one item (or to the first item if currently on the last)
-* `showPrevItem()`: Navigates the gallery backwards one item (or to the last item if currently on the last)
-* `showNextPage()`: Navigates the gallery forward one page (or to the first page if currently on the last)
-* `showPrevPage()`: Navigates the gallery backward one page (or to the last page if currently on the first)
+* `showNextItem()`: Navigates the gallery forward one item
+* `showPrevItem()`: Navigates the gallery backwards one item
+* `showNextPage()`: Navigates the gallery forward one page
+* `showPrevPage()`: Navigates the gallery backward one page
 * `selectItem(idx, show)`: Selects item, and optionally shows it too.
 * `selectNextItem(show)`: Selects next item, and optionally shows it too.
 * `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
 * `getSelectedItem()`: Returns the index of the currently selected item (integer)
+
+When a next/prev method is called, if there is no next or previous, then it will do nothing.
 
 The desired behaviour of the left & right UI controls for single- and multiple-item-per-page galleries will be different. For example, in a slideshow (single item per page), the right arrow control should select _and_ show the next item, but in a thumbnail strip (multiple items per page), it should show the next page without affecting what it selected.
 
@@ -210,6 +212,19 @@ The following simplified methods are provided to handle this logic:
 
 These method may be useful for adding keyboard control to a Gallery.
 
-## CSS classes
+## CSS
 
-A `o-gallery__item--selected` class is applied to only the selected Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.
+_Gallery_ only provides the minimum styling for a Gallery to be functional - e.g. mostly just positioning, and the previous/next UI controls.
+
+It is the responsibility of products using Gallery to provide visual styling of the Gallery in general, and for its contents (including preserving aspect ratios, if the width is variable).
+
+The following Gallery classes are applied to elements in the Gallery structure:
+
+* `o-gallery`: the Gallery's root element
+* `o-gallery__viewport`: the are through which the Gallery items scroll
+* `o-gallery__items`: the container of all the Gallery items
+* `o-gallery__item`: the container of each item in the Gallery
+* `o-gallery__item__content`: the container of an item's content
+* `o-gallery__item__caption`: the container of an item's caption (if present)
+
+In addition to this, a `o-gallery__item--selected` class is applied to the _selected_ Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.

@@ -76,6 +76,17 @@
     color: oColorsGetColorFor(control-hover, text);
   }
   @include oFtIconsBaseIconStyles();
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s linear;
+  transition: visibility 0s linear 0.25s, opacity 0.25s linear;
+}
+
+@include oGallerySelectors(o-gallery__control--show) {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
 }
 
 @include oGallerySelectors(o-gallery__control--prev) {
@@ -89,4 +100,5 @@
   transform: rotate(180deg); // Temporarily flip the left arrow, until we get the correct left/right arrows in o-ft-icons
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
 }
