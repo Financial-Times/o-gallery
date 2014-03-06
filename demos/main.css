@@ -27,8 +27,11 @@ body {
  *
  *  <use case>                        <colorname>            <cssclassproperty>   [<status>]
  */
-.o-gallery__control--prev:before, .o-gallery__control--next:before {
-  content: "\e004"; }
+.o-gallery__control--prev:before {
+  content: "\e002"; }
+
+.o-gallery__control--next:before {
+  content: "\e003"; }
 
 /**
   Wrap styles in SASS placeholders and CSS classes (if not in silent mode),
@@ -141,8 +144,4 @@ body {
   left: 0; }
 
 .o-gallery__control--next {
-  right: 0;
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg); }
+  right: 0; }
