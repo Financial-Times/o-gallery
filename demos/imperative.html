@@ -3,17 +3,32 @@
 <!--[if IE 8]>         <html class="no-js o-useragent-ie8"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-	<meta charset="utf-8" />
-	<title>Origami gallery - o-gallery</title>
-	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-	<script src="modernizr-custom.js"></script>
-	<link rel="stylesheet" href="demo.css" />
+    <meta charset="utf-8" />
+    <title>o-gallery: imperative demo</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <style>
+    body {
+        margin: 0;
+    }
+    .demo-message {
+        margin: 0 0 10px 0;
+        border-bottom: 1px solid #ddcc66;
+        padding: 3px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        text-align: center;
+        background-color: #ffee88;
+        color: #333;
+    }
+    </style>
+    <link rel="stylesheet" href="/bundles/css?modules=o-gallery&main=o-gallery/demos/src/demo.scss" />
 </head>
 <body>
+    
     <script>
     (function(d){
         var h = d.getElementsByTagName("html")[0];
-        h.className = h.className.replace(/\bno-js\b/,'');
+        h.className = "js csstransforms csstransforms3d csstransitions fontface boxsizing";
     }(document));
 </script>
 
@@ -25,13 +40,209 @@
 </div>
 
 <script>
+var slideshowData = [
+    {
+        "content": "&lt;img alt=&quot;Ukrainian soldiers guard a gate of an infantry base in Privolnoye, Ukraine&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;c6bb1407-b0fc-4cc6-8f9f-af838349595e.img&quot; &#x2F;&gt;",
+        "caption": "Ukrainian soldiers guard a gate of an infantry base in Privolnoye, Ukraine"
+        , "selected": true
+    },
+    {
+        "content": "&lt;img alt=&quot;A Russian flag flies behind armed personnel on top of a Russian army vehicle outside a Ukrainian border guard post in Balaclava&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;ed8abc52-eb10-4cd2-91ae-ba0ddc88863e.img&quot; &#x2F;&gt;",
+        "caption": "A Russian flag flies behind armed personnel on top of a Russian army vehicle outside a Ukrainian border guard post in Balaclava"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;A Russian convoy heads towards Simferopol, the regional capital of Ukraine&#39;s Crimea region&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;05c4639c-9023-4239-b8c1-63ade8e0e230.img&quot; &#x2F;&gt;",
+        "caption": "A Russian convoy heads towards Simferopol, the regional capital of Ukraine&#39;s Crimea region"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Ukrainians hold placards as they gather near the US consulate in Kiev&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;6470af55-ea40-46dc-be82-e409c85600fe.img&quot; &#x2F;&gt;",
+        "caption": "Ukrainians hold placards as they gather near the US consulate in Kiev"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;President Barack Obama talks on the phone in the Oval Office with Russia’s President Vladimir Putin about the situation in Ukraine&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;049c7ee7-a4de-48cb-b1a5-0ec80fee4f37.img&quot; &#x2F;&gt;",
+        "caption": "President Barack Obama talks on the phone in the Oval Office with Russia’s President Vladimir Putin about the situation in Ukraine"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;The UN Security Council meets to discuss the situation in Ukraine&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;5d5bc53b-6ad7-42eb-bca2-ed90038b6d71.img&quot; &#x2F;&gt;",
+        "caption": "The UN Security Council meets to discuss the situation in Ukraine"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Vitaly Churkin, Russian ambassador to the UN, waits for the security council meeting on the situation in Ukraine to start&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;5f2697c4-9536-4ed2-adc3-3e927da67059.img&quot; &#x2F;&gt;",
+        "caption": "Vitaly Churkin, Russian ambassador to the UN, waits for the security council meeting on the situation in Ukraine to start"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Samantha Power, US ambassador to the UN, speaks at the end of a security council meeting about the crisis&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;9b3e72bf-5e19-45ce-9aa1-ee855f9e3b56.img&quot; &#x2F;&gt;",
+        "caption": "Samantha Power, US ambassador to the UN, speaks at the end of a security council meeting about the crisis"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Armed troops displaying no identifying insignia and local pro-Russian militants stand guard outside a local government building in Simferopol&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;1d2c3eab-76d8-4d7e-bebd-b8aa3530647b.img&quot; &#x2F;&gt;",
+        "caption": "Armed troops displaying no identifying insignia and local pro-Russian militants stand guard outside a local government building in Simferopol"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Police detain a protester demonstrating against the Russian military&#39;s actions in Crimea during a rally in St.Petersburg &quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;de4970cf-687e-4683-9bf8-0d3d668a63b6.img&quot; &#x2F;&gt;",
+        "caption": "Police detain a protester demonstrating against the Russian military&#39;s actions in Crimea during a rally in St. Petersburg"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Pro-Russian militants behind a row of shields near a local government building and a statue of Lenin in Simferopol&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;663ec694-81ab-4060-b4a2-b608e4c3e118.img&quot; &#x2F;&gt;",
+        "caption": "Pro-Russian militants behind a row of shields near a local government building and a statue of Lenin in Simferopol"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Police try to stop pro-Russian activists storming government buildings in the eastern city of Kharkiv&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;480cca14-bac9-4b30-b653-96a2c1e2cbc8.img&quot; &#x2F;&gt;",
+        "caption": "Police try to stop pro-Russian activists storming government buildings in the eastern city of Kharkiv"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Pro-Russian activists storm the regional government building in Kharkiv, Ukraine’s second-largest city&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;244d1c57-057b-4c3a-ad02-f1e60a9a19f2.img&quot; &#x2F;&gt;",
+        "caption": "Pro-Russian activists storm the regional government building in Kharkiv, Ukraine’s second-largest city"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;People attend a morning prayer at Independence Square in central Kiev&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;6f9c8681-19d6-4e9f-9dda-d73a8548ed3f.img&quot; &#x2F;&gt;",
+        "caption": "People attend a morning prayer at Independence Square in central Kiev"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;A wounded supporter of Ukraine&#39;s new government after clashes with pro - Russian protesters in central Kharkiv &quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;a6932e6b-a2b3-4506-b12f-293cf86fd412.img&quot; &#x2F;&gt;",
+        "caption": "A wounded supporter of Ukraine&#39;s new government after clashes with pro-Russian protesters in central Kharkiv"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Igor Tenyukh, Ukrainian defence minister, gives a speech as interim president Mr Turchynov listens, during a session at the parliament in Kiev&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;fcc78be0-0fb3-4794-871c-a4caaac8ce64.img&quot; &#x2F;&gt;",
+        "caption": "Igor Tenyukh, Ukrainian defence minister, gives a speech as interim president Mr Turchynov listens, during a session at the parliament in Kiev"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Ukraine&#39;s acting president Oleksander Turchinov, Prime Minister Arseniy Yatseniuk and defence minister Ihor Tenyukh address journalists in Kiev &quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;93279828-cc57-4576-8b02-f9e55cae610e.img&quot; &#x2F;&gt;",
+        "caption": "Ukraine&#39;s acting president Oleksander Turchinov, Prime Minister Arseniy Yatseniuk and defence minister Ihor Tenyukh address journalists in Kiev"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;A wedding party in the street as unidentified armed men in military uniform stand by in the centre of Simferopol&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;d2af6946-f696-4df4-a5ec-3ed09c203c6c.img&quot; &#x2F;&gt;",
+        "caption": "A wedding party in the street as unidentified armed men in military uniform stand by in the centre of Simferopol"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Unidentified military ships off the coast of Sevastopol, Crimea, home of Russia’s Black Sea Fleet.&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;71051bac-fb98-4076-a62b-5d0e507d80c1.img&quot; &#x2F;&gt;",
+        "caption": "Unidentified military ships off the coast of Sevastopol, Crimea, home of Russia’s Black Sea Fleet"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;Orthodox monks pray next to armed servicemen near Russian army vehicles outside a Ukrainian border guard post in Balaclava&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;a3a98d50-d738-48ed-9b52-e0d3cc5ff3f0.img&quot; &#x2F;&gt;",
+        "caption": "Orthodox monks pray next to armed servicemen near Russian army vehicles outside a Ukrainian border guard post in Balaclava"
+        
+    },
+    {
+        "content": "&lt;img alt=&quot;People in Kiev hold portraits of anti-government protesters killed in clashes with police during a mourning ceremony&quot; src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;a2e54bda-9cc5-4923-8317-f0f07a09e6a0.img&quot; &#x2F;&gt;",
+        "caption": "People in Kiev hold portraits of anti-government protesters killed in clashes with police during a mourning ceremony"
+        
+    },
+];
+
 var slideshowGalleryConfig = {
-    items: [{"content":"<img alt=\"Ukrainian soldiers guard a gate of an infantry base in Privolnoye, Ukraine\" src=\"http://im.ft-static.com/content/images/c6bb1407-b0fc-4cc6-8f9f-af838349595e.img\" />","caption":"Ukrainian soldiers guard a gate of an infantry base in Privolnoye, Ukraine","selected":true},{"content":"<img alt=\"A Russian flag flies behind armed personnel on top of a Russian army vehicle outside a Ukrainian border guard post in Balaclava\" src=\"http://im.ft-static.com/content/images/ed8abc52-eb10-4cd2-91ae-ba0ddc88863e.img\" />","caption":"A Russian flag flies behind armed personnel on top of a Russian army vehicle outside a Ukrainian border guard post in Balaclava"},{"content":"<img alt=\"A Russian convoy heads towards Simferopol, the regional capital of Ukraine's Crimea region\" src=\"http://im.ft-static.com/content/images/05c4639c-9023-4239-b8c1-63ade8e0e230.img\" />","caption":"A Russian convoy heads towards Simferopol, the regional capital of Ukraine's Crimea region"},{"content":"<img alt=\"Ukrainians hold placards as they gather near the US consulate in Kiev\" src=\"http://im.ft-static.com/content/images/6470af55-ea40-46dc-be82-e409c85600fe.img\" />","caption":"Ukrainians hold placards as they gather near the US consulate in Kiev"},{"content":"<img alt=\"President Barack Obama talks on the phone in the Oval Office with Russia’s President Vladimir Putin about the situation in Ukraine\" src=\"http://im.ft-static.com/content/images/049c7ee7-a4de-48cb-b1a5-0ec80fee4f37.img\" />","caption":"President Barack Obama talks on the phone in the Oval Office with Russia’s President Vladimir Putin about the situation in Ukraine"},{"content":"<img alt=\"The UN Security Council meets to discuss the situation in Ukraine\" src=\"http://im.ft-static.com/content/images/5d5bc53b-6ad7-42eb-bca2-ed90038b6d71.img\" />","caption":"The UN Security Council meets to discuss the situation in Ukraine"},{"content":"<img alt=\"Vitaly Churkin, Russian ambassador to the UN, waits for the security council meeting on the situation in Ukraine to start\" src=\"http://im.ft-static.com/content/images/5f2697c4-9536-4ed2-adc3-3e927da67059.img\" />","caption":"Vitaly Churkin, Russian ambassador to the UN, waits for the security council meeting on the situation in Ukraine to start"},{"content":"<img alt=\"Samantha Power, US ambassador to the UN, speaks at the end of a security council meeting about the crisis\" src=\"http://im.ft-static.com/content/images/9b3e72bf-5e19-45ce-9aa1-ee855f9e3b56.img\" />","caption":"Samantha Power, US ambassador to the UN, speaks at the end of a security council meeting about the crisis"},{"content":"<img alt=\"Armed troops displaying no identifying insignia and local pro-Russian militants stand guard outside a local government building in Simferopol\" src=\"http://im.ft-static.com/content/images/1d2c3eab-76d8-4d7e-bebd-b8aa3530647b.img\" />","caption":"Armed troops displaying no identifying insignia and local pro-Russian militants stand guard outside a local government building in Simferopol"},{"content":"<img alt=\"Police detain a protester demonstrating against the Russian military's actions in Crimea during a rally in St.Petersburg \" src=\"http://im.ft-static.com/content/images/de4970cf-687e-4683-9bf8-0d3d668a63b6.img\" />","caption":"Police detain a protester demonstrating against the Russian military's actions in Crimea during a rally in St. Petersburg"},{"content":"<img alt=\"Pro-Russian militants behind a row of shields near a local government building and a statue of Lenin in Simferopol\" src=\"http://im.ft-static.com/content/images/663ec694-81ab-4060-b4a2-b608e4c3e118.img\" />","caption":"Pro-Russian militants behind a row of shields near a local government building and a statue of Lenin in Simferopol"},{"content":"<img alt=\"Police try to stop pro-Russian activists storming government buildings in the eastern city of Kharkiv\" src=\"http://im.ft-static.com/content/images/480cca14-bac9-4b30-b653-96a2c1e2cbc8.img\" />","caption":"Police try to stop pro-Russian activists storming government buildings in the eastern city of Kharkiv"},{"content":"<img alt=\"Pro-Russian activists storm the regional government building in Kharkiv, Ukraine’s second-largest city\" src=\"http://im.ft-static.com/content/images/244d1c57-057b-4c3a-ad02-f1e60a9a19f2.img\" />","caption":"Pro-Russian activists storm the regional government building in Kharkiv, Ukraine’s second-largest city"},{"content":"<img alt=\"People attend a morning prayer at Independence Square in central Kiev\" src=\"http://im.ft-static.com/content/images/6f9c8681-19d6-4e9f-9dda-d73a8548ed3f.img\" />","caption":"People attend a morning prayer at Independence Square in central Kiev"},{"content":"<img alt=\"A wounded supporter of Ukraine's new government after clashes with pro - Russian protesters in central Kharkiv \" src=\"http://im.ft-static.com/content/images/a6932e6b-a2b3-4506-b12f-293cf86fd412.img\" />","caption":"A wounded supporter of Ukraine's new government after clashes with pro-Russian protesters in central Kharkiv"},{"content":"<img alt=\"Igor Tenyukh, Ukrainian defence minister, gives a speech as interim president Mr Turchynov listens, during a session at the parliament in Kiev\" src=\"http://im.ft-static.com/content/images/fcc78be0-0fb3-4794-871c-a4caaac8ce64.img\" />","caption":"Igor Tenyukh, Ukrainian defence minister, gives a speech as interim president Mr Turchynov listens, during a session at the parliament in Kiev"},{"content":"<img alt=\"Ukraine's acting president Oleksander Turchinov, Prime Minister Arseniy Yatseniuk and defence minister Ihor Tenyukh address journalists in Kiev \" src=\"http://im.ft-static.com/content/images/93279828-cc57-4576-8b02-f9e55cae610e.img\" />","caption":"Ukraine's acting president Oleksander Turchinov, Prime Minister Arseniy Yatseniuk and defence minister Ihor Tenyukh address journalists in Kiev"},{"content":"<img alt=\"A wedding party in the street as unidentified armed men in military uniform stand by in the centre of Simferopol\" src=\"http://im.ft-static.com/content/images/d2af6946-f696-4df4-a5ec-3ed09c203c6c.img\" />","caption":"A wedding party in the street as unidentified armed men in military uniform stand by in the centre of Simferopol"},{"content":"<img alt=\"Unidentified military ships off the coast of Sevastopol, Crimea, home of Russia’s Black Sea Fleet.\" src=\"http://im.ft-static.com/content/images/71051bac-fb98-4076-a62b-5d0e507d80c1.img\" />","caption":"Unidentified military ships off the coast of Sevastopol, Crimea, home of Russia’s Black Sea Fleet"},{"content":"<img alt=\"Orthodox monks pray next to armed servicemen near Russian army vehicles outside a Ukrainian border guard post in Balaclava\" src=\"http://im.ft-static.com/content/images/a3a98d50-d738-48ed-9b52-e0d3cc5ff3f0.img\" />","caption":"Orthodox monks pray next to armed servicemen near Russian army vehicles outside a Ukrainian border guard post in Balaclava"},{"content":"<img alt=\"People in Kiev hold portraits of anti-government protesters killed in clashes with police during a mourning ceremony\" src=\"http://im.ft-static.com/content/images/a2e54bda-9cc5-4923-8317-f0f07a09e6a0.img\" />","caption":"People in Kiev hold portraits of anti-government protesters killed in clashes with police during a mourning ceremony"}],
+    items: slideshowData,
     captionMinHeight: 30,
     captionMaxHeight: 60
 };
+
+var thumbnailData = [
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;bf78da6c-8e79-493a-8af6-11db6ee66666.img&quot; &#x2F;&gt;"
+            , "selected": true
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;5cc3255f-a5aa-402a-9304-a2dded21ae74.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;66c8be19-8448-46b9-8eb7-1cb322af1192.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;a32c6bb6-73cd-4f44-ab45-7cfb4a37650e.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;eefd0b95-5600-4d52-ab08-56b3ae538778.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;d7bca44e-d443-42f6-9c26-bf9a3a2cf3d8.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;007f9ce2-4e8b-46a2-9301-2ef88636c974.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;9d197dbd-dc18-4382-bdf5-3086d8af167a.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;ea09cc36-d93b-414f-a700-48da6ae377a5.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;fcc44844-22dc-48fe-91d3-f6ce6fa7f392.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;2af8712c-ceaf-4be8-9459-63411ce7dc38.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;3a8aad52-712d-41a3-a6f8-40a5ac7c04ca.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;c34b77a4-bda0-4043-a9df-40d2a52d6172.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;5abbe4c8-9ce6-45b5-aa83-2945394ad03a.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;0f515536-1648-407e-bad3-57cf68d38a4b.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;0aecfa4c-37c3-4083-bfd3-6f06f828775c.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;ad555c73-ff00-43c7-9699-ac6f8fec8202.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;ed3de8dd-465c-409a-a319-2788589feaf0.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;645d2c73-4a6b-48ee-9af9-141d369d5e75.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;8eef59c8-2f75-4eb1-b7a5-42e1ecd99fcd.img&quot; &#x2F;&gt;"
+            
+        },
+        {
+            "content": "&lt;img src=&quot;http:&#x2F;&#x2F;im.ft-static.com&#x2F;content&#x2F;images&#x2F;a33e8505-09b7-4327-89dd-b6dc37a50f27.img&quot; &#x2F;&gt;"
+            
+        },
+];
+
 var thumbnailGalleryConfig = {
-    items: [{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/bf78da6c-8e79-493a-8af6-11db6ee66666.img\" /></div>","selected":true},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/5cc3255f-a5aa-402a-9304-a2dded21ae74.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/66c8be19-8448-46b9-8eb7-1cb322af1192.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/a32c6bb6-73cd-4f44-ab45-7cfb4a37650e.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/eefd0b95-5600-4d52-ab08-56b3ae538778.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/d7bca44e-d443-42f6-9c26-bf9a3a2cf3d8.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/007f9ce2-4e8b-46a2-9301-2ef88636c974.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/9d197dbd-dc18-4382-bdf5-3086d8af167a.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/ea09cc36-d93b-414f-a700-48da6ae377a5.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/fcc44844-22dc-48fe-91d3-f6ce6fa7f392.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/2af8712c-ceaf-4be8-9459-63411ce7dc38.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/3a8aad52-712d-41a3-a6f8-40a5ac7c04ca.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/c34b77a4-bda0-4043-a9df-40d2a52d6172.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/5abbe4c8-9ce6-45b5-aa83-2945394ad03a.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/0f515536-1648-407e-bad3-57cf68d38a4b.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/0aecfa4c-37c3-4083-bfd3-6f06f828775c.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/ad555c73-ff00-43c7-9699-ac6f8fec8202.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/ed3de8dd-465c-409a-a319-2788589feaf0.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/645d2c73-4a6b-48ee-9af9-141d369d5e75.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/8eef59c8-2f75-4eb1-b7a5-42e1ecd99fcd.img\" /></div>"},{"content":"<div class=\"demo__gallery__item--thumbnail\"><img src=\"http://im.ft-static.com/content/images/a33e8505-09b7-4327-89dd-b6dc37a50f27.img\" /></div>"}],
+    items: thumbnailData,
     multipleItemsPerPage: true,
     captions: false
 };
@@ -289,7 +500,7 @@ var thumbnailGalleryConfig = {
 })(this);
 </script>
 <![endif]-->
-	<script src="imperative.js"></script>
+    <script src="imperative.js" />
     <script src='http://registry.origami.ft.com/embedapi?autoload=resize'></script>
 </body>
 </html>

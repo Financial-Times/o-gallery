@@ -1,5 +1,6 @@
-/*global require, console */
-var Gallery = require('./../main.js');
+/*global require, console, slideshowGalleryConfig, thumbnailGalleryConfig*/
+
+var Gallery = require('./../../main.js');
 
 if (document.addEventListener) {
     document.addEventListener("oGalleryReady", function (evt) {
@@ -15,4 +16,9 @@ if (document.addEventListener) {
     });
 }
 
-window.galleries = Gallery.createAllIn(document.body);
+var slideshowImperative = new Gallery(document.getElementById("imperative-slideshow"), slideshowGalleryConfig),
+    thumbnailImperative = new Gallery(document.getElementById("imperative-thumbnails"), thumbnailGalleryConfig);
+
+if (thumbnailImperative.syncWith) {
+    thumbnailImperative.syncWith(slideshowImperative);
+}

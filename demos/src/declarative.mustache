@@ -1,29 +1,31 @@
 <script>
     (function(d){
         var h = d.getElementsByTagName("html")[0];
-        h.className = h.className.replace(/\bno-js\b/,'');
+        h.className = "js csstransforms csstransforms3d csstransitions fontface boxsizing";
     }(document));
 </script>
 
 <div class="demo__container">
-    <div class="demo__slideshow" id="imperative-slideshow">
-        <div class="demo__slideshow__poster">Default (no-js) content</div>
+    <div class="demo__slideshow o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+        <ol class="o-gallery__items">
+            {{#slideshowData}}
+                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
+                    <div class="o-gallery__item__content">{{{content}}}</div>
+                    <div class="o-gallery__item__caption">{{{caption}}}</div>
+                </li>
+            {{/slideshowData}}
+        </ol>
     </div>
-    <div class="demo__thumbnails" id="imperative-thumbnails"></div>
+    <div class="demo__thumbnails o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-multipleitemsperpage="true">
+        <ol class="o-gallery__items">
+            {{#thumbnailData}}
+                <li class="o-gallery__item{{#selected}} o-gallery__item--selected{{/selected}}">
+                    <div class="o-gallery__item__content">{{{content}}}</div>
+                </li>
+            {{/thumbnailData}}
+        </ol>
+    </div>
 </div>
-
-<script>
-var slideshowGalleryConfig = {
-    items: {{{jsonSlideshowItems}}},
-    captionMinHeight: 30,
-    captionMaxHeight: 60
-};
-var thumbnailGalleryConfig = {
-    items: {{{jsonThumbnailItems}}},
-    multipleItemsPerPage: true,
-    captions: false
-};
-</script>
 
 <!--[if IE 8 ]>
 <script>
