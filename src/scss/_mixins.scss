@@ -24,3 +24,8 @@
     @content;
   }
 }
+
+@mixin oGalleryOverlayBackground() {
+  background-color: oColorsGetColorFor(control, background);
+  background-color: transparentize(oColorsGetColorFor(control, background), 0.2);
+}

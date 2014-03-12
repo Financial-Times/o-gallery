@@ -12,6 +12,7 @@ function Gallery(containerEl, config) {
     }
 
     var viewportEl,
+        titleEl,
         allItemsEl,
         itemEls,
         selectedItemIndex,
@@ -109,6 +110,18 @@ function Gallery(containerEl, config) {
             galleryDOM.addClass(nextControlDiv, "o-gallery__control--show");
         } else {
             galleryDOM.removeClass(nextControlDiv, "o-gallery__control--show");
+        }
+    }
+
+    function getTitleEl() {
+        titleEl = containerEl.querySelector(".o-gallery__title");
+        if (titleEl) {
+            titleEl.parentNode.removeChild(titleEl);
+        } else if (config.title) {
+            titleEl = galleryDOM.createElement('div', config.title, 'o-gallery__title');
+        }
+        if (titleEl && config.title) {
+            titleEl.innerHTML = config.title;
         }
     }
 
@@ -375,6 +388,7 @@ function Gallery(containerEl, config) {
     }
     config = extendObjects([defaultConfig, galleryDOM.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
     updateDataAttributes();
+    getTitleEl();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
@@ -417,6 +431,9 @@ function Gallery(containerEl, config) {
         scroller = new SimpleScroller(containerEl, {});
     }
     viewportEl = scroller.contentContainerNode.parentNode;
+    if (titleEl) {
+        viewportEl.insertBefore(titleEl);
+    }
     galleryDOM.addClass(viewportEl, "o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     addUiControls();

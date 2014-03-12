@@ -100,7 +100,7 @@ Once the config options have been gathered, the HTML data-attributes are added/u
 
 ### Multiple items per page
 
-Data attribute: `data-o-gallery-multipleitemsperpage`
+HTML source: attribute `data-o-gallery-multipleitemsperpage` on root element
 
 JS property: `multipleItemsPerPage`
 
@@ -112,7 +112,7 @@ Sets whether multiple items should be allowed to show per page. For example a no
 
 ### Sync ID
 
-Data attribute: `data-o-gallery-syncid`
+HTML source: attribute `data-o-gallery-syncid` on root element
 
 JS property: `syncID`
 
@@ -124,7 +124,7 @@ Sets the ID used in events fired and listened to by a Gallery instance. Setting 
 
 ### Touch
 
-Data attribute: `data-o-gallery-touch`
+HTML source: attribute `data-o-gallery-touch` on root element
 
 JS property: `touch`
 
@@ -134,9 +134,19 @@ Default: `false`
 
 Controls whether touch events will be listened to. See [ftscroller](https://github.com/ftlabs/ftscroller) for more details.
 
+### Title
+
+HTML source: Element inside container with a class of `o-gallery__title`.
+
+JS property: `title`
+
+Type: `String`
+
+The [optional] Gallery title. Displayed in the top left of the viewport and remains in place for all items.
+
 ### Captions
 
-Data attribute: `data-o-gallery-captions`
+HTML source: attribute `data-o-gallery-captions` on root element
 
 JS property: `captions`
 
@@ -148,7 +158,7 @@ Whether captions will be shown at all. With this set to true, a blank area will 
 
 ### Caption min/max height
 
-Data attribute: `data-o-gallery-captionminheight`, `data-o-gallery-captionmaxheight`
+HTML source: attributes `data-o-gallery-captionminheight`, `data-o-gallery-captionmaxheight` on root element
 
 JS property: `data-o-gallery-captionmaxheight`, `captionMaxHeight`
 
@@ -160,7 +170,7 @@ The height constraints of the caption area. The min value is used to position th
 
 ### Window resize
 
-Data attribute: `data-o-gallery-windowresize`
+HTML source: attribute `data-o-gallery-windowresize` on root element
 
 JS property: `windowResize`
 
