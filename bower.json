@@ -11,10 +11,8 @@
     ".travis.yml"
   ],
   "dependencies": {
-    "o-colors": "https://github.com/Financial-Times/o-colors.git#^2.2.12",
-    "o-ft-icons": "https://github.com/Financial-Times/o-ft-icons.git#^0.0.4",
+    "o-colors": "^2.2.20",
+    "o-ft-icons": "^0.0.5",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#ie8-safe-syntax"
-  },
-  "devDependencies": {
   }
 }

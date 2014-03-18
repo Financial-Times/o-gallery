@@ -19,5 +19,8 @@
   "demos": [
       "demos/declarative.html",
       "demos/imperative.html"
-  ]
+  ],
+  "ci": {
+      "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
+  }
 }

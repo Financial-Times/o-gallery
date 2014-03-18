@@ -1,4 +1,4 @@
-# o-gallery
+# o-gallery [![Build Status](https://travis-ci.org/Financial-Times/o-gallery.png?branch=master)](https://travis-ci.org/Financial-Times/o-gallery)
 
 A configurable content gallery. For carousels, slideshows and thumbnail strips.
 
