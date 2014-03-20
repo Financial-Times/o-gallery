@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "o-colors": "^2.2.20",
-    "o-ft-icons": "^0.0.5",
+    "o-ft-icons": "^1.0.0",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#ie8-safe-syntax"
   }
 }
