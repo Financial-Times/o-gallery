@@ -1,7 +1,7 @@
 /*global require, module*/
 
 var galleryDOM = require('./galleryDOM'),
-    FTScroller = require('../../bower_components/ftscroller'),
+    FTScroller = require('ftscroller'),
     SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
