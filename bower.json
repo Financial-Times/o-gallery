@@ -9,8 +9,8 @@
     ".travis.yml"
   ],
   "dependencies": {
-    "o-colors": "^2.2.20",
-    "o-ft-icons": "^1.0.0",
+    "o-colors": "^2.3.4",
+    "o-ft-icons": "^1.2.1",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#ie8-safe-syntax"
   },
   "ci": {

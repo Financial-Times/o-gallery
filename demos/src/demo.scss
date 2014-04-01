@@ -52,16 +52,7 @@ ol, ul, li {
   background-color: _oColorsGetPaletteColor(warm-grey1);
 }
 
-.demo__gallery__item--thumbnail {
-  @extend %demo__gallery__item;
-  background-color: #000;
-}
-
-.o-gallery__item--selected .demo__gallery__item--thumbnail {
-  outline: 1px solid #fff;
-}
-
-.o-gallery__item--selected .demo__gallery__item--thumbnail img {
+.demo__thumbnails .o-gallery__item--selected .o-gallery__item__content img {
   opacity: 0.5;
 }
 
