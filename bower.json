@@ -11,7 +11,7 @@
   "dependencies": {
     "o-colors": "^2.3.4",
     "o-ft-icons": "^1.2.1",
-    "ftscroller": "https://github.com/ftlabs/ftscroller.git#ie8-safe-syntax"
+    "ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.3.4"
   },
   "ci": {
       "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
