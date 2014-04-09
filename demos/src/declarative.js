@@ -5,7 +5,7 @@ if (document.addEventListener) {
     document.addEventListener("oGalleryReady", function (evt) {
         "use strict";
         if (typeof console === "object" && typeof console.log === "function") {
-            console.log("Gallery ready", evt.gallery);
+            console.log("Gallery ready", evt.detail.gallery);
             parent && parent.postMessage(JSON.stringify({
                 type: 'resize',
                 url: location.href,

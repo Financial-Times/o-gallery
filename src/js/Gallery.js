@@ -1,6 +1,7 @@
 /*global require, module*/
 
-var galleryDOM = require('./galleryDOM'),
+var dom = require('./dom'),
+    events = require('./events'),
     FTScroller = require('ftscroller'),
     SimpleScroller = require('./SimpleScroller');
 
@@ -48,7 +49,7 @@ function Gallery(containerEl, config) {
 
     function supportsCssTransforms() {
         var htmlEl = document.getElementsByTagName('html')[0];
-        return galleryDOM.hasClass(htmlEl, "csstransforms") || galleryDOM.hasClass(htmlEl, "csstransforms3d") || galleryDOM.hasClass(htmlEl, "csstransitions");
+        return dom.hasClass(htmlEl, "csstransforms") || dom.hasClass(htmlEl, "csstransforms3d") || dom.hasClass(htmlEl, "csstransitions");
     }
 
     function isDataSource() {
@@ -77,7 +78,7 @@ function Gallery(containerEl, config) {
     function getSelectedItem() {
         var selectedItem = 0, c, l;
         for (c = 0, l = itemEls.length; c < l; c++) {
-            if (galleryDOM.hasClass(itemEls[c], "o-gallery__item--selected")) {
+            if (dom.hasClass(itemEls[c], "o-gallery__item--selected")) {
                 selectedItem = c;
                 break;
             }
@@ -86,15 +87,15 @@ function Gallery(containerEl, config) {
     }
 
     function addUiControls() {
-        prevControlDiv = galleryDOM.createElement("div", "", "o-gallery__control o-gallery__control--prev");
-        nextControlDiv = galleryDOM.createElement("div", "", "o-gallery__control o-gallery__control--next");
+        prevControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
-        galleryDOM.listenForEvent(prevControlDiv, "click", prev);
-        galleryDOM.listenForEvent(nextControlDiv, "click", next);
+        events.listen(prevControlDiv, "click", prev);
+        events.listen(nextControlDiv, "click", next);
         if (config.multipleItemsPerPage) {
-            galleryDOM.listenForEvent(viewportEl, "click", function (evt) {
-                var clickedItemNum = galleryDOM.getElementIndex(galleryDOM.getClosest(evt.srcElement, "o-gallery__item"));
+            events.listen(viewportEl, "click", function (evt) {
+                var clickedItemNum = dom.getElementIndex(dom.getClosest(evt.srcElement, "o-gallery__item"));
                 selectItem(clickedItemNum, true, "user");
             });
         }
@@ -102,14 +103,14 @@ function Gallery(containerEl, config) {
 
     function updateControlStates() {
         if (scroller.scrollLeft > 0) {
-            galleryDOM.addClass(prevControlDiv, "o-gallery__control--show");
+            dom.addClass(prevControlDiv, "o-gallery__control--show");
         } else {
-            galleryDOM.removeClass(prevControlDiv, "o-gallery__control--show");
+            dom.removeClass(prevControlDiv, "o-gallery__control--show");
         }
         if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-            galleryDOM.addClass(nextControlDiv, "o-gallery__control--show");
+            dom.addClass(nextControlDiv, "o-gallery__control--show");
         } else {
-            galleryDOM.removeClass(nextControlDiv, "o-gallery__control--show");
+            dom.removeClass(nextControlDiv, "o-gallery__control--show");
         }
     }
 
@@ -118,7 +119,7 @@ function Gallery(containerEl, config) {
         if (titleEl) {
             titleEl.parentNode.removeChild(titleEl);
         } else if (config.title) {
-            titleEl = galleryDOM.createElement('div', config.title, 'o-gallery__title');
+            titleEl = dom.createElement('div', config.title, 'o-gallery__title');
         }
         if (titleEl && config.title) {
             titleEl.innerHTML = config.title;
@@ -143,7 +144,7 @@ function Gallery(containerEl, config) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
                 if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
-                    galleryDOM.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
+                    dom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
                     config.items[itemNum].inserted = true;
                     setCaptionSizes();
                 }
@@ -171,27 +172,18 @@ function Gallery(containerEl, config) {
     }
 
     function onGalleryCustomEvent(evt) {
-        if (evt.srcElement !== containerEl && evt.syncID === config.syncID && evt.oGallerySource === "user") {
-            selectItem(evt.itemID, true);
+        if (evt.srcElement !== containerEl && evt.detail.syncID === config.syncID && evt.detail.source === "user") {
+            selectItem(evt.detail.itemID, true);
         }
     }
 
     function listenForSyncEvents() {
-        if (document.addEventListener) {
-            document.addEventListener("oGalleryItemSelected", onGalleryCustomEvent);
-        }
+        events.listen(document, "oGalleryItemSelected", onGalleryCustomEvent);
     }
 
     function triggerEvent(name, data) {
-        if (document.createEvent && containerEl.dispatchEvent) {
-            var event = document.createEvent('Event');
-            event.initEvent(name, true, true);
-            event.syncID = config.syncID;
-            event.gallery = data.gallery;
-            event.itemID = data.itemID;
-            event.oGallerySource = data.source;
-            containerEl.dispatchEvent(event);
-        }
+        data.syncID = config.syncID;
+        events.trigger(containerEl, name, data);
     }
 
     function moveViewport(left) {
@@ -271,9 +263,9 @@ function Gallery(containerEl, config) {
                 selectedItemIndex = n;
                 for (var c = 0, l = itemEls.length; c < l; c++) {
                     if (c === selectedItemIndex) {
-                        galleryDOM.addClass(itemEls[c], "o-gallery__item--selected");
+                        dom.addClass(itemEls[c], "o-gallery__item--selected");
                     } else {
-                        galleryDOM.removeClass(itemEls[c], "o-gallery__item--selected");
+                        dom.removeClass(itemEls[c], "o-gallery__item--selected");
                     }
                 }
                 triggerEvent("oGalleryItemSelected", {
@@ -339,7 +331,7 @@ function Gallery(containerEl, config) {
     }
 
     function updateDataAttributes() {
-        galleryDOM.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
+        dom.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
     }
 
     function setSyncID(id) {
@@ -371,22 +363,20 @@ function Gallery(containerEl, config) {
                 containerEl.removeAttribute(propertyAttributeMap[prop]);
             }
         }
-        if (document.removeEventListener) {
-            document.removeEventListener("oGalleryItemSelected", onGalleryCustomEvent);
-        }
+        events.unlisten(document, "oGalleryItemSelected", onGalleryCustomEvent);
         if (config.windowResize) {
-            galleryDOM.unlistenForEvent(window, "resize", resizeHandler);
+            events.unlisten(window, "resize", resizeHandler);
         }
     }
 
-    galleryDOM.addClass(containerEl, "o-gallery--js");
+    dom.addClass(containerEl, "o-gallery--js");
     if (isDataSource()) {
-        galleryDOM.emptyElement(containerEl);
-        galleryDOM.addClass(containerEl, "o-gallery");
-        allItemsEl = galleryDOM.createItemsList(containerEl);
-        itemEls = galleryDOM.createItems(allItemsEl, config.items);
+        dom.emptyElement(containerEl);
+        dom.addClass(containerEl, "o-gallery");
+        allItemsEl = dom.createItemsList(containerEl);
+        itemEls = dom.createItems(allItemsEl, config.items);
     }
-    config = extendObjects([defaultConfig, galleryDOM.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
+    config = extendObjects([defaultConfig, dom.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
     updateDataAttributes();
     getTitleEl();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
@@ -394,7 +384,7 @@ function Gallery(containerEl, config) {
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
     if (config.windowResize) {
-        galleryDOM.listenForEvent(window, "resize", resizeHandler);
+        events.listen(window, "resize", resizeHandler);
     }
     insertItemContent(selectedItemIndex);
     setWidths();
@@ -432,9 +422,9 @@ function Gallery(containerEl, config) {
     }
     viewportEl = scroller.contentContainerNode.parentNode;
     if (titleEl) {
-        viewportEl.insertBefore(titleEl);
+        viewportEl.insertBefore(titleEl, null);
     }
-    galleryDOM.addClass(viewportEl, "o-gallery__viewport");
+    dom.addClass(viewportEl, "o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     addUiControls();
     showItem(selectedItemIndex);
