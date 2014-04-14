@@ -8,7 +8,9 @@
     "required": [
       "queryselector",
       "css-boxsizing",
-      "addeventlistener"
+      "addeventlistener",
+      "classList",
+      "matches"
     ],
     "optional": [
       "csstransforms",

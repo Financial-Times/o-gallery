@@ -32,26 +32,6 @@ function unwrapElement(targetEl) {
     wrappingElParent.removeChild(wrappingEl);
 }
 
-function hasClass(el, c) {
-    "use strict";
-    return (' ' + el.className + ' ').indexOf(' ' + c + ' ') > -1;
-}
-
-function addClass(el, c) {
-    "use strict";
-    if (!hasClass(el, c)) {
-        el.className = el.className + " " + c;
-    }
-}
-
-function removeClass(el, c) {
-    "use strict";
-    if (hasClass(el, c)) {
-        var reg = new RegExp('(\\s|^)' + c + '(\\s|$)');
-        el.className = el.className.replace(reg,' ');
-    }
-}
-
 function createItemsList(containerEl) {
     "use strict";
     var itemsList = createElement("ol", "", "o-gallery__items");
@@ -130,12 +110,16 @@ function setAttributesFromProperties(el, obj, map, excl) {
     }
 }
 
-function getClosest(el, c) {
+function getClosest(el, selector) {
     "use strict";
-    while (!hasClass(el, c) && el.parentNode) {
-        el = el.parentNode;
+    while (el) {
+        if (el.matches(selector)) {
+            return el;
+        } else {
+            el = el.parentElement;
+        }
     }
-    return el;
+    return false;
 }
 
 function getElementIndex(el) {
@@ -153,9 +137,6 @@ exports.emptyElement = emptyElement;
 exports.createElement = createElement;
 exports.wrapElement = wrapElement;
 exports.unwrapElement = unwrapElement;
-exports.hasClass = hasClass;
-exports.addClass = addClass;
-exports.removeClass = removeClass;
 exports.createItemsList = createItemsList;
 exports.createItems = createItems;
 exports.insertItemContent = insertItemContent;

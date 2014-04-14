@@ -1,8 +1,11 @@
 /*global require, console */
+
+require('./polyfills.js');
+
 var Gallery = require('./../../main.js');
 
 if (document.addEventListener) {
-    document.addEventListener("oGalleryReady", function (evt) {
+    document.addEventListener("oGallery.ready", function (evt) {
         "use strict";
         if (typeof console === "object" && typeof console.log === "function") {
             console.log("Gallery ready", evt.detail.gallery);
