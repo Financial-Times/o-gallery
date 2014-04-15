@@ -1,15 +1,12 @@
 /*global require, module*/
 
-var dom = require('./dom'),
+var oDom = require('o-dom'),
+    dom = require('./dom'),
     FTScroller = require('ftscroller'),
     SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
     "use strict";
-
-    if (!document.querySelectorAll) {
-        return;
-    }
 
     var viewportEl,
         titleEl,
@@ -86,7 +83,7 @@ function Gallery(containerEl, config) {
     }
 
     function selectOnClick(evt) {
-        var clickedItemNum = dom.getElementIndex(dom.getClosest(evt.srcElement, ".o-gallery__item"));
+        var clickedItemNum = oDom.getIndex(oDom.getClosestMatch(evt.srcElement, ".o-gallery__item"));
         selectItem(clickedItemNum, true, "user");
     }
 
@@ -429,7 +426,7 @@ function Gallery(containerEl, config) {
             }
         });
     } else {
-        scroller = new SimpleScroller(containerEl, {});
+        scroller = new SimpleScroller(containerEl);
     }
     viewportEl = scroller.contentContainerNode.parentNode;
     if (titleEl) {

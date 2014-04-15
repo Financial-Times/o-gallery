@@ -1,4 +1,4 @@
-/* global require, module */
+/*global require,module */
 
 var dom = require('./dom');
 
@@ -6,8 +6,7 @@ var dom = require('./dom');
  * Mimics FTScroller in simplest possible way (without touch interface, transitions or events)
  * Intended for IE8 particularly.
  */
-
-function SimpleScroller(containerEl, config) {
+function SimpleScroller(containerEl) {
     'use strict';
 
     var self = this,

@@ -110,29 +110,6 @@ function setAttributesFromProperties(el, obj, map, excl) {
     }
 }
 
-function getClosest(el, selector) {
-    "use strict";
-    while (el) {
-        if (el.matches(selector)) {
-            return el;
-        } else {
-            el = el.parentElement;
-        }
-    }
-    return false;
-}
-
-function getElementIndex(el) {
-    "use strict";
-    var i = 0;
-    while (el = el.previousSibling) {
-        if (el.nodeType === 1) {
-            ++i;
-        }
-    }
-    return i;
-}
-
 exports.emptyElement = emptyElement;
 exports.createElement = createElement;
 exports.wrapElement = wrapElement;
@@ -142,5 +119,3 @@ exports.createItems = createItems;
 exports.insertItemContent = insertItemContent;
 exports.setAttributesFromProperties = setAttributesFromProperties;
 exports.getPropertiesFromAttributes = getPropertiesFromAttributes;
-exports.getClosest = getClosest;
-exports.getElementIndex = getElementIndex;
