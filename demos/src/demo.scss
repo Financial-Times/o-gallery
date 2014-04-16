@@ -29,14 +29,6 @@ ol, ul, li {
   background-color: _oColorsGetPaletteColor(cool-grey2);
 }
 
-.demo__thumbnails {
-  display: none;
-  width: 100%;
-  height: 74px;
-  overflow: hidden;
-  background-color: oColorsGetColorFor(control, background);
-}
-
 .demo__slideshow + .demo__thumbnails {
   margin-top: -4px;
 }
@@ -45,15 +37,24 @@ ol, ul, li {
   display: block;
 }
 
-.demo__thumbnails .o-gallery__item__content {
-  padding: 5px 10px;
-  width: 114px;
-  height: 64px;
+.demo__thumbnails {
+  display: none;
+  width: 100%;
+  height: 74px;
+  overflow: hidden;
   background-color: _oColorsGetPaletteColor(warm-grey1);
-}
-
-.demo__thumbnails .o-gallery__item--selected .o-gallery__item__content img {
-  opacity: 0.5;
+  .o-gallery__item__content {
+    margin: 5px 10px;
+    width: 114px;
+    height: 64px;
+  }
+  .o-gallery__item--selected .o-gallery__item__content {
+    position: relative;
+    outline: 1px solid white;
+    img {
+      -webkit-filter: brightness(50%);
+    }
+  }
 }
 
 .demo__slideshow__poster {
