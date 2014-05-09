@@ -22,7 +22,7 @@ In IE8 there is no option for touch input support and there are no transitions (
 
 Gallery content can come from either HTML already in the DOM, or data passed explicitly to Gallery javascript via a configuration object. See the _declarative_ demo for an example of the HTML structure required.
 
-In both cases there must be an root element already in the DOM to construct the Gallery in.
+In both cases there must be an root element already in the DOM to construct the Gallery in. The root element must not be set to `display: none`, either directly or via an ancestor element, otherwise the Gallery will be unable to calculate its item widths and will not work correctly.
 
 Galleries can be constructed in three ways:
 
