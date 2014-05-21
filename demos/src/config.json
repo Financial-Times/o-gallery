@@ -3,14 +3,16 @@
         "sass": "demos/src/demo.scss",
         "data": "demos/src/data.json"
     },
-    "demos": {
-        "declarative": {
+    "demos": [
+        {
+            "name": "declarative",
             "template": "demos/src/declarative.mustache",
             "js": "demos/src/declarative.js"
         },
-        "imperative": {
+        {
+            "name": "imperative",
             "template": "demos/src/imperative.mustache",
             "js": "demos/src/imperative.js"
         }
-    }
+    ]
 }

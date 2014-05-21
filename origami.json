@@ -1,28 +1,36 @@
 {
-  "description": "Slideshow gallery component",
-  "origamiType": "module",
-  "origamiVersion": 1,
-  "support": "https://github.com/Financial-Times/o-gallery/issues",
-  "supportStatus": "active",
-  "browserFeatures": {
-    "required": [
-      "queryselector",
-      "css-boxsizing",
-      "addeventlistener",
-      "classList",
-      "matches"
-    ],
-    "optional": [
-      "csstransforms",
-      "csstransforms3d",
-      "csstransitions"
+    "description": "Slideshow gallery component",
+    "origamiType": "module",
+    "origamiVersion": 1,
+    "support": "https://github.com/Financial-Times/o-gallery/issues",
+    "supportStatus": "active",
+    "browserFeatures": {
+        "required": [
+            "queryselector",
+            "css-boxsizing",
+            "addeventlistener",
+            "classList",
+            "matches"
+        ],
+        "optional": [
+            "csstransforms",
+            "csstransforms3d",
+            "csstransitions"
+        ]
+    },
+    "ci": {
+        "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
+    },
+    "demos": [
+        {
+            "path": "/demos/declarative.html",
+            "expanded": true,
+            "description": ""
+        },
+        {
+            "path": "/demos/imperative.html",
+            "expanded": true,
+            "description": ""
+        }
     ]
-  },
-  "ci": {
-    "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
-  },
-  "demos": [
-    "/demos/declarative.html",
-    "/demos/imperative.html"
-  ]
 }

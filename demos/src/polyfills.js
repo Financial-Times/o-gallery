@@ -1,17 +1,5 @@
 (function() {
     "use strict";
-    // Normalise/polyfill Element.matches
-    if (!Element.prototype.matches) {
-        Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.webkitMatchesSelector ||
-            Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector ||
-            Element.prototype.oMatchesSelector || function (selector) {
-            "use strict";
-            var nodes = (this.parentNode || this.document).querySelectorAll(selector),
-                i = -1;
-            while (nodes[++i] && nodes[i] !== this){}
-            return !!nodes[i];
-        };
-    }
 
     /*! Element.classList API polyfill. @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js*/
     if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(function(view){"use strict";if(!('HTMLElement'in view)&&!('Element'in view))return;var
