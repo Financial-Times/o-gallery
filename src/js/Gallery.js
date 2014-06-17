@@ -3,6 +3,7 @@
 var oDom = require('o-dom'),
     DomDelegate = require('dom-delegate'),
     FTScroller = require('ftscroller'),
+    oViewport = require('o-viewport'),
     galleryDom = require('./galleryDom'),
     SimpleScroller = require('./SimpleScroller');
 
@@ -15,7 +16,6 @@ function Gallery(containerEl, config) {
         itemEls,
         selectedItemIndex,
         shownItemIndex,
-        debounceOnResize,
         scroller,
         debounceScroll,
         prevControlDiv,
@@ -320,11 +320,6 @@ function Gallery(containerEl, config) {
         }
     }
 
-    function resizeHandler() {
-        clearTimeout(debounceOnResize);
-        debounceOnResize = setTimeout(onResize, 500);
-    }
-
     function extendObjects(objs) {
         var newObj = {};
         for (var c = 0, l = objs.length; c < l; c++) {
@@ -373,9 +368,7 @@ function Gallery(containerEl, config) {
         }
         containerDomDelegate.destroy();
         bodyDomDelegate.destroy();
-        if (config.windowResize) {
-            window.removeEventListener("resize", resizeHandler, false);
-        }
+        window.removeEventListener("resize", onResize, false);
         containerEl.removeAttribute('data-o-gallery--js');
     }
 
@@ -396,7 +389,8 @@ function Gallery(containerEl, config) {
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
     if (config.windowResize) {
-        window.addEventListener("resize", resizeHandler, false);
+        oViewport.listenTo('resize');
+        window.addEventListener("oViewport.resize", onResize, false);
     }
     insertItemContent(selectedItemIndex);
     setCaptionSizes();
