@@ -375,9 +375,10 @@ function Gallery(containerEl, config) {
         if (config.windowResize) {
             window.removeEventListener("resize", resizeHandler, false);
         }
+        containerEl.removeAttribute('data-o-gallery--js');
     }
 
-    containerEl.classList.add("o-gallery--js");
+    containerEl.setAttribute('data-o-gallery--js', '');
     if (isDataSource()) {
         dom.emptyElement(containerEl);
         containerEl.classList.add("o-gallery");
