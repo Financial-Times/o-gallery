@@ -1,8 +1,9 @@
 /*global require, module*/
 
 var oDom = require('o-dom'),
-    dom = require('./dom'),
+    DomDelegate = require('dom-delegate'),
     FTScroller = require('ftscroller'),
+    galleryDom = require('./galleryDom'),
     SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
@@ -41,7 +42,9 @@ function Gallery(containerEl, config) {
             syncID: "o-gallery-" + new Date().getTime(),
             windowResize: true
         },
-        allowTransitions = false;
+        allowTransitions = false,
+        bodyDomDelegate,
+        containerDomDelegate;
 
     function supportsCssTransforms() {
         var htmlEl = document.getElementsByTagName('html')[0];
@@ -88,14 +91,14 @@ function Gallery(containerEl, config) {
     }
 
     function addUiControls() {
-        prevControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--prev");
-        nextControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--next");
+        prevControlDiv = galleryDom.createElement("div", "", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = galleryDom.createElement("div", "", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
-        prevControlDiv.addEventListener("click", prev, false);
-        nextControlDiv.addEventListener("click", next, false);
+        containerDomDelegate.on('click', '.o-gallery__control--prev', prev);
+        containerDomDelegate.on('click', '.o-gallery__control--next', next);
         if (config.multipleItemsPerPage) {
-            viewportEl.addEventListener("click", selectOnClick, false);
+            containerDomDelegate.on('click', '.o-gallery__viewport', selectOnClick);
         }
     }
 
@@ -117,7 +120,7 @@ function Gallery(containerEl, config) {
         if (titleEl) {
             titleEl.parentNode.removeChild(titleEl);
         } else if (config.title) {
-            titleEl = dom.createElement('div', config.title, 'o-gallery__title');
+            titleEl = galleryDom.createElement('div', config.title, 'o-gallery__title');
         }
         if (titleEl && config.title) {
             titleEl.innerHTML = config.title;
@@ -142,7 +145,7 @@ function Gallery(containerEl, config) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
                 if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
-                    dom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
+                    galleryDom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
                     config.items[itemNum].inserted = true;
                     setCaptionSizes();
                 }
@@ -176,7 +179,7 @@ function Gallery(containerEl, config) {
     }
 
     function listenForSyncEvents() {
-        document.addEventListener("oGallery.itemSelect", onGalleryCustomEvent, false);
+        bodyDomDelegate.on('oGallery.itemSelect', onGalleryCustomEvent);
     }
 
     function triggerEvent(name, data) {
@@ -336,7 +339,7 @@ function Gallery(containerEl, config) {
     }
 
     function updateDataAttributes() {
-        dom.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
+        galleryDom.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
     }
 
     function setSyncID(id) {
@@ -362,16 +365,14 @@ function Gallery(containerEl, config) {
         prevControlDiv = null;
         nextControlDiv.parentNode.removeChild(nextControlDiv);
         nextControlDiv = null;
-        if (config.multipleItemsPerPage) {
-            viewportEl.removeEventListener("click", selectOnClick, false);
-        }
         scroller.destroy(true);
         for (var prop in propertyAttributeMap) {
             if (propertyAttributeMap.hasOwnProperty(prop)) {
                 containerEl.removeAttribute(propertyAttributeMap[prop]);
             }
         }
-        document.removeEventListener("oGallery.itemSelect", onGalleryCustomEvent, false);
+        containerDomDelegate.destroy();
+        bodyDomDelegate.destroy();
         if (config.windowResize) {
             window.removeEventListener("resize", resizeHandler, false);
         }
@@ -379,13 +380,15 @@ function Gallery(containerEl, config) {
     }
 
     containerEl.setAttribute('data-o-gallery--js', '');
+    bodyDomDelegate = new DomDelegate(document.body);
+    containerDomDelegate = new DomDelegate(containerEl);
     if (isDataSource()) {
-        dom.emptyElement(containerEl);
+        galleryDom.emptyElement(containerEl);
         containerEl.classList.add("o-gallery");
-        allItemsEl = dom.createItemsList(containerEl);
-        itemEls = dom.createItems(allItemsEl, config.items);
+        allItemsEl = galleryDom.createItemsList(containerEl);
+        itemEls = galleryDom.createItems(allItemsEl, config.items);
     }
-    config = extendObjects([defaultConfig, dom.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
+    config = extendObjects([defaultConfig, galleryDom.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
     updateDataAttributes();
     getTitleEl();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
@@ -396,7 +399,6 @@ function Gallery(containerEl, config) {
         window.addEventListener("resize", resizeHandler, false);
     }
     insertItemContent(selectedItemIndex);
-    setWidths();
     setCaptionSizes();
     if (supportsCssTransforms()) {
         scroller = new FTScroller(containerEl, {
@@ -436,6 +438,7 @@ function Gallery(containerEl, config) {
     viewportEl.classList.add("o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     addUiControls();
+    setWidths();
     showItem(selectedItemIndex);
     if (config.multipleItemsPerPage === true) {
         allowTransitions = true;
@@ -471,7 +474,7 @@ Gallery.createAllIn = function(el, config) {
         gEls,
         galleries = [];
     if (el.querySelectorAll) {
-        gEls = el.querySelectorAll("[data-o-component=o-gallery]");
+        gEls = el.querySelectorAll("[data-o-component=o-gallery]:not([data-o-gallery--js])");
         for (var c = 0, l = gEls.length; c < l; c++) {
             galleries.push(new Gallery(gEls[c], conf));
         }
