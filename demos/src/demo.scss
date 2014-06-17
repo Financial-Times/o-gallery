@@ -49,7 +49,7 @@ ol, ul, li {
     width: 114px;
     height: 64px;
   }
-  .o-gallery__item--selected .o-gallery__item__content {
+  [aria-selected='true'] .o-gallery__item__content {
     position: relative;
     outline: 1px solid white;
     img {

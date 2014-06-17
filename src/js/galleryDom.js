@@ -41,10 +41,13 @@ function createItemsList(containerEl) {
 
 function createItems(containerEl, items) {
     "use strict";
-    var itemClass;
-    for (var c = 0, l = items.length; c < l; c++) {
-        itemClass = "o-gallery__item" + ((items[c].selected) ? " o-gallery__item--selected" : "" );
-        containerEl.appendChild(createElement("li", "&nbsp;", itemClass));
+    var itemEl, c, l;
+    for (c = 0, l = items.length; c < l; c++) {
+        itemEl = createElement("li", "&nbsp;", "o-gallery__item");
+        if (items[c].selected) {
+            itemEl.setAttribute('aria-selected', 'true');
+        }
+        containerEl.appendChild(itemEl);
     }
     return containerEl.querySelectorAll(".o-gallery__item");
 }

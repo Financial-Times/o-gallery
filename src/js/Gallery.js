@@ -77,7 +77,7 @@ function Gallery(containerEl, config) {
     function getSelectedItem() {
         var selectedItem = 0, c, l;
         for (c = 0, l = itemEls.length; c < l; c++) {
-            if (itemEls[c].classList.contains("o-gallery__item--selected")) {
+            if (itemEls[c].getAttribute('aria-selected') === 'true') {
                 selectedItem = c;
                 break;
             }
@@ -103,16 +103,8 @@ function Gallery(containerEl, config) {
     }
 
     function updateControlStates() {
-        if (scroller.scrollLeft > 0) {
-            prevControlDiv.classList.add("o-gallery__control--show");
-        } else {
-            prevControlDiv.classList.remove("o-gallery__control--show");
-        }
-        if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-            nextControlDiv.classList.add("o-gallery__control--show");
-        } else {
-            nextControlDiv.classList.remove("o-gallery__control--show");
-        }
+        prevControlDiv.setAttribute('aria-hidden', String(scroller.scrollLeft <= 0));
+        nextControlDiv.setAttribute('aria-hidden', String(scroller.scrollLeft >= allItemsEl.clientWidth - viewportEl.clientWidth));
     }
 
     function getTitleEl() {
@@ -270,11 +262,7 @@ function Gallery(containerEl, config) {
             if (n !== selectedItemIndex) {
                 selectedItemIndex = n;
                 for (var c = 0, l = itemEls.length; c < l; c++) {
-                    if (c === selectedItemIndex) {
-                        itemEls[c].classList.add("o-gallery__item--selected");
-                    } else {
-                        itemEls[c].classList.remove("o-gallery__item--selected");
-                    }
+                    itemEls[c].setAttribute('aria-selected', String(c === selectedItemIndex));
                 }
                 triggerEvent("oGallery.itemSelect", {
                     itemID: selectedItemIndex,

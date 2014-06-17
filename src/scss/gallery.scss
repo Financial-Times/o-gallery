@@ -56,10 +56,6 @@
   }
 }
 
-@include oGallerySelectors(o-gallery__item--selected) {
-  // Implemented by consumer
-}
-
 @include oGallerySelectors(o-gallery__item__caption) {
   position: absolute;
   left: 0;
@@ -96,13 +92,12 @@
   -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s linear;
   transition: visibility 0s linear 0.25s, opacity 0.25s linear;
   z-index: 5;
-}
-
-@include oGallerySelectors(o-gallery__control--show) {
-  visibility: visible;
-  opacity: 1;
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s;
+  &:not([aria-hidden='true']) {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+  }
 }
 
 @include oGallerySelectors(o-gallery__control--prev) {
