@@ -87,7 +87,7 @@
   @include oGalleryOverlayBackground();
   overflow: hidden;
   cursor: pointer;
-  &:hover {
+  @at-root #{$o-hoverable-if-hover-enabled} &:hover {
     color: oColorsGetColorFor(control-hover, text);
   }
   @include oFtIconsBaseIconStyles();
