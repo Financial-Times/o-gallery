@@ -1,7 +1,7 @@
 @include oGallerySelectors(o-gallery) {
   position: static;
   @include oGalleryUserSelect(none);
-  &.o-gallery--js {
+  &[data-o-gallery--js] {
     position: relative;
   }
 }
@@ -36,7 +36,7 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
-  .o-gallery--js & {
+  [data-o-gallery--js] & {
     float: left;
     clear: none;
   }
@@ -49,15 +49,11 @@
   margin: 0 0 20px 0;
   padding: 0;
   list-style-type: none;
-  .o-gallery--js & {
+  [data-o-gallery--js] & {
     float: left;
     clear: none;
     margin: 0;
   }
-}
-
-@include oGallerySelectors(o-gallery__item--selected) {
-  // Implemented by consumer
 }
 
 @include oGallerySelectors(o-gallery__item__caption) {
@@ -87,7 +83,7 @@
   @include oGalleryOverlayBackground();
   overflow: hidden;
   cursor: pointer;
-  &:hover {
+  @at-root #{$o-hoverable-if-hover-enabled} &:hover {
     color: oColorsGetColorFor(control-hover, text);
   }
   @include oFtIconsBaseIconStyles();
@@ -96,13 +92,12 @@
   -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s linear;
   transition: visibility 0s linear 0.25s, opacity 0.25s linear;
   z-index: 5;
-}
-
-@include oGallerySelectors(o-gallery__control--show) {
-  visibility: visible;
-  opacity: 1;
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s;
+  &:not([aria-hidden='true']) {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+  }
 }
 
 @include oGallerySelectors(o-gallery__control--prev) {

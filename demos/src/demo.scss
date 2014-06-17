@@ -14,6 +14,7 @@ ol, ul, li {
 
 .demo__container {
   width: 50%;
+  min-width: 400px;
 }
 
 .demo__slideshow {
@@ -26,14 +27,14 @@ ol, ul, li {
   width: 100%;
   text-align: center;
   overflow: hidden;
-  background-color: _oColorsGetPaletteColor(cool-grey2);
+  background-color: _oColorsGetPaletteColor(grey-tint2);
 }
 
 .demo__slideshow + .demo__thumbnails {
   margin-top: -4px;
 }
 
-.demo__thumbnails.o-gallery--js {
+.demo__thumbnails[data-o-gallery--js] {
   display: block;
 }
 
@@ -42,13 +43,13 @@ ol, ul, li {
   width: 100%;
   height: 74px;
   overflow: hidden;
-  background-color: _oColorsGetPaletteColor(warm-grey1);
+  background-color: _oColorsGetPaletteColor(pink-tint4);
   .o-gallery__item__content {
     margin: 5px 10px;
     width: 114px;
     height: 64px;
   }
-  .o-gallery__item--selected .o-gallery__item__content {
+  [aria-selected='true'] .o-gallery__item__content {
     position: relative;
     outline: 1px solid white;
     img {
@@ -64,8 +65,8 @@ ol, ul, li {
   font-size: 24px;
   text-align: center;
   overflow: hidden;
-  color: _oColorsGetPaletteColor(dark-grey);
-  background-color: _oColorsGetPaletteColor(cool-grey1);
+  color: _oColorsGetPaletteColor(grey-tint4);
+  background-color: _oColorsGetPaletteColor(grey-tint3);
   height: 400px;
   line-height: 400px;
 }

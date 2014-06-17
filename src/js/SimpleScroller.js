@@ -1,6 +1,6 @@
 /*global require,module */
 
-var dom = require('./dom');
+var galleryDom = require('./galleryDom');
 
 /**
  * Mimics FTScroller in simplest possible way (without touch interface, transitions or events)
@@ -23,13 +23,13 @@ function SimpleScroller(containerEl) {
     }
 
     function destroy() {
-        dom.unwrapElement(viewportEl);
+        galleryDom.unwrapElement(viewportEl);
     }
 
     allItemsEl = containerEl.querySelector('.o-gallery__items');
-    viewportEl = dom.createElement('div', '', 'o-gallery__viewport');
+    viewportEl = galleryDom.createElement('div', '', 'o-gallery__viewport');
     containerEl.appendChild(viewportEl);
-    dom.wrapElement(allItemsEl, viewportEl);
+    galleryDom.wrapElement(allItemsEl, viewportEl);
     updateProperties();
 
     this.contentContainerNode = allItemsEl;

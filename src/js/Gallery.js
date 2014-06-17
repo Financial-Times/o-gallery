@@ -1,8 +1,10 @@
 /*global require, module*/
 
 var oDom = require('o-dom'),
-    dom = require('./dom'),
+    DomDelegate = require('dom-delegate'),
     FTScroller = require('ftscroller'),
+    oViewport = require('o-viewport'),
+    galleryDom = require('./galleryDom'),
     SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
@@ -14,7 +16,6 @@ function Gallery(containerEl, config) {
         itemEls,
         selectedItemIndex,
         shownItemIndex,
-        debounceOnResize,
         scroller,
         debounceScroll,
         prevControlDiv,
@@ -41,7 +42,9 @@ function Gallery(containerEl, config) {
             syncID: "o-gallery-" + new Date().getTime(),
             windowResize: true
         },
-        allowTransitions = false;
+        allowTransitions = false,
+        bodyDomDelegate,
+        containerDomDelegate;
 
     function supportsCssTransforms() {
         var htmlEl = document.getElementsByTagName('html')[0];
@@ -74,7 +77,7 @@ function Gallery(containerEl, config) {
     function getSelectedItem() {
         var selectedItem = 0, c, l;
         for (c = 0, l = itemEls.length; c < l; c++) {
-            if (itemEls[c].classList.contains("o-gallery__item--selected")) {
+            if (itemEls[c].getAttribute('aria-selected') === 'true') {
                 selectedItem = c;
                 break;
             }
@@ -88,28 +91,20 @@ function Gallery(containerEl, config) {
     }
 
     function addUiControls() {
-        prevControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--prev");
-        nextControlDiv = dom.createElement("div", "", "o-gallery__control o-gallery__control--next");
+        prevControlDiv = galleryDom.createElement("div", "", "o-gallery__control o-gallery__control--prev");
+        nextControlDiv = galleryDom.createElement("div", "", "o-gallery__control o-gallery__control--next");
         containerEl.appendChild(prevControlDiv);
         containerEl.appendChild(nextControlDiv);
-        prevControlDiv.addEventListener("click", prev, false);
-        nextControlDiv.addEventListener("click", next, false);
+        containerDomDelegate.on('click', '.o-gallery__control--prev', prev);
+        containerDomDelegate.on('click', '.o-gallery__control--next', next);
         if (config.multipleItemsPerPage) {
-            viewportEl.addEventListener("click", selectOnClick, false);
+            containerDomDelegate.on('click', '.o-gallery__viewport', selectOnClick);
         }
     }
 
     function updateControlStates() {
-        if (scroller.scrollLeft > 0) {
-            prevControlDiv.classList.add("o-gallery__control--show");
-        } else {
-            prevControlDiv.classList.remove("o-gallery__control--show");
-        }
-        if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-            nextControlDiv.classList.add("o-gallery__control--show");
-        } else {
-            nextControlDiv.classList.remove("o-gallery__control--show");
-        }
+        prevControlDiv.setAttribute('aria-hidden', String(scroller.scrollLeft <= 0));
+        nextControlDiv.setAttribute('aria-hidden', String(scroller.scrollLeft >= allItemsEl.clientWidth - viewportEl.clientWidth));
     }
 
     function getTitleEl() {
@@ -117,7 +112,7 @@ function Gallery(containerEl, config) {
         if (titleEl) {
             titleEl.parentNode.removeChild(titleEl);
         } else if (config.title) {
-            titleEl = dom.createElement('div', config.title, 'o-gallery__title');
+            titleEl = galleryDom.createElement('div', config.title, 'o-gallery__title');
         }
         if (titleEl && config.title) {
             titleEl.innerHTML = config.title;
@@ -142,7 +137,7 @@ function Gallery(containerEl, config) {
             for (var c = 0, l = itemNums.length; c < l; c++) {
                 var itemNum = itemNums[c];
                 if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
-                    dom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
+                    galleryDom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
                     config.items[itemNum].inserted = true;
                     setCaptionSizes();
                 }
@@ -176,7 +171,7 @@ function Gallery(containerEl, config) {
     }
 
     function listenForSyncEvents() {
-        document.addEventListener("oGallery.itemSelect", onGalleryCustomEvent, false);
+        bodyDomDelegate.on('oGallery.itemSelect', onGalleryCustomEvent);
     }
 
     function triggerEvent(name, data) {
@@ -267,11 +262,7 @@ function Gallery(containerEl, config) {
             if (n !== selectedItemIndex) {
                 selectedItemIndex = n;
                 for (var c = 0, l = itemEls.length; c < l; c++) {
-                    if (c === selectedItemIndex) {
-                        itemEls[c].classList.add("o-gallery__item--selected");
-                    } else {
-                        itemEls[c].classList.remove("o-gallery__item--selected");
-                    }
+                    itemEls[c].setAttribute('aria-selected', String(c === selectedItemIndex));
                 }
                 triggerEvent("oGallery.itemSelect", {
                     itemID: selectedItemIndex,
@@ -317,11 +308,6 @@ function Gallery(containerEl, config) {
         }
     }
 
-    function resizeHandler() {
-        clearTimeout(debounceOnResize);
-        debounceOnResize = setTimeout(onResize, 500);
-    }
-
     function extendObjects(objs) {
         var newObj = {};
         for (var c = 0, l = objs.length; c < l; c++) {
@@ -336,7 +322,7 @@ function Gallery(containerEl, config) {
     }
 
     function updateDataAttributes() {
-        dom.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
+        galleryDom.setAttributesFromProperties(containerEl, config, propertyAttributeMap, ["items"]);
     }
 
     function setSyncID(id) {
@@ -362,29 +348,28 @@ function Gallery(containerEl, config) {
         prevControlDiv = null;
         nextControlDiv.parentNode.removeChild(nextControlDiv);
         nextControlDiv = null;
-        if (config.multipleItemsPerPage) {
-            viewportEl.removeEventListener("click", selectOnClick, false);
-        }
         scroller.destroy(true);
         for (var prop in propertyAttributeMap) {
             if (propertyAttributeMap.hasOwnProperty(prop)) {
                 containerEl.removeAttribute(propertyAttributeMap[prop]);
             }
         }
-        document.removeEventListener("oGallery.itemSelect", onGalleryCustomEvent, false);
-        if (config.windowResize) {
-            window.removeEventListener("resize", resizeHandler, false);
-        }
+        containerDomDelegate.destroy();
+        bodyDomDelegate.destroy();
+        window.removeEventListener("resize", onResize, false);
+        containerEl.removeAttribute('data-o-gallery--js');
     }
 
-    containerEl.classList.add("o-gallery--js");
+    containerEl.setAttribute('data-o-gallery--js', '');
+    bodyDomDelegate = new DomDelegate(document.body);
+    containerDomDelegate = new DomDelegate(containerEl);
     if (isDataSource()) {
-        dom.emptyElement(containerEl);
+        galleryDom.emptyElement(containerEl);
         containerEl.classList.add("o-gallery");
-        allItemsEl = dom.createItemsList(containerEl);
-        itemEls = dom.createItems(allItemsEl, config.items);
+        allItemsEl = galleryDom.createItemsList(containerEl);
+        itemEls = galleryDom.createItems(allItemsEl, config.items);
     }
-    config = extendObjects([defaultConfig, dom.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
+    config = extendObjects([defaultConfig, galleryDom.getPropertiesFromAttributes(containerEl, propertyAttributeMap), config]);
     updateDataAttributes();
     getTitleEl();
     allItemsEl = containerEl.querySelector(".o-gallery__items");
@@ -392,10 +377,10 @@ function Gallery(containerEl, config) {
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
     if (config.windowResize) {
-        window.addEventListener("resize", resizeHandler, false);
+        oViewport.listenTo('resize');
+        window.addEventListener("oViewport.resize", onResize, false);
     }
     insertItemContent(selectedItemIndex);
-    setWidths();
     setCaptionSizes();
     if (supportsCssTransforms()) {
         scroller = new FTScroller(containerEl, {
@@ -435,6 +420,7 @@ function Gallery(containerEl, config) {
     viewportEl.classList.add("o-gallery__viewport");
     insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
     addUiControls();
+    setWidths();
     showItem(selectedItemIndex);
     if (config.multipleItemsPerPage === true) {
         allowTransitions = true;
@@ -470,7 +456,7 @@ Gallery.createAllIn = function(el, config) {
         gEls,
         galleries = [];
     if (el.querySelectorAll) {
-        gEls = el.querySelectorAll("[data-o-component=o-gallery]");
+        gEls = el.querySelectorAll("[data-o-component=o-gallery]:not([data-o-gallery--js])");
         for (var c = 0, l = gEls.length; c < l; c++) {
             galleries.push(new Gallery(gEls[c], conf));
         }

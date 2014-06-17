@@ -237,4 +237,8 @@ The following Gallery classes are applied to elements in the Gallery structure:
 * `o-gallery__item__content`: the container of an item's content
 * `o-gallery__item__caption`: the container of an item's caption (if present)
 
-In addition to this, a `o-gallery__item--selected` class is applied to the _selected_ Gallery item. It is up to a product to use this class to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.
+In addition to this, `aria-selected="true"` attributes is set on the _selected_ Gallery item. It is up to a product to use this attribute to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.
+
+### Hover styles
+
+Gallery uses `:hover` styles. These can be enabled by products adding the `o-hoverable-on` class to the document body.
