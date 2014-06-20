@@ -49,9 +49,11 @@ ol, ul, li {
     width: 114px;
     height: 64px;
   }
-  [aria-selected='true'] .o-gallery__item__content {
-    position: relative;
-    outline: 1px solid white;
+  [aria-selected='true'] {
+    .o-gallery__item__content {
+      position: relative;
+      outline: 1px solid #ffffff;
+    }
     img {
       -webkit-filter: brightness(50%);
     }
