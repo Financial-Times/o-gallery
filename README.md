@@ -222,7 +222,19 @@ The following simplified methods are provided to handle this logic:
 
 These method may be useful for adding keyboard control to a Gallery.
 
-## CSS
+## SASS
+
+By default the SASS is in silent mode, meaning there will be no CSS output.
+
+If you're `@import`ing the SASS into your product or component, and you want to turn off silent mode, then set the following SASS variable:
+
+```sass
+$o-gallery-is-silent: false;
+```
+
+If requesting the CSS from the build service, silent mode will automatically be switched off.
+
+In silent mode, instead of the CSS classes listed below, there will be SASS placeholders using the same name: e.g. `%o-gallery` instead of an `.o-gallery` selector. These placeholders can then be `@extend`ed into selectors of your choice.
 
 _Gallery_ only provides the minimum styling for a Gallery to be functional - e.g. mostly just positioning, and the previous/next UI controls.
 
