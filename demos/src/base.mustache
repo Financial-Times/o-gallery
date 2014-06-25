@@ -6,8 +6,9 @@
 </script>
 
 <div class="demo__container">
-    <div class="demo__slideshow o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
-        <h1 class="o-gallery__title">Ukraine: diplomacy and tension</h1>
+    <p>Single</p>
+    <div class="o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+        <h1 class="o-gallery__title">Gallery title</h1>
         <ol class="o-gallery__items">
             {{#slideshowData}}
                 <li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>
@@ -17,7 +18,8 @@
             {{/slideshowData}}
         </ol>
     </div>
-    <div class="demo__thumbnails o-gallery o-gallery--thumbnails" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-multipleitemsperpage="true">
+    <p>Multiple</p>
+    <div class="o-gallery demo__multi" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-multipleitemsperpage="true">
         <ol class="o-gallery__items">
             {{#thumbnailData}}
                 <li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>

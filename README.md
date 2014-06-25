@@ -236,9 +236,25 @@ If requesting the CSS from the build service, silent mode will automatically be 
 
 In silent mode, instead of the CSS classes listed below, there will be SASS placeholders using the same name: e.g. `%o-gallery` instead of an `.o-gallery` selector. These placeholders can then be `@extend`ed into selectors of your choice.
 
-_Gallery_ only provides the minimum styling for a Gallery to be functional - e.g. mostly just positioning, and the previous/next UI controls.
+## Themes
 
-It is the responsibility of products using Gallery to provide visual styling of the Gallery in general, and for its contents (including preserving aspect ratios, if the width is variable).
+By default, _Gallery_ only provides the minimum styling for a Gallery to be functional - e.g. mostly just positioning, and the previous/next UI controls.
+
+Two themes are provided: for slideshows and thumbnails.
+
+To use the slideshow theme, set a 'o-gallery--slideshow' class on the root Gallery element:
+
+```html
+<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-version="1.0.0">
+```
+
+To use the thumbnails theme, set a `o-gallery--thumbnails` class on the Gallery root element:
+
+```html
+<div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery" data-o-version="1.0.0">
+```
+
+If creating your own theme, see the [Origami section on themes](http://origami.ft.com/docs/component-spec/modules/#themes).
 
 The following Gallery classes are applied to elements in the Gallery structure:
 
@@ -250,6 +266,8 @@ The following Gallery classes are applied to elements in the Gallery structure:
 * `o-gallery__item__caption`: the container of an item's caption (if present)
 
 In addition to this, a `aria-selected="true"` attribute is set on the _selected_ Gallery item. It is up to a product to use this attribute to apply styles as required. This class is only likely to be useful when `multipleItemsPerPage` is set to true. This class is also used to identify the initially selected item when constructing a Gallery from HTML source.
+
+Themes must only be used with the default `o-gallery` classes.
 
 ### Hover styles
 

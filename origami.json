@@ -23,6 +23,11 @@
     },
     "demos": [
         {
+            "path": "/demos/base.html",
+            "expanded": false,
+            "description": ""
+        },
+        {
             "path": "/demos/declarative.html",
             "expanded": true,
             "description": ""

@@ -5,25 +5,40 @@
   -ms-user-select: $v; // IE10+
 }
 
-//  Wrap styles in SASS placeholders and CSS classes (if not in silent mode),
-//  and optionally CSS selectors (if not in silent mode)
-//  $names:         SASS list of placeholder/class names in the format "name1 name2" but without the quotes.
-//                  Will automatically by prefixed with module name.
-//  $cssSelectors:  [optional] string. CSS selectors which should also receive the same styles.
-//                  Does not get auto-prefixed, so must be exactly as you want output on the CSS.
-@mixin oGallerySelectors($names, $cssSelectors: ()) {
-  $selectors: ();
-  $selectors: append($selectors, oGalleryGetPrefixedPlaceholders($names));
-  @if (not $o-gallery-is-silent) {
-    $selectors: append($selectors, oGalleryGetPrefixedClasses($names));
-    $selectors: append($selectors, unquote($cssSelectors), comma);
-  }
-  #{$selectors} {
-    @content;
-  }
-}
-
 @mixin oGalleryOverlayBackground() {
   background-color: oColorsGetColorFor(control, background);
   background-color: transparentize(oColorsGetColorFor(control, background), 0.2);
+}
+
+@mixin oGalleryBase($class: o-gallery) {
+  .#{$class} {
+    @extend %o-gallery;
+  }
+  .#{$class}__title {
+    @extend %o-gallery__title;
+  }
+  .#{$class}__viewport {
+    @extend %o-gallery__viewport;
+  }
+  .#{$class}__items {
+    @extend %o-gallery__items;
+  }
+  .#{$class}__item {
+    @extend %o-gallery__item;
+  }
+  .#{$class}__item__content {
+    @extend %o-gallery__item__content;
+  }
+}
+
+@mixin oGalleryControl($class: o-gallery) {
+  .#{$class}__control {
+    @extend %o-gallery__control;
+  }
+  .#{$class}__control--prev {
+    @extend %o-gallery__control--prev;
+  }
+  .#{$class}__control--next {
+    @extend %o-gallery__control--next;
+  }
 }
