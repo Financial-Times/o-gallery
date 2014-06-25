@@ -1,62 +1,16 @@
 $o-gallery-is-silent: false;
 @import "../../main";
 
-ol, ul, li {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-.o-gallery__item__content img {
-  display: block;
-  width: 100%;
-}
-
 .demo__container {
   width: 50%;
   min-width: 400px;
 }
 
-.demo__slideshow {
-  width: 100%;
-  overflow: hidden;
-}
-
-%demo__gallery__item {
-  display: block;
-  width: 100%;
-  text-align: center;
-  overflow: hidden;
-  background-color: _oColorsGetPaletteColor(grey-tint2);
-}
-
-.demo__slideshow + .demo__thumbnails {
-  margin-top: -4px;
-}
-
-.demo__thumbnails[data-o-gallery--js] {
-  display: block;
-}
-
-.demo__thumbnails {
-  display: none;
-  width: 100%;
-  height: 74px;
-  overflow: hidden;
-  background-color: _oColorsGetPaletteColor(pink-tint4);
+[data-o-gallery-multipleitemsperpage="true"] {
   .o-gallery__item__content {
     margin: 5px 10px;
     width: 114px;
     height: 64px;
-  }
-  [aria-selected='true'] {
-    .o-gallery__item__content {
-      position: relative;
-      outline: 1px solid #ffffff;
-    }
-    img {
-      -webkit-filter: brightness(50%);
-    }
   }
 }
 

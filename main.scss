@@ -8,10 +8,20 @@
 @import "src/scss/_functions";
 @import "src/scss/_mixins";
 
+@import "src/scss/base";
+@import "src/scss/controls";
+@import "src/scss/themes/slideshow";
+@import "src/scss/themes/thumbnails";
+
 @if (not $o-gallery-is-silent) {
   @include oFtIconsFontFace();
   @include oFontsInclude(BentonSans, normal);
+  @include oGalleryBase(o-gallery);
+  @include oGalleryControl(o-gallery);
+  .o-gallery--slideshow {
+    @extend %o-gallery--slideshow;
+  }
+  .o-gallery--thumbnails {
+    @extend %o-gallery--thumbnails;
+  }
 }
-
-@import "src/scss/gallery";
-@import "src/scss/controls";

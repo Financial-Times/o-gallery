@@ -1,4 +1,6 @@
-@include oGallerySelectors(o-gallery__control) {
+%o-gallery__control {
+  @include oFtIconsBaseIconStyles();
+  @include oGalleryOverlayBackground();
   position: absolute;
   top: 50%;
   margin-top: ($_o-gallery-control-height / 2) * -1;
@@ -8,13 +10,11 @@
   line-height: $_o-gallery-control-height;
   text-align: center;
   color: oColorsGetColorFor(control, text);
-  @include oGalleryOverlayBackground();
   overflow: hidden;
   cursor: pointer;
   @at-root #{$o-hoverable-if-hover-enabled} &:hover {
     color: oColorsGetColorFor(control-hover, text);
   }
-  @include oFtIconsBaseIconStyles();
   visibility: hidden;
   opacity: 0;
   -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s linear;
@@ -28,12 +28,12 @@
   }
 }
 
-@include oGallerySelectors(o-gallery__control--prev) {
-  left: 0;
+%o-gallery__control--prev {
   @extend %o-ft-icons-icon--arrow-left;
+  left: 0;
 }
 
-@include oGallerySelectors(o-gallery__control--next) {
-  right: 0;
+%o-gallery__control--next {
   @extend %o-ft-icons-icon--arrow-right;
+  right: 0;
 }
