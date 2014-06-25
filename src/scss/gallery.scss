@@ -12,10 +12,10 @@
   top: 0;
   margin: 0;
   padding: 10px;
-  font-family: BentonSans-normal, Arial, Helvetica, sans-serif;
+  font-family: oFontsGetFontFamilyWithFallbacks(BentonSans);
+  font-weight: normal;
   font-size: 20px;
   line-height: 24px;
-  font-weight: normal;
   color: oColorsGetColorFor(overlay, text);
   @include oGalleryOverlayBackground();
   z-index: 5;
@@ -63,7 +63,8 @@
   bottom: 0;
   box-sizing: border-box;
   padding: 5px 10px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: oFontsGetFontFamilyWithFallbacks(BentonSans);
+  font-weight: normal;
   font-size: 12px;
   line-height: 14px;
   color: oColorsGetColorFor(overlay, text);

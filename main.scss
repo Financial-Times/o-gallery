@@ -2,6 +2,7 @@
 @import "o-colors/main";
 @import "o-ft-icons/main";
 @import "o-hoverable/main";
+@import "o-fonts/main";
 
 @import "src/scss/_variables";
 @import "src/scss/_functions";
@@ -9,6 +10,7 @@
 
 @if (not $o-gallery-is-silent) {
   @include oFtIconsFontFace();
+  @include oFontsInclude(BentonSans, normal);
 }
 
 @import "src/scss/gallery";
