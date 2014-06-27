@@ -9,7 +9,7 @@
     ".travis.yml"
   ],
   "dependencies": {
-    "o-colors": "^2.3.13",
+    "o-colors": "^2.3.16",
     "o-ft-icons": "^2.0.0",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.3.5",
     "o-dom": "^0.3.0",

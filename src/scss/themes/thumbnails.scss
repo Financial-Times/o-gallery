@@ -4,7 +4,7 @@
   width: 100%;
   height: 74px;
   overflow: hidden;
-  background-color: _oColorsGetPaletteColor(pink-tint4);
+  background-color: oColorsGetColorFor(gallery-thumbnails, background);
   .o-gallery--slideshow + & {
     margin-top: -4px;
   }
