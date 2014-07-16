@@ -463,11 +463,13 @@ Gallery.createAllIn = function(el, config) {
         gEls,
         galleries = [];
     if (el.querySelectorAll) {
-        gEls = el.querySelectorAll("[data-o-component=o-gallery]:not([data-o-gallery--js])");
+        gEls = el.querySelectorAll("[data-o-component=o-gallery]");
         for (var c = 0, l = gEls.length; c < l; c++) {
+            if (!gEls[c].getAttribute('data-o-gallery--js')) {
                 galleries.push(new Gallery(gEls[c], conf));
             }
         }
+    }
     return galleries;
 };
 
