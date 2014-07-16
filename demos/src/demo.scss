@@ -1,9 +1,8 @@
 $o-gallery-is-silent: false;
 @import "../../main";
 
-.demo__container {
-  width: 50%;
-  min-width: 400px;
+.o-gallery {
+  max-width: 600px;
 }
 
 [data-o-gallery-multipleitemsperpage="true"] {

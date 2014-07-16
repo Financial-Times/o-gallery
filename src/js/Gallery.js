@@ -46,9 +46,15 @@ function Gallery(containerEl, config) {
         bodyDomDelegate,
         containerDomDelegate;
 
+    // TODO:AB: This should probably use o-useragent
     function supportsCssTransforms() {
-        var htmlEl = document.getElementsByTagName('html')[0];
-        return htmlEl.classList.contains("csstransforms") || htmlEl.classList.contains("csstransforms3d") || htmlEl.classList.contains("csstransitions");
+        var b = document.body || document.documentElement, s = b.style, p = 'Transition';
+        var v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+
+        for (var i=0; i<v.length; i++) {
+            if (typeof s[v[i] + p] == 'string' || typeof s[v[i] + p.toLowerCase()] == 'string') return true;
+        }
+        return false;
     }
 
     function isDataSource() {
@@ -222,6 +228,7 @@ function Gallery(containerEl, config) {
         if (isValidItem(n)) {
             bringItemIntoView(n);
             shownItemIndex = n;
+            updateControlStates();
         }
     }
 
@@ -456,9 +463,11 @@ Gallery.createAllIn = function(el, config) {
         gEls,
         galleries = [];
     if (el.querySelectorAll) {
-        gEls = el.querySelectorAll("[data-o-component=o-gallery]:not([data-o-gallery--js])");
+        gEls = el.querySelectorAll("[data-o-component=o-gallery]");
         for (var c = 0, l = gEls.length; c < l; c++) {
-            galleries.push(new Gallery(gEls[c], conf));
+            if (!gEls[c].getAttribute('data-o-gallery--js')) {
+                galleries.push(new Gallery(gEls[c], conf));
+            }
         }
     }
     return galleries;

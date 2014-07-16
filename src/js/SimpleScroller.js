@@ -3,8 +3,8 @@
 var galleryDom = require('./galleryDom');
 
 /**
- * Mimics FTScroller in simplest possible way (without touch interface, transitions or events)
- * Intended for IE8 particularly.
+ * Mimics FTScroller without touch interface, transitions or events
+ * Intended for IE8 or other browsers that lack support for CSS transitions
  */
 function SimpleScroller(containerEl) {
     'use strict';

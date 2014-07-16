@@ -18,7 +18,8 @@
         {
             "name": "imperative",
             "template": "demos/src/imperative.mustache",
-            "js": "demos/src/imperative.js"
+            "js": "demos/src/imperative.js",
+            "expanded": false
         }
     ]
 }
