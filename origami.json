@@ -34,7 +34,7 @@
         },
         {
             "path": "/demos/imperative.html",
-            "expanded": true,
+            "expanded": false,
             "description": ""
         }
     ]
