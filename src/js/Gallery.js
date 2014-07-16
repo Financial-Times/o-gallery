@@ -228,6 +228,7 @@ function Gallery(containerEl, config) {
         if (isValidItem(n)) {
             bringItemIntoView(n);
             shownItemIndex = n;
+            updateControlStates();
         }
     }
 
@@ -464,9 +465,9 @@ Gallery.createAllIn = function(el, config) {
     if (el.querySelectorAll) {
         gEls = el.querySelectorAll("[data-o-component=o-gallery]:not([data-o-gallery--js])");
         for (var c = 0, l = gEls.length; c < l; c++) {
-            galleries.push(new Gallery(gEls[c], conf));
+                galleries.push(new Gallery(gEls[c], conf));
+            }
         }
-    }
     return galleries;
 };
 
