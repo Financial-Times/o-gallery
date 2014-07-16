@@ -1,7 +1,5 @@
 /*global require, console, slideshowGalleryConfig, thumbnailGalleryConfig*/
 
-require('./polyfills.js');
-
 var Gallery = require('./../../main.js');
 
 var slideshowImperative = new Gallery(document.getElementById("imperative-slideshow"), slideshowGalleryConfig),
