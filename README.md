@@ -37,6 +37,14 @@ With the HTML already in the page, the following method can be called to search 
     var galleries = Gallery.createAllIn();
     
 Any gallery objects that are constructed will be returned.
+
+Alternatively, a `o.DOMContentLoaded` event can be dispatched on the `document` to auto-construct a __o-gallery__ object for each element with a `data-o-component="o-gallery"` attribute:
+
+```javascript
+document.addEventListener("DOMContentLoaded", function() {
+    document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
+});
+```
     
 Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
