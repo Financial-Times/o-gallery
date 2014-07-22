@@ -15,7 +15,8 @@
         "optional": [
             "csstransforms",
             "csstransforms3d",
-            "csstransitions"
+            "csstransitions",
+            "customevent"
         ]
     },
     "ci": {
