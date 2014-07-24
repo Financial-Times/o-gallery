@@ -1,4 +1,8 @@
 /*global require, console */
 
-var Gallery = require('./../../main.js');
-window.galleries = Gallery.createAllIn(document.body);
+require('./../../main.js');
+
+document.addEventListener("DOMContentLoaded", function() {
+    "use strict";
+    document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
+});
