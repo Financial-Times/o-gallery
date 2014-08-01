@@ -15,7 +15,7 @@
     "o-dom": "^0.3.0",
     "dom-delegate": "~2.0.0",
     "o-viewport": "^0.1.1",
-    "o-hoverable": "^0.1.1",
+    "o-hoverable": ">=0.1.1 <0.3",
     "o-fonts": "^1.4.1"
   },
   "ci": {
