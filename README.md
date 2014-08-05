@@ -12,6 +12,10 @@ A configurable content gallery. For carousels, slideshows and thumbnail strips.
 
 A _shown_ item does not necessarily have to be _selected_, and vice versa.
 
+The following wireframes show two example galleries: A) a gallery with single items per page, with a title and caption; B) a gallery with multiple items per page and no captions (ie, a thumbstrip). Galleries would often be used together in these forms to create a single coherent interface for viewing and navigating slideshows of images.
+
+![Wireframe](img/wireframe.png)
+
 ## Browser support
 
 Gallery supports the same browsers as [FTScroller](https://github.com/ftlabs/ftscroller) (which it uses for touch/mouse input and transition behaviour), but also adds graceful degradation for IE8.
