@@ -17,14 +17,10 @@
   }
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s linear;
-  transition: visibility 0s linear 0.25s, opacity 0.25s linear;
   z-index: 5;
-  &:not([aria-hidden='true']) {
+  &[aria-hidden='false'] {
     visibility: visible;
     opacity: 1;
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
   }
 }
 

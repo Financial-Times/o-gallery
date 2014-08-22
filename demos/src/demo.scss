@@ -20,8 +20,8 @@ $o-gallery-is-silent: false;
   font-size: 24px;
   text-align: center;
   overflow: hidden;
-  color: _oColorsGetPaletteColor(grey-tint4);
-  background-color: _oColorsGetPaletteColor(grey-tint3);
+  color: oColorsGetPaletteColor(grey-tint4);
+  background-color: oColorsGetPaletteColor(grey-tint3);
   height: 400px;
   line-height: 400px;
 }
