@@ -457,13 +457,18 @@ function Gallery(containerEl, config) {
 
 }
 
-Gallery.createAllIn = function(el, config) {
+Gallery.init = function(el, config) {
     "use strict";
     var conf = config || {},
         gEls,
         galleries = [];
+    if (!el) {
+        el = document.body;
+    } else if (!(el instanceof HTMLElement)) {
+        el = document.querySelector(el);
+    }
     if (el.querySelectorAll) {
-        gEls = el.querySelectorAll("[data-o-component=o-gallery]");
+        gEls = el.querySelectorAll("[data-o-component~=o-gallery]");
         for (var c = 0, l = gEls.length; c < l; c++) {
             if (!gEls[c].getAttribute('data-o-gallery--js')) {
                 galleries.push(new Gallery(gEls[c], conf));

@@ -2,7 +2,7 @@
 var oGallery = require('./src/js/Gallery'),
     constructAll = function() {
         'use strict';
-        oGallery.createAllIn(document.body);
+        oGallery.init();
         document.removeEventListener('o.DOMContentLoaded', constructAll);
     };
 
