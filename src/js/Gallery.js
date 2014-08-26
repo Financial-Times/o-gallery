@@ -383,10 +383,7 @@ function Gallery(containerEl, config) {
     itemEls = containerEl.querySelectorAll(".o-gallery__item");
     selectedItemIndex = getSelectedItem();
     shownItemIndex = selectedItemIndex;
-    if (config.windowResize) {
-        oViewport.listenTo('resize');
-        window.addEventListener("oViewport.resize", onResize, false);
-    }
+    
     insertItemContent(selectedItemIndex);
     setCaptionSizes();
     if (supportsCssTransforms()) {
@@ -435,6 +432,13 @@ function Gallery(containerEl, config) {
     updateControlStates();
     listenForSyncEvents();
 
+    if (config.windowResize) {
+        oViewport.listenTo('resize');
+        window.addEventListener("oViewport.resize", onResize, false);
+        // Force an initial resize in case all images are loaded before o.DOMContentLoaded is fired and the resize event isn't
+        onResize();
+    }
+
     this.showItem = showItem;
     this.getSelectedItem = getSelectedItem;
     this.showPrevItem = showPrevItem;
@@ -454,7 +458,6 @@ function Gallery(containerEl, config) {
     triggerEvent("oGallery.ready", {
         gallery: this
     });
-
 }
 
 Gallery.init = function(el, config) {
