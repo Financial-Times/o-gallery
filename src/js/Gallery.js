@@ -367,6 +367,12 @@ function Gallery(containerEl, config) {
 		containerEl.removeAttribute('data-o-gallery--js');
 	}
 
+	if (!containerEl) {
+		containerEl = document.body;
+	} else if (!(el instanceof HTMLElement)) {
+		containerEl = document.querySelector(containerEl);
+	}
+	
 	containerEl.setAttribute('data-o-gallery--js', '');
 	bodyDomDelegate = new DomDelegate(document.body);
 	containerDomDelegate = new DomDelegate(containerEl);
