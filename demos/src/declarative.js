@@ -1,4 +1,4 @@
-/*global require, console */
+/*global require */
 
 require('./../../main.js');
 

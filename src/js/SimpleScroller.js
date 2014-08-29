@@ -1,4 +1,5 @@
 /*global require,module */
+'use strict';
 
 var galleryDom = require('./galleryDom');
 
@@ -7,8 +8,7 @@ var galleryDom = require('./galleryDom');
  * Intended for IE8 or other browsers that lack support for CSS transitions
  */
 function SimpleScroller(containerEl) {
-    'use strict';
-
+    
     var self = this,
         allItemsEl,
         viewportEl;

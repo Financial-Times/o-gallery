@@ -1,4 +1,5 @@
 /*global require, module*/
+'use strict';
 
 var oDom = require('o-dom'),
 	DomDelegate = require('dom-delegate'),
@@ -8,7 +9,6 @@ var oDom = require('o-dom'),
 	SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
-	"use strict";
 
 	var viewportEl,
 		titleEl,
@@ -52,7 +52,7 @@ function Gallery(containerEl, config) {
 		var v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
 
 		for (var i=0; i<v.length; i++) {
-			if (typeof s[v[i] + p] == 'string' || typeof s[v[i] + p.toLowerCase()] == 'string') return true;
+			if (typeof s[v[i] + p] === 'string' || typeof s[v[i] + p.toLowerCase()] === 'string') return true;
 		}
 		return false;
 	}
@@ -369,7 +369,7 @@ function Gallery(containerEl, config) {
 
 	if (!containerEl) {
 		containerEl = document.body;
-	} else if (!(el instanceof HTMLElement)) {
+	} else if (!(containerEl instanceof HTMLElement)) {
 		containerEl = document.querySelector(containerEl);
 	}
 	
@@ -467,7 +467,6 @@ function Gallery(containerEl, config) {
 }
 
 Gallery.init = function(el, config) {
-	"use strict";
 	var conf = config || {},
 		gEls,
 		galleries = [];

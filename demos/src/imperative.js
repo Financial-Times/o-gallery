@@ -1,4 +1,5 @@
-/*global require, console, slideshowGalleryConfig, thumbnailGalleryConfig*/
+/*global require, slideshowGalleryConfig, thumbnailGalleryConfig*/
+'use strict';
 
 var Gallery = require('./../../main.js');
 
