@@ -22,7 +22,6 @@ function Gallery(containerEl, config) {
 		nextControlDiv,
 		propertyAttributeMap = {
 			component: "data-o-component",
-			version: "data-o-version",
 			syncID: "data-o-gallery-syncid",
 			multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
 			touch: "data-o-gallery-touch",
@@ -33,7 +32,6 @@ function Gallery(containerEl, config) {
 		},
 		defaultConfig = {
 			component: "o-gallery",
-			version: "0.0.0",
 			multipleItemsPerPage: false,
 			captions: true,
 			captionMinHeight: 24,
@@ -115,13 +113,13 @@ function Gallery(containerEl, config) {
 
 	function getTitleEl() {
 		titleEl = containerEl.querySelector(".o-gallery__title");
-		if (titleEl) {
-			titleEl.parentNode.removeChild(titleEl);
-		} else if (config.title) {
-			titleEl = galleryDom.createElement('div', config.title, 'o-gallery__title');
-		}
-		if (titleEl && config.title) {
-			titleEl.innerHTML = config.title;
+		if (config.title) {
+			if (titleEl) {
+				titleEl.parentNode.removeChild(titleEl);
+				titleEl.innerHTML = config.title;
+			} else {
+				titleEl = galleryDom.createElement('div', config.title, 'o-gallery__title');
+			}
 		}
 	}
 
@@ -424,10 +422,14 @@ function Gallery(containerEl, config) {
 		scroller = new SimpleScroller(containerEl);
 	}
 	viewportEl = scroller.contentContainerNode.parentNode;
-	if (titleEl) {
-		viewportEl.insertBefore(titleEl, null);
-	}
 	viewportEl.classList.add("o-gallery__viewport");
+	if (titleEl) {
+		if (supportsCssTransforms()) {
+			viewportEl.appendChild(titleEl);
+		} else {
+			containerEl.appendChild(titleEl);
+		}
+	}
 	insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
 	addUiControls();
 	setWidths();
