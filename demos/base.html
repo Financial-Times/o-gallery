@@ -6,14 +6,14 @@
     <meta charset="utf-8" />
     <title>o-gallery: base demo</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <script src="//polyfill.webservices.ft.com/v1/polyfill.min.js"></script>
     <style>body { margin: 0; }.demo-js .o--if-nojs { display: none; }</style>
     <link rel="stylesheet" href="/bundles/css?modules=o-gallery:/demos/src/demo.scss" />
 </head>
 <body class="">
     <script>(function(d) {var b = d.getElementsByTagName('body')[0];b.className = b.className + ' demo-js';})(document);</script>
-    
     <p>Single</p>
-<div class="o-gallery" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+<div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
     <h1 class="o-gallery__title">Gallery title</h1>
     <ol class="o-gallery__items">
             <li class="o-gallery__item" aria-selected="true">
@@ -47,7 +47,7 @@
     </ol>
 </div>
 <p>Multiple</p>
-<div class="o-gallery demo__multi" data-o-component="o-gallery" data-o-version="1.0.0" data-o-gallery-multipleitemsperpage="true">
+<div class="o-gallery demo__multi" data-o-component="o-gallery" data-o-gallery-multipleitemsperpage="true">
     <ol class="o-gallery__items">
             <li class="o-gallery__item" aria-selected="true">
                 <div class="o-gallery__item__content"><img src="http://im.ft-static.com/content/images/bf78da6c-8e79-493a-8af6-11db6ee66666.img" /></div>

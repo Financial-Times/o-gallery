@@ -1,6 +1,6 @@
 %o-gallery {
   @include oGalleryUserSelect(none);
-  position: static;
+  position: relative;
   & ol,
   & ul,
   & li {
@@ -12,16 +12,13 @@
     display: block;
     width: 100%;
   }
-  &[data-o-gallery--js] {
-    position: relative;
-  }
   &[data-o-gallery-multipleitemsperpage=true] & {
     margin: 0 $_o-gallery-control-width;
   }
 }
 
 %o-gallery__title {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   z-index: 5;
