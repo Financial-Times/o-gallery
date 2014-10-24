@@ -115,7 +115,6 @@ function Gallery(containerEl, config) {
 		titleEl = containerEl.querySelector(".o-gallery__title");
 		if (config.title) {
 			if (titleEl) {
-				titleEl.parentNode.removeChild(titleEl);
 				titleEl.innerHTML = config.title;
 			} else {
 				titleEl = galleryDom.createElement('div', config.title, 'o-gallery__title');
@@ -423,12 +422,10 @@ function Gallery(containerEl, config) {
 	}
 	viewportEl = scroller.contentContainerNode.parentNode;
 	viewportEl.classList.add("o-gallery__viewport");
-	if (titleEl) {
-		if (supportsCssTransforms()) {
-			viewportEl.appendChild(titleEl);
-		} else {
-			containerEl.appendChild(titleEl);
-		}
+	if (titleEl && supportsCssTransforms()) {
+		// Title needs to be moved into the viewport so it stays visible when pages change
+		titleEl.parentNode.removeChild(titleEl);
+		viewportEl.appendChild(titleEl);
 	}
 	insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
 	addUiControls();
