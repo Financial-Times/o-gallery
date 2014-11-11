@@ -366,7 +366,7 @@ function Gallery(containerEl, config) {
 
 	if (!containerEl) {
 		containerEl = document.body;
-	} else if (!(containerEl instanceof HTMLElement)) {
+	} else if (containerEl.nodeType !== 1) {
 		containerEl = document.querySelector(containerEl);
 	}
 	
@@ -471,7 +471,7 @@ Gallery.init = function(el, config) {
 		galleries = [];
 	if (!el) {
 		el = document.body;
-	} else if (!(el instanceof HTMLElement)) {
+	} else if (el.nodeType !== 1) {
 		el = document.querySelector(el);
 	}
 	if (el.querySelectorAll) {
