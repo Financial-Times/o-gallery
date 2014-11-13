@@ -18,11 +18,4 @@
   @include oFtIconsFontFace();
   @include oFontsInclude(BentonSans, normal);
   @include oGalleryBase(o-gallery);
-  @include oGalleryControl(o-gallery);
-  .o-gallery--slideshow {
-    @extend %o-gallery--slideshow;
-  }
-  .o-gallery--thumbnails {
-    @extend %o-gallery--thumbnails;
-  }
 }

@@ -1,1 +1,4 @@
-@include oColorsSetUseCase(gallery-thumbnails, background, pink-tint4);
+@include oColorsSetUseCase(o-gallery-thumbnails, background, pink-tint4);
+@include oColorsSetUseCase(o-gallery-overlay, background, grey-tint5);
+@include oColorsSetUseCase(o-gallery-overlay, text, white);
+@include oColorsSetUseCase(o-gallery-overlay-hover, text, grey-tint1);

@@ -6,13 +6,19 @@
 }
 
 @mixin oGalleryOverlayBackground() {
-  background: oColorsGetColorFor(control, background);
-  background-color: transparentize(oColorsGetColorFor(control, background), 0.2);
+  background: oColorsGetColorFor(o-gallery-overlay, background);
+  background-color: transparentize(oColorsGetColorFor(o-gallery-overlay, background), 0.2);
 }
 
 @mixin oGalleryBase($class: o-gallery) {
   .#{$class} {
     @extend %o-gallery;
+  }
+  .#{$class}--slideshow {
+    @extend %o-gallery--slideshow;
+  }
+  .#{$class}--thumbnails {
+    @extend %o-gallery--thumbnails;
   }
   .#{$class}__title {
     @extend %o-gallery__title;
@@ -29,9 +35,6 @@
   .#{$class}__item__content {
     @extend %o-gallery__item__content;
   }
-}
-
-@mixin oGalleryControl($class: o-gallery) {
   .#{$class}__control {
     @extend %o-gallery__control;
   }

@@ -5,7 +5,7 @@
     "main.scss"
   ],
   "dependencies": {
-    "o-colors": "^2.3.16",
+    "o-colors": "^2.4.0",
     "o-ft-icons": "^2.0.0",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.5.0",
     "o-dom": "^0.3.0",

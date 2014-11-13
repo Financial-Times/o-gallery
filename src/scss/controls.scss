@@ -9,18 +9,16 @@
   font-size: 60px;
   line-height: $_o-gallery-control-height;
   text-align: center;
-  color: oColorsGetColorFor(control, text);
+  color: oColorsGetColorFor(o-gallery-overlay, text);
   overflow: hidden;
   cursor: pointer;
   @at-root #{$o-hoverable-if-hover-enabled} &:hover {
-    color: oColorsGetColorFor(control-hover, text);
+    color: oColorsGetColorFor(o-gallery-overlay-hover, text);
   }
   visibility: hidden;
-  opacity: 0;
   z-index: 5;
   &[aria-hidden='false'] {
     visibility: visible;
-    opacity: 1;
   }
 }
 

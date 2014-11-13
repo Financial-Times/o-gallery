@@ -179,14 +179,12 @@ function Gallery(containerEl, config) {
 
 	function triggerEvent(name, data) {
 		data.syncID = config.syncID;
-		if (document.createEvent && containerEl.dispatchEvent) {
-			var event = document.createEvent('Event');
-			event.initEvent(name, true, true);
-			if (data) {
-				event.detail = data;
-			}
-			containerEl.dispatchEvent(event);
-		}
+		var event = new CustomEvent(name, {
+			'bubbles': true,
+			'cancelable': true,
+			'detail': data || {}
+		});
+		containerEl.dispatchEvent(event);
 	}
 
 	function moveViewport(left) {
@@ -429,7 +427,6 @@ function Gallery(containerEl, config) {
 	}
 	insertItemContent(getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth, false));
 	addUiControls();
-	setWidths();
 	showItem(selectedItemIndex);
 	if (config.multipleItemsPerPage === true) {
 		allowTransitions = true;
@@ -437,11 +434,21 @@ function Gallery(containerEl, config) {
 	updateControlStates();
 	listenForSyncEvents();
 
+	// If it's the thumbnails gallery, check that the thumbnails' clientwidth has been set before resizing
+	// as this takes time in IE8
+	function forceResize() {
+		if (!config.multipleItemsPerPage || parseInt(itemEls[selectedItemIndex].clientWidth, 10) !== 0) {
+			onResize();
+		} else {
+			setTimeout(forceResize, 150);
+		}
+	}
+
 	if (config.windowResize) {
 		oViewport.listenTo('resize');
 		window.addEventListener("oViewport.resize", onResize, false);
 		// Force an initial resize in case all images are loaded before o.DOMContentLoaded is fired and the resize event isn't
-		onResize();
+		forceResize();
 	}
 
 	this.showItem = showItem;
