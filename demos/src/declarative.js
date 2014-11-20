@@ -1,8 +1,8 @@
 /*global require */
+"use strict";
 
 require('./../../main.js');
 
 document.addEventListener("DOMContentLoaded", function() {
-    "use strict";
-    document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
+	document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
 });

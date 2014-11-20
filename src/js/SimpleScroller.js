@@ -8,33 +8,33 @@ var galleryDom = require('./galleryDom');
  * Intended for IE8 or other browsers that lack support for CSS transitions
  */
 function SimpleScroller(containerEl) {
-    
-    var self = this,
-        allItemsEl,
-        viewportEl;
 
-    function updateProperties() {
-        self.scrollLeft = viewportEl.scrollLeft;
-    }
+	var self = this;
+	var allItemsEl;
+	var viewportEl;
 
-    function scrollTo(n) {
-        viewportEl.scrollLeft = n;
-        updateProperties();
-    }
+	function updateProperties() {
+		self.scrollLeft = viewportEl.scrollLeft;
+	}
 
-    function destroy() {
-        galleryDom.unwrapElement(viewportEl);
-    }
+	function scrollTo(n) {
+		viewportEl.scrollLeft = n;
+		updateProperties();
+	}
 
-    allItemsEl = containerEl.querySelector('.o-gallery__items');
-    viewportEl = galleryDom.createElement('div', '', 'o-gallery__viewport');
-    containerEl.appendChild(viewportEl);
-    galleryDom.wrapElement(allItemsEl, viewportEl);
-    updateProperties();
+	function destroy() {
+		galleryDom.unwrapElement(viewportEl);
+	}
 
-    this.contentContainerNode = allItemsEl;
-    this.scrollTo = scrollTo;
-    this.destroy = destroy;
+	allItemsEl = containerEl.querySelector('.o-gallery__items');
+	viewportEl = galleryDom.createElement('div', '', 'o-gallery__viewport');
+	containerEl.appendChild(viewportEl);
+	galleryDom.wrapElement(allItemsEl, viewportEl);
+	updateProperties();
+
+	this.contentContainerNode = allItemsEl;
+	this.scrollTo = scrollTo;
+	this.destroy = destroy;
 
 }
 

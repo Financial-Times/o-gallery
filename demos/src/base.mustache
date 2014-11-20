@@ -1,22 +1,22 @@
 <p>Single</p>
 <div class="o-gallery" data-o-component="o-gallery" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
-    <h1 class="o-gallery__title">Gallery title</h1>
-    <ol class="o-gallery__items">
-        {{#slideshowData}}
-            <li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>
-                <div class="o-gallery__item__content">{{{content}}}</div>
-                <div class="o-gallery__item__caption">{{{caption}}}</div>
-            </li>
-        {{/slideshowData}}
-    </ol>
+	<h1 class="o-gallery__title">Gallery title</h1>
+	<ol class="o-gallery__items">
+		{{#slideshowData}}
+			<li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>
+				<div class="o-gallery__item__content">{{{content}}}</div>
+				<div class="o-gallery__item__caption">{{{caption}}}</div>
+			</li>
+		{{/slideshowData}}
+	</ol>
 </div>
 <p>Multiple</p>
 <div class="o-gallery demo__multi" data-o-component="o-gallery" data-o-gallery-multipleitemsperpage="true">
-    <ol class="o-gallery__items">
-        {{#thumbnailData}}
-            <li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>
-                <div class="o-gallery__item__content">{{{content}}}</div>
-            </li>
-        {{/thumbnailData}}
-    </ol>
+	<ol class="o-gallery__items">
+		{{#thumbnailData}}
+			<li class="o-gallery__item"{{#selected}} aria-selected="true"{{/selected}}>
+				<div class="o-gallery__item__content">{{{content}}}</div>
+			</li>
+		{{/thumbnailData}}
+	</ol>
 </div>

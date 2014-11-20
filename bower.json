@@ -1,24 +1,24 @@
 {
-  "name": "o-gallery",
-  "main": [
-    "main.js",
-    "main.scss"
-  ],
-  "ignore": [
-    "docs/",
-    ".travis.yml"
-  ],
-  "dependencies": {
-    "o-colors": "^2.3.16",
-    "o-ft-icons": "^2.0.0",
-    "ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.3.5",
-    "o-dom": "^0.3.0",
-    "dom-delegate": "~2.0.0",
-    "o-viewport": "^0.1.1",
-    "o-hoverable": ">=0.1.1 <0.3",
-    "o-fonts": "^1.4.1"
-  },
-  "ci": {
-    "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
-  }
+	"name": "o-gallery",
+	"main": [
+		"main.js",
+		"main.scss"
+	],
+	"ignore": [
+		"docs/",
+		".travis.yml"
+	],
+	"dependencies": {
+		"o-colors": "^2.3.16",
+		"o-ft-icons": "^2.0.0",
+		"ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.3.5",
+		"o-dom": "^0.3.0",
+		"dom-delegate": "~2.0.0",
+		"o-viewport": "^0.1.1",
+		"o-hoverable": ">=0.1.1 <0.3",
+		"o-fonts": "^1.4.1"
+	},
+	"ci": {
+		"travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
+	}
 }
