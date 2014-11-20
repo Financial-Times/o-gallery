@@ -1,24 +1,24 @@
 {
-    "options": {
-        "sass": "demos/src/demo.scss",
-        "js": "demos/src/declarative.js",
-        "data": "demos/src/data.json"
-    },
-    "demos": [
-        {
-            "name": "base",
-            "template": "demos/src/base.mustache",
-            "expanded": false
-        },
-        {
-            "name": "declarative",
-            "template": "demos/src/declarative.mustache"
-        },
-        {
-            "name": "imperative",
-            "template": "demos/src/imperative.mustache",
-            "js": "demos/src/imperative.js",
-            "expanded": false
-        }
-    ]
+	"options": {
+		"sass": "demos/src/demo.scss",
+		"js": "demos/src/declarative.js",
+		"data": "demos/src/data.json"
+	},
+	"demos": [
+		{
+			"name": "base",
+			"template": "demos/src/base.mustache",
+			"expanded": false
+		},
+		{
+			"name": "declarative",
+			"template": "demos/src/declarative.mustache"
+		},
+		{
+			"name": "imperative",
+			"template": "demos/src/imperative.mustache",
+			"js": "demos/src/imperative.js",
+			"expanded": false
+		}
+	]
 }
