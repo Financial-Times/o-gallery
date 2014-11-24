@@ -20,7 +20,7 @@ The following wireframes show two example galleries: A) a gallery with single it
 
 Gallery supports the same browsers as [FTScroller](https://github.com/ftlabs/ftscroller) (which it uses for touch/mouse input and transition behaviour), but also adds graceful degradation for IE8 and IE9.
 
-In IE8 and IE9 there is no option for touch input support and there are no transitions (items & pages will change instantly). Usage of the [Polyfill service](http://polyfill.webservices.ft.com/v1/docs/) is necessary in IE.
+In IE8 and IE9 there is no option for touch input support and there are no transitions (items & pages will change instantly). Usage of the [Polyfill service](http://polyfill.webservices.ft.com/v1/docs/) is necessary in IE, and you need to request the default set of polyfills and, if you want it to work on IE8, also add the DOMContentLoaded one.
 
 ## Creating Galleries
 
@@ -38,15 +38,15 @@ Galleries can be constructed in three ways:
 
 With the HTML already in the page, the following method can be called to search for Gallery HTML elements and automatically construct a Gallery for each one:
 
-    var galleries = Gallery.createAllIn();
-    
+	var galleries = Gallery.createAllIn();
+
 Any gallery objects that are constructed will be returned.
 
 Alternatively, a `o.DOMContentLoaded` event can be dispatched on the `document` to auto-construct a __o-gallery__ object for each element with a `data-o-component="o-gallery"` attribute:
 
 ```javascript
 document.addEventListener("DOMContentLoaded", function() {
-    document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
+	document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
 });
 ```
     
@@ -58,21 +58,21 @@ Optionally, a DOM element can be passed to limit the search to a particular area
 
 With the HTML already in the page, a Gallery object can be constructed like so:
 
-    var gallery1 = new Gallery(document.getElementById('#gallery1');
-    
+	var gallery1 = new Gallery(document.getElementById('#gallery1');
+
 An optional configuration object can be passed as second argument:
-    
-    var gallery2 = new Gallery(document.getElementById('#gallery2', {
-        // config options
-    });
+
+	var gallery2 = new Gallery(document.getElementById('#gallery2', {
+		// config options
+	});
 
 ### 3. Imperatively from JS data
 
 With just an HTML container element already in the page, a Gallery object can be constructed by passing the content as data via the config object:
 
-    var gallery = new Gallery(document.getElementById('#gallery', {
-        items: [ <itemObject>, <itemObject>, <itemObject> ...]
-    });
+	var gallery = new Gallery(document.getElementById('#gallery', {
+		items: [ <itemObject>, <itemObject>, <itemObject> ...]
+	});
 
 Where an itemObject can consist of the following properties:
 
@@ -98,11 +98,11 @@ Whether this item is selected. If more than one item is set to be selected, then
 
 For example:
 
-    {
-        content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
-        caption: '<p>Slideshow caption text.</p>',
-        selected: true
-    }
+	{
+		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+		caption: '<p>Slideshow caption text.</p>',
+		selected: true
+	}
 
 ## Configuration
 
@@ -226,11 +226,11 @@ The desired behaviour of the left & right UI controls for single- and multiple-i
 The following simplified methods are provided to handle this logic:
 
 * `next()`:
-    * multiple: false - `selectNextItem(true); // select & show`
-    * multiple: true - `showNextPage(); // doesn't affect selection`
+	* multiple: false - `selectNextItem(true); // select & show`
+	* multiple: true - `showNextPage(); // doesn't affect selection`
 * `prev()`:
-    * multiple: false - `selectPrevItem(true); // select & show`
-    * multiple: true - `showPrevPage(); // doesn't affect selection`
+	* multiple: false - `selectPrevItem(true); // select & show`
+	* multiple: true - `showPrevPage(); // doesn't affect selection`
 
 These method may be useful for adding keyboard control to a Gallery.
 
@@ -240,7 +240,7 @@ By default the SASS is in silent mode, meaning there will be no CSS output.
 
 If you're `@import`ing the SASS into your product or component, and you want to turn off silent mode, then set the following SASS variable:
 
-```sass
+```scss
 $o-gallery-is-silent: false;
 ```
 

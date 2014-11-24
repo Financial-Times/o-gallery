@@ -10,39 +10,39 @@ var oDom = require('o-dom'),
 
 function Gallery(containerEl, config) {
 
-	var viewportEl,
-		titleEl,
-		allItemsEl,
-		itemEls,
-		selectedItemIndex,
-		shownItemIndex,
-		scroller,
-		debounceScroll,
-		prevControlDiv,
-		nextControlDiv,
-		propertyAttributeMap = {
-			component: "data-o-component",
-			syncID: "data-o-gallery-syncid",
-			multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
-			touch: "data-o-gallery-touch",
-			captions: "data-o-gallery-captions",
-			captionMinHeight: "data-o-gallery-captionminheight",
-			captionMaxHeight: "data-o-gallery-captionmaxheight",
-			windowResize: "data-o-gallery-windowresize"
-		},
-		defaultConfig = {
-			component: "o-gallery",
-			multipleItemsPerPage: false,
-			captions: true,
-			captionMinHeight: 24,
-			captionMaxHeight: 52,
-			touch: false,
-			syncID: "o-gallery-" + new Date().getTime(),
-			windowResize: true
-		},
-		allowTransitions = false,
-		bodyDomDelegate,
-		containerDomDelegate;
+	var viewportEl;
+	var titleEl;
+	var allItemsEl;
+	var itemEls;
+	var selectedItemIndex;
+	var shownItemIndex;
+	var scroller;
+	var debounceScroll;
+	var prevControlDiv;
+	var nextControlDiv;
+	var propertyAttributeMap = {
+		component: "data-o-component",
+		syncID: "data-o-gallery-syncid",
+		multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
+		touch: "data-o-gallery-touch",
+		captions: "data-o-gallery-captions",
+		captionMinHeight: "data-o-gallery-captionminheight",
+		captionMaxHeight: "data-o-gallery-captionmaxheight",
+		windowResize: "data-o-gallery-windowresize"
+	};
+	var defaultConfig = {
+		component: "o-gallery",
+		multipleItemsPerPage: false,
+		captions: true,
+		captionMinHeight: 24,
+		captionMaxHeight: 52,
+		touch: false,
+		syncID: "o-gallery-" + new Date().getTime(),
+		windowResize: true
+	};
+	var allowTransitions = false;
+	var bodyDomDelegate;
+	var containerDomDelegate;
 
 	// TODO:AB: This should probably use o-useragent
 	function supportsCssTransforms() {
@@ -60,10 +60,11 @@ function Gallery(containerEl, config) {
 	}
 
 	function setWidths() {
-		var i,
-			l,
-			totalWidth = 0,
-			itemWidth = containerEl.clientWidth;
+		var i;
+		var l;
+		var totalWidth = 0;
+		var itemWidth = containerEl.clientWidth;
+
 		if (config.multipleItemsPerPage) {
 			itemWidth = parseInt(itemEls[selectedItemIndex].clientWidth, 10);
 		}
@@ -79,7 +80,9 @@ function Gallery(containerEl, config) {
 	}
 
 	function getSelectedItem() {
-		var selectedItem = 0, c, l;
+		var selectedItem = 0;
+		var c;
+		var l;
 		for (c = 0, l = itemEls.length; c < l; c++) {
 			if (itemEls[c].getAttribute('aria-selected') === 'true') {
 				selectedItem = c;
@@ -157,8 +160,8 @@ function Gallery(containerEl, config) {
 	}
 
 	function getItemsInPageView(l, r, whole) {
-		var itemsInView = [],
-			onlyWhole = (typeof whole !== "boolean") ? true : whole;
+		var itemsInView = [];
+		var onlyWhole = (typeof whole !== "boolean") ? true : whole;
 		for (var c = 0; c < itemEls.length; c++) {
 			if ((onlyWhole && isWholeItemInPageView(c, l, r)) || (!onlyWhole && isAnyPartOfItemInPageView(c, l, r))) {
 				itemsInView.push(c);
@@ -205,10 +208,10 @@ function Gallery(containerEl, config) {
 		if (!isValidItem(n)) {
 			return;
 		}
-		var viewportL = scroller.scrollLeft,
-			viewportR = viewportL + viewportEl.clientWidth,
-			itemL = itemEls[n].offsetLeft,
-			itemR = itemL + itemEls[n].clientWidth;
+		var viewportL = scroller.scrollLeft;
+		var viewportR = viewportL + viewportEl.clientWidth;
+		var itemL = itemEls[n].offsetLeft;
+		var itemR = itemL + itemEls[n].clientWidth;
 		if (itemL > viewportL && itemR < viewportR) {
 			return;
 		}
@@ -239,16 +242,16 @@ function Gallery(containerEl, config) {
 
 	function showPrevPage() {
 		if (scroller.scrollLeft > 0) {
-			var prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft),
-				prevPageItem = prevPageWholeItems.pop() || 0;
+			var prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft);
+			var prevPageItem = prevPageWholeItems.pop() || 0;
 			alignItemRight(prevPageItem);
 		}
 	}
 
 	function showNextPage() {
 		if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-			var currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth),
-				lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
+			var currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth);
+			var lastWholeItemInView = currentWholeItemsInView.pop() || itemEls.length - 1;
 			alignItemLeft(lastWholeItemInView + 1);
 		}
 	}
@@ -367,7 +370,7 @@ function Gallery(containerEl, config) {
 	} else if (containerEl.nodeType !== 1) {
 		containerEl = document.querySelector(containerEl);
 	}
-	
+
 	containerEl.setAttribute('data-o-gallery--js', '');
 	bodyDomDelegate = new DomDelegate(document.body);
 	containerDomDelegate = new DomDelegate(containerEl);
@@ -384,7 +387,7 @@ function Gallery(containerEl, config) {
 	itemEls = containerEl.querySelectorAll(".o-gallery__item");
 	selectedItemIndex = getSelectedItem();
 	shownItemIndex = selectedItemIndex;
-	
+
 	insertItemContent(selectedItemIndex);
 	setCaptionSizes();
 	if (supportsCssTransforms()) {
@@ -436,11 +439,13 @@ function Gallery(containerEl, config) {
 
 	// If it's the thumbnails gallery, check that the thumbnails' clientwidth has been set before resizing
 	// as this takes time in IE8
+	var resizeLimit = 50;
 	function forceResize() {
 		if (!config.multipleItemsPerPage || parseInt(itemEls[selectedItemIndex].clientWidth, 10) !== 0) {
 			onResize();
-		} else {
+		} else if (resizeLimit > 0) {
 			setTimeout(forceResize, 150);
+			resizeLimit--;
 		}
 	}
 
@@ -473,9 +478,9 @@ function Gallery(containerEl, config) {
 }
 
 Gallery.init = function(el, config) {
-	var conf = config || {},
-		gEls,
-		galleries = [];
+	var conf = config || {};
+	var gEls;
+	var galleries = [];
 	if (!el) {
 		el = document.body;
 	} else if (el.nodeType !== 1) {

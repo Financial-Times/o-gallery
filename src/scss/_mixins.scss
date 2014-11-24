@@ -1,47 +1,47 @@
 @mixin oGalleryUserSelect($v) {
-  -webkit-user-select: $v; // webkit (safari, chrome) browsers
-  -moz-user-select: $v; // mozilla browsers
-  -khtml-user-select: $v; // webkit (konqueror) browsers
-  -ms-user-select: $v; // IE10+
+	-webkit-user-select: $v; // webkit (safari, chrome) browsers
+	-moz-user-select: $v; // mozilla browsers
+	-khtml-user-select: $v; // webkit (konqueror) browsers
+	-ms-user-select: $v; // IE10+
 }
 
 @mixin oGalleryOverlayBackground() {
-  background: oColorsGetColorFor(o-gallery-overlay, background);
-  background-color: transparentize(oColorsGetColorFor(o-gallery-overlay, background), 0.2);
+	background: oColorsGetColorFor(o-gallery-overlay, background);
+	background-color: transparentize(oColorsGetColorFor(o-gallery-overlay, background), 0.2);
 }
 
 @mixin oGalleryBase($class: o-gallery) {
-  .#{$class} {
-    @extend %o-gallery;
-  }
-  .#{$class}--slideshow {
-    @extend %o-gallery--slideshow;
-  }
-  .#{$class}--thumbnails {
-    @extend %o-gallery--thumbnails;
-  }
-  .#{$class}__title {
-    @extend %o-gallery__title;
-  }
-  .#{$class}__viewport {
-    @extend %o-gallery__viewport;
-  }
-  .#{$class}__items {
-    @extend %o-gallery__items;
-  }
-  .#{$class}__item {
-    @extend %o-gallery__item;
-  }
-  .#{$class}__item__content {
-    @extend %o-gallery__item__content;
-  }
-  .#{$class}__control {
-    @extend %o-gallery__control;
-  }
-  .#{$class}__control--prev {
-    @extend %o-gallery__control--prev;
-  }
-  .#{$class}__control--next {
-    @extend %o-gallery__control--next;
-  }
+	.#{$class} {
+		@extend %o-gallery;
+	}
+	.#{$class}--slideshow {
+		@extend %o-gallery--slideshow;
+	}
+	.#{$class}--thumbnails {
+		@extend %o-gallery--thumbnails;
+	}
+	.#{$class}__title {
+		@extend %o-gallery__title;
+	}
+	.#{$class}__viewport {
+		@extend %o-gallery__viewport;
+	}
+	.#{$class}__items {
+		@extend %o-gallery__items;
+	}
+	.#{$class}__item {
+		@extend %o-gallery__item;
+	}
+	.#{$class}__item__content {
+		@extend %o-gallery__item__content;
+	}
+	.#{$class}__control {
+		@extend %o-gallery__control;
+	}
+	.#{$class}__control--prev {
+		@extend %o-gallery__control--prev;
+	}
+	.#{$class}__control--next {
+		@extend %o-gallery__control--next;
+	}
 }

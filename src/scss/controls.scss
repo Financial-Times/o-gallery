@@ -1,33 +1,33 @@
 %o-gallery__control {
-  @include oFtIconsBaseIconStyles();
-  @include oGalleryOverlayBackground();
-  position: absolute;
-  top: 50%;
-  margin-top: ($_o-gallery-control-height / 2) * -1;
-  width: $_o-gallery-control-width;
-  height: $_o-gallery-control-height;
-  font-size: 60px;
-  line-height: $_o-gallery-control-height;
-  text-align: center;
-  color: oColorsGetColorFor(o-gallery-overlay, text);
-  overflow: hidden;
-  cursor: pointer;
-  @at-root #{$o-hoverable-if-hover-enabled} &:hover {
-    color: oColorsGetColorFor(o-gallery-overlay-hover, text);
-  }
-  visibility: hidden;
-  z-index: 5;
-  &[aria-hidden='false'] {
-    visibility: visible;
-  }
+	@include oFtIconsBaseIconStyles();
+	@include oGalleryOverlayBackground();
+	position: absolute;
+	top: 50%;
+	margin-top: ($_o-gallery-control-height / 2) * -1;
+	width: $_o-gallery-control-width;
+	height: $_o-gallery-control-height;
+	font-size: 60px;
+	line-height: $_o-gallery-control-height;
+	text-align: center;
+	color: oColorsGetColorFor(o-gallery-overlay, text);
+	overflow: hidden;
+	cursor: pointer;
+	@at-root #{$o-hoverable-if-hover-enabled} &:hover {
+		color: oColorsGetColorFor(o-gallery-overlay-hover, text);
+	}
+	visibility: hidden;
+	z-index: 5;
+	&[aria-hidden='false'] {
+		visibility: visible;
+	}
 }
 
 %o-gallery__control--prev {
-  @extend %o-ft-icons-icon--arrow-left;
-  left: 0;
+	@extend %o-ft-icons-icon--arrow-left;
+	left: 0;
 }
 
 %o-gallery__control--next {
-  @extend %o-ft-icons-icon--arrow-right;
-  right: 0;
+	@extend %o-ft-icons-icon--arrow-right;
+	right: 0;
 }

@@ -1,62 +1,62 @@
 %o-gallery {
-  @include oGalleryUserSelect(none);
-  position: relative;
-  & ol,
-  & ul,
-  & li {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  img {
-    display: block;
-    width: 100%;
-  }
-  &[data-o-gallery-multipleitemsperpage=true] & {
-    margin: 0 $_o-gallery-control-width;
-  }
+	@include oGalleryUserSelect(none);
+	position: relative;
+	ol,
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+	img {
+		display: block;
+		width: 100%;
+	}
+	&[data-o-gallery-multipleitemsperpage=true] & {
+		margin: 0 $_o-gallery-control-width;
+	}
 }
 
 %o-gallery__title {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 5;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
 }
 
 %o-gallery__viewport {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
 }
 
 %o-gallery__items {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  // Make sure there's no space between images
-  [data-o-gallery--js] & {
-    white-space: nowrap;
-    font-size: 0;
-  }
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	// Make sure there's no space between images
+	[data-o-gallery--js] & {
+		white-space: nowrap;
+		font-size: 0;
+	}
 }
 
 %o-gallery__item {
-  position: relative;
-  margin: 0 0 20px;
-  padding: 0;
-  list-style-type: none;
-  // Align items inline so scroller gets the correct width for the viewport
-  [data-o-gallery--js] & {
-    margin: 0;
-    display: inline-block;
-    white-space: normal;
-  }
+	position: relative;
+	margin: 0 0 20px;
+	padding: 0;
+	list-style-type: none;
+	// Align items inline so scroller gets the correct width for the viewport
+	[data-o-gallery--js] & {
+		margin: 0;
+		display: inline-block;
+		white-space: normal;
+	}
 }
 
 %o-gallery__item__content {
-  & img {
-    display: block;
-    width: 100%;
-  }
+	img {
+		display: block;
+		width: 100%;
+	}
 }
