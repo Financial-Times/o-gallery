@@ -1,14 +1,13 @@
-/*global exports*/
+'use strict';
 
+/*global exports*/
 function emptyElement(targetEl) {
-	"use strict";
 	while (targetEl.firstChild) {
 		targetEl.removeChild(targetEl.firstChild);
 	}
 }
 
 function createElement(nodeName, content, classes) {
-	"use strict";
 	var el = document.createElement(nodeName);
 	el.innerHTML = content;
 	el.setAttribute("class", classes);
@@ -16,14 +15,12 @@ function createElement(nodeName, content, classes) {
 }
 
 function wrapElement(targetEl, wrapEl) {
-	"use strict";
 	var parentEl = targetEl.parentNode;
 	wrapEl.appendChild(targetEl);
 	parentEl.appendChild(wrapEl);
 }
 
 function unwrapElement(targetEl) {
-	"use strict";
 	var wrappingEl = targetEl.parentNode;
 	var wrappingElParent = wrappingEl.parentNode;
 	while (wrappingEl.childNodes.length > 0) {
@@ -33,14 +30,12 @@ function unwrapElement(targetEl) {
 }
 
 function createItemsList(containerEl) {
-	"use strict";
 	var itemsList = createElement("ol", "", "o-gallery__items");
 	containerEl.appendChild(itemsList);
 	return itemsList;
 }
 
 function createItems(containerEl, items) {
-	"use strict";
 	var itemEl;
 	var c;
 	var l;
@@ -55,7 +50,6 @@ function createItems(containerEl, items) {
 }
 
 function insertItemContent(config, item, itemEl) {
-	"use strict";
 	emptyElement(itemEl);
 	var contentEl = createElement("div", item.content, "o-gallery__item__content");
 	itemEl.appendChild(contentEl);
@@ -66,7 +60,6 @@ function insertItemContent(config, item, itemEl) {
 }
 
 function setPropertyIfAttributeExists(obj, propName, el, attrName) {
-	"use strict";
 	var v = el.getAttribute(attrName);
 	if (v !== null) {
 		if (v === "true") {
@@ -79,7 +72,6 @@ function setPropertyIfAttributeExists(obj, propName, el, attrName) {
 }
 
 function getPropertiesFromAttributes(el, map) {
-	"use strict";
 	var obj = {};
 	var prop;
 	for (prop in map) {
@@ -91,7 +83,6 @@ function getPropertiesFromAttributes(el, map) {
 }
 
 function arrayIndexOf(a, v) {
-	"use strict";
 	var i = -1;
 	if (Array.prototype.indexOf) {
 		return a.indexOf(v);
@@ -106,7 +97,6 @@ function arrayIndexOf(a, v) {
 }
 
 function setAttributesFromProperties(el, obj, map, excl) {
-	"use strict";
 	var exclude = excl || [];
 	for (var prop in obj) {
 		if (obj.hasOwnProperty(prop) && arrayIndexOf(exclude, prop) < 0) {

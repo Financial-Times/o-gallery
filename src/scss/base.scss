@@ -31,28 +31,26 @@
 }
 
 %o-gallery__items {
-	float: none;
-	clear: both;
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+	// Make sure there's no space between images
 	[data-o-gallery--js] & {
-		float: left;
-		clear: none;
+		white-space: nowrap;
+		font-size: 0;
 	}
 }
 
 %o-gallery__item {
-	float: none;
-	clear: both;
 	position: relative;
 	margin: 0 0 20px;
 	padding: 0;
 	list-style-type: none;
+	// Align items inline so scroller gets the correct width for the viewport
 	[data-o-gallery--js] & {
-		float: left;
-		clear: none;
 		margin: 0;
+		display: inline-block;
+		white-space: normal;
 	}
 }
 

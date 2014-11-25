@@ -18,9 +18,9 @@ The following wireframes show two example galleries: A) a gallery with single it
 
 ## Browser support
 
-Gallery supports the same browsers as [FTScroller](https://github.com/ftlabs/ftscroller) (which it uses for touch/mouse input and transition behaviour), but also adds graceful degradation for IE8.
+Gallery supports the same browsers as [FTScroller](https://github.com/ftlabs/ftscroller) (which it uses for touch/mouse input and transition behaviour), but also adds graceful degradation for IE8 and IE9.
 
-In IE8 there is no option for touch input support and there are no transitions (items & pages will change instantly). Polyfills for `addEventListener`, `removeEventListener`, `dispatchEvent` are necessary if Gallery sync behaviour is required.
+In IE8 and IE9 there is no option for touch input support and there are no transitions (items & pages will change instantly). Usage of the [Polyfill service](http://polyfill.webservices.ft.com/v1/docs/) is necessary in IE, and you need to request the default set of polyfills and, if you want it to work on IE8, also add the DOMContentLoaded one.
 
 ## Creating Galleries
 
