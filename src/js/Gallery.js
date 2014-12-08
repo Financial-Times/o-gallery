@@ -44,7 +44,6 @@ function Gallery(containerEl, config) {
 	var bodyDomDelegate;
 	var containerDomDelegate;
 
-	// TODO:AB: This should probably use o-useragent
 	function supportsCssTransforms() {
 		var b = document.body || document.documentElement, s = b.style, p = 'Transition';
 		var v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
