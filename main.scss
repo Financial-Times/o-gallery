@@ -15,7 +15,7 @@
 @import "src/scss/themes/thumbnails";
 
 @if (not $o-gallery-is-silent) {
-  @include oFtIconsFontFace();
-  @include oFontsInclude(BentonSans, normal);
-  @include oGalleryBase(o-gallery);
+	@include oFtIconsFontFace();
+	@include oFontsInclude(BentonSans, normal);
+	@include oGalleryBase(o-gallery);
 }
