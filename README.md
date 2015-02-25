@@ -180,24 +180,13 @@ Default: `24`, `52`
 
 The height constraints of the caption area. The min value is used to position the caption area below the gallery item. If the content of the caption forces the caption height to increase, then it will increase upwards, in front of the gallery item, up to the maximum height set.
 
-### Window resize
-
-HTML source: attribute `data-o-gallery-windowresize` on root element
-
-JS property: `windowResize`
-
-Type: `Boolean`
-
-Default: `true`
-
-Galleries have to reset their display widths when their size changes. By default this will be done by listening to the window onResize event, but this can be turned off in favour of calling the `onResize()` method when necessary.
-
 ## Events
 
 The following events will be dispatched on the Gallery's root DOM element:
 
 * `oGallery.ready`: The Gallery has initialised and made all required DOM changes
 * `oGallery.itemSelect`: The selected item in the gallery has changed. Passes two properties: the index of the newly active item, and the source of the change ('user' or 'api').
+* `oGallery.scrollEnd`: A scroll has finished and passes the scrolling distance in the property `x`.
 
 In IE8, these events will only be dispatched if the [EventTarget API](https://developer.mozilla.org/en/docs/Web/API/EventTarget) has been polyfilled.
 

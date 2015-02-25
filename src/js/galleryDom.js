@@ -2,8 +2,8 @@
 
 /*global exports*/
 function emptyElement(targetEl) {
-	while (targetEl.firstChild) {
-		targetEl.removeChild(targetEl.firstChild);
+	for (var i = 0; i < targetEl.children.length; i++) {
+		targetEl.removeChild(targetEl.children[i]);
 	}
 }
 
@@ -37,16 +37,16 @@ function createItemsList(containerEl) {
 
 function createItems(containerEl, items) {
 	var itemEl;
-	var c;
-	var l;
-	for (c = 0, l = items.length; c < l; c++) {
+	var itemEls = [];
+	for (var i = 0; i < items.length; i++) {
 		itemEl = createElement("li", "&nbsp;", "o-gallery__item");
-		if (items[c].selected) {
+		if (items[i].selected) {
 			itemEl.setAttribute('aria-selected', 'true');
 		}
 		containerEl.appendChild(itemEl);
+		itemEls.push(itemEl);
 	}
-	return containerEl.querySelectorAll(".o-gallery__item");
+	return itemEls;
 }
 
 function insertItemContent(config, item, itemEl) {
@@ -82,24 +82,10 @@ function getPropertiesFromAttributes(el, map) {
 	return obj;
 }
 
-function arrayIndexOf(a, v) {
-	var i = -1;
-	if (Array.prototype.indexOf) {
-		return a.indexOf(v);
-	} else {
-		for (var c = 0, l = a.length; c < l; c++) {
-			if (a[c] === v) {
-				i = c;
-			}
-		}
-	}
-	return i;
-}
-
 function setAttributesFromProperties(el, obj, map, excl) {
 	var exclude = excl || [];
 	for (var prop in obj) {
-		if (obj.hasOwnProperty(prop) && arrayIndexOf(exclude, prop) < 0) {
+		if (obj.hasOwnProperty(prop) && exclude.indexOf(prop) < 0) {
 			el.setAttribute(map[prop], obj[prop]);
 		}
 	}
