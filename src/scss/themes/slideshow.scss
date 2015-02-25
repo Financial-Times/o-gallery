@@ -2,13 +2,13 @@
 	width: 100%;
 	overflow: hidden;
 	.o-gallery__title {
+		@include oGalleryOverlayBackground();
 		margin: 0;
 		padding: 10px;
 		font-weight: normal;
 		font-size: 20px;
 		line-height: 24px;
 		color: oColorsGetColorFor(o-gallery-overlay, text);
-		@include oGalleryOverlayBackground();
 	}
 	.o-gallery__item__caption {
 		position: absolute;

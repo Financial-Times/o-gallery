@@ -22,6 +22,7 @@
 			outline: 1px solid #ffffff;
 		}
 		img {
+			// scss-lint:disable VendorPrefixes
 			-webkit-filter: brightness(50%);
 		}
 	}

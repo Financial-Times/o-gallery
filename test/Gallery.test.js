@@ -1,4 +1,4 @@
-/*global describe, it, after*/
+/*global describe, it*/
 'use strict';
 
 var expect = require('expect.js');
@@ -115,9 +115,6 @@ describe('Gallery', function() {
 		myConfig.items[0].selected = false;
 		myConfig.items[1].selected = true;
 		var gallery = new Gallery(galleryEl, myConfig);
-		// Event will be listened twice, the first time to position the last element on the viewport
-		// the second time, to move back to the first element
-		var scrollEnds = 0;
 		galleryEl.addEventListener('oGallery.scrollEnd', function(evt) {
 			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
 
@@ -193,7 +190,7 @@ describe('Gallery', function() {
 
 	it('#next', function(done) {
 		var galleryEl = generateGallery();
-		 var  gallery = new Gallery(galleryEl, galleryConfig);
+		var  gallery = new Gallery(galleryEl, galleryConfig);
 		var expectedSelectedItem = (gallery.getSelectedItem() + 1 > 1) ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
 			expect(e.detail.source).to.be('user');
