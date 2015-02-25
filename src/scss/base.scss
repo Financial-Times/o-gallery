@@ -1,5 +1,5 @@
-%o-gallery {
-	@include oGalleryUserSelect(none);
+@mixin oGallery {
+	user-select: none;
 	position: relative;
 	ol,
 	ul,
@@ -17,20 +17,20 @@
 	}
 }
 
-%o-gallery__title {
+@mixin oGalleryTitle {
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 5;
 }
 
-%o-gallery__viewport {
+@mixin oGalleryViewport {
 	position: relative;
 	overflow: hidden;
 	z-index: 1;
 }
 
-%o-gallery__items {
+@mixin oGalleryItems {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -41,7 +41,7 @@
 	}
 }
 
-%o-gallery__item {
+@mixin oGalleryItem {
 	position: relative;
 	margin: 0 0 20px;
 	padding: 0;
@@ -54,7 +54,7 @@
 	}
 }
 
-%o-gallery__item__content {
+@mixin oGalleryItemContent {
 	img {
 		display: block;
 		width: 100%;

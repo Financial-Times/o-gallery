@@ -1,0 +1,27 @@
+%o-gallery {
+	@include oGallery;
+}
+%o-gallery--slideshow {
+	@include oGallerySlideshow;
+}
+%o-gallery--thumbnails {
+	@include oGalleryThumbnails;
+}
+%o-gallery__title {
+	@include oGalleryTitle;
+}
+%o-gallery__viewport {
+	@include oGalleryViewport;
+}
+%o-gallery__items {
+	@include oGalleryItems;
+}
+%o-gallery__item {
+	@include oGalleryItem;
+}
+%o-gallery__item__content {
+	@include oGalleryItemContent;
+}
+%o-gallery__control {
+	@include oGalleryControl;
+}

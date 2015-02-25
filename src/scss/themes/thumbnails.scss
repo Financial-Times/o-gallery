@@ -1,4 +1,4 @@
-%o-gallery--thumbnails {
+@mixin oGalleryThumbnails {
 	display: none;
 	color: blue;
 	width: 100%;
