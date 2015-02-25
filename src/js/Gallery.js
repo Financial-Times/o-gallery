@@ -44,7 +44,6 @@ function Gallery(containerEl, config) {
 	var containerDomDelegate;
 
 	function supportsCssTransforms() {
-		return false;
 		var b = document.body || document.documentElement, s = b.style, p = 'Transition';
 		var v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
 
@@ -419,7 +418,7 @@ function Gallery(containerEl, config) {
 		});
 	} else {
 		scroller = new SimpleScroller(containerEl);
-		scroller.addEventListener("scrollend", function(evt) {
+		containerEl.addEventListener("scrollend", function(evt) {
 			onScroll(evt);
 			triggerEvent('oGallery.scrollEnd', evt);
 		});
