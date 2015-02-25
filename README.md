@@ -38,7 +38,7 @@ Galleries can be constructed in three ways:
 
 With the HTML already in the page, the following method can be called to search for Gallery HTML elements and automatically construct a Gallery for each one:
 
-	var galleries = Gallery.createAllIn();
+	var galleries = Gallery.init();
 
 Any gallery objects that are constructed will be returned.
 
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
 Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
-    var galleries = Gallery.createAllIn(document.getElementByClassName(".ft-article-body")[0]);
+    var galleries = Gallery.init(document.getElementByClassName(".ft-article-body")[0]);
     
 ### 2. Imperatively from HTML source
 
