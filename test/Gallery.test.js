@@ -11,12 +11,12 @@ describe('Gallery', function() {
 		title: 'Ukraine: diplomacy and tension',
 		items: [
 			{
-				'content': '<img alt="" src="http://im.ft-stat">',
+				'content': '<img alt="" src="http://im.ft-stat" />',
 				'caption': 'Ukrainian soldiers guard a gate',
 				'selected': true
 			},
 			{
-				'content': '<img alt="" src="http://im.ft-stat">',
+				'content': '<img alt="" src="http://im.ft-stat" />',
 				'caption': 'Ukrainian soldiers guard a gate'
 			}
 		],

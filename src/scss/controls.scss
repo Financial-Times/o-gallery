@@ -1,3 +1,9 @@
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
+
+/// Mixin to be applied to the gallery controls
 @mixin oGalleryControl {
 	@include oFtIconsBaseIconStyles();
 	@include oGalleryOverlayBackground();

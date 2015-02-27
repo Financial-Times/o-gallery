@@ -1,4 +1,23 @@
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
+
+/// Silent mode
+///
+/// @type {Boolean}
 $o-gallery-is-silent: false !default;
 
+/// The width of the controls
+///
+/// @access private
+///
+/// @type {Number}
 $_o-gallery-control-width: 50px;
+
+/// The height of the controls
+///
+/// @access private
+///
+/// @type {Number}
 $_o-gallery-control-height: 110px;
