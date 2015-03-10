@@ -343,6 +343,8 @@ function Gallery(containerEl, config) {
 	}
 
 	function destroy() {
+		// Destroy objects before manipulating the dom. Order is important for gallery to be destroyed properly
+		// It won't instantiate again nicely if it's the other way round
 		containerDomDelegate.destroy();
 		bodyDomDelegate.destroy();
 		window.removeEventListener("oViewport.resize", onResize, false);
@@ -398,8 +400,7 @@ function Gallery(containerEl, config) {
 			disabledInputMethods: {
 				touch: !config.touch,
 				scroll: true
-			},
-			windowScrollingActiveFlag: 'foo'+Math.random()
+			}
 		});
 		scroller.addEventListener("scroll", function(evt) {
 			clearTimeout(debounceScroll);

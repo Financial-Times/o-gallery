@@ -207,6 +207,9 @@ Each gallery _item_ has an index number. _Pages_ do not have index numbers as th
 * `selectNextItem(show)`: Selects next item, and optionally shows it too.
 * `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
 * `getSelectedItem()`: Returns the index of the currently selected item (integer)
+* `getSyncID()`: Returns the sync ID of that gallery
+* `syncWith(galleryInstance)`: Sets the syncID to that of the gallery instance that's passed to the function
+* `onResize()`: Resizes the gallery. This is executed when the viewport is resized. It should also be manually executed when the gallery is in a container element that's resized.
 
 When a next/prev method is called, if there is no next or previous, then it will do nothing.
 
@@ -246,13 +249,13 @@ Two themes are provided: for slideshows and thumbnails.
 To use the slideshow theme, set a 'o-gallery--slideshow' class on the root Gallery element:
 
 ```html
-<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-version="1.0.0">
+<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery">
 ```
 
 To use the thumbnails theme, set a `o-gallery--thumbnails` class on the Gallery root element:
 
 ```html
-<div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery" data-o-version="1.0.0">
+<div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery">
 ```
 
 If creating your own theme, see the [Origami section on themes](http://origami.ft.com/docs/component-spec/modules/#themes).
