@@ -1,4 +1,10 @@
-%o-gallery--thumbnails {
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
+
+/// Styling for the thumbnail gallery theme
+@mixin oGalleryThumbnails {
 	display: none;
 	color: blue;
 	width: 100%;
@@ -22,7 +28,7 @@
 			outline: 1px solid #ffffff;
 		}
 		img {
-			-webkit-filter: brightness(50%);
+			filter: brightness(50%);
 		}
 	}
 }

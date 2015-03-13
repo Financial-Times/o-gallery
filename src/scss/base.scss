@@ -1,5 +1,11 @@
-%o-gallery {
-	@include oGalleryUserSelect(none);
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
+
+/// General styling for the gallery
+@mixin oGallery {
+	user-select: none;
 	position: relative;
 	ol,
 	ul,
@@ -17,20 +23,23 @@
 	}
 }
 
-%o-gallery__title {
+/// Styling for the gallery title
+@mixin oGalleryTitle {
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 5;
 }
 
-%o-gallery__viewport {
+/// To be applied to the viewport element
+@mixin oGalleryViewport {
 	position: relative;
 	overflow: hidden;
 	z-index: 1;
 }
 
-%o-gallery__items {
+/// Styles the element the holds the different items
+@mixin oGalleryItems {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -41,7 +50,8 @@
 	}
 }
 
-%o-gallery__item {
+/// Styles each gallery item
+@mixin oGalleryItem {
 	position: relative;
 	margin: 0 0 20px;
 	padding: 0;
@@ -54,7 +64,8 @@
 	}
 }
 
-%o-gallery__item__content {
+/// Sets the styling for the content of each item
+@mixin oGalleryItemContent {
 	img {
 		display: block;
 		width: 100%;

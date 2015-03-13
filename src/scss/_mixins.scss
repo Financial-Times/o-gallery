@@ -1,47 +1,43 @@
-@mixin oGalleryUserSelect($v) {
-	-webkit-user-select: $v; // webkit (safari, chrome) browsers
-	-moz-user-select: $v; // mozilla browsers
-	-khtml-user-select: $v; // webkit (konqueror) browsers
-	-ms-user-select: $v; // IE10+
-}
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
 
+/// Applies background colour for gallery overlays like title and controls
 @mixin oGalleryOverlayBackground() {
 	background: oColorsGetColorFor(o-gallery-overlay, background);
 	background-color: transparentize(oColorsGetColorFor(o-gallery-overlay, background), 0.2);
 }
 
+/// Applies all styling to default classes
+///
+/// @param {String} class - base selector class that the styles should be applied to
 @mixin oGalleryBase($class: o-gallery) {
 	.#{$class} {
-		@extend %o-gallery;
+		@include oGallery;
 	}
 	.#{$class}--slideshow {
-		@extend %o-gallery--slideshow;
+		@include oGallerySlideshow;
 	}
 	.#{$class}--thumbnails {
-		@extend %o-gallery--thumbnails;
+		@include oGalleryThumbnails;
 	}
 	.#{$class}__title {
-		@extend %o-gallery__title;
+		@include oGalleryTitle;
 	}
 	.#{$class}__viewport {
-		@extend %o-gallery__viewport;
+		@include oGalleryViewport;
 	}
 	.#{$class}__items {
-		@extend %o-gallery__items;
+		@include oGalleryItems;
 	}
 	.#{$class}__item {
-		@extend %o-gallery__item;
+		@include oGalleryItem;
 	}
 	.#{$class}__item__content {
-		@extend %o-gallery__item__content;
+		@include oGalleryItemContent;
 	}
 	.#{$class}__control {
-		@extend %o-gallery__control;
-	}
-	.#{$class}__control--prev {
-		@extend %o-gallery__control--prev;
-	}
-	.#{$class}__control--next {
-		@extend %o-gallery__control--next;
+		@include oGalleryControl;
 	}
 }

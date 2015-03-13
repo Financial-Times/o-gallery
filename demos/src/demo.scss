@@ -1,6 +1,10 @@
 $o-gallery-is-silent: false;
 @import "../../main";
 
+body {
+	font-family: BentonSans, sans-serif;
+}
+
 .o-gallery {
 	max-width: 600px;
 }

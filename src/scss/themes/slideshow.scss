@@ -1,15 +1,20 @@
-%o-gallery--slideshow {
+////
+/// @group o-gallery
+/// @link http://registry.origami.ft.com/components/o-gallery
+////
+
+/// Styling for the slideshow gallery theme
+@mixin oGallerySlideshow {
 	width: 100%;
 	overflow: hidden;
 	.o-gallery__title {
+		@include oGalleryOverlayBackground();
 		margin: 0;
 		padding: 10px;
-		font-family: oFontsGetFontFamilyWithFallbacks(BentonSans);
 		font-weight: normal;
 		font-size: 20px;
 		line-height: 24px;
 		color: oColorsGetColorFor(o-gallery-overlay, text);
-		@include oGalleryOverlayBackground();
 	}
 	.o-gallery__item__caption {
 		position: absolute;
@@ -18,7 +23,6 @@
 		bottom: 0;
 		box-sizing: border-box;
 		padding: 5px 10px;
-		font-family: oFontsGetFontFamilyWithFallbacks(BentonSans);
 		font-weight: normal;
 		font-size: 12px;
 		line-height: 14px;

@@ -9,33 +9,37 @@ var galleryDom = require('./galleryDom');
  */
 function SimpleScroller(containerEl) {
 
-	var self = this;
+	var scroller = this;
 	var allItemsEl;
 	var viewportEl;
 
-	function updateProperties() {
-		self.scrollLeft = viewportEl.scrollLeft;
+	function updateDimensions() {
+		scroller.scrollLeft = viewportEl.scrollLeft;
 	}
 
 	function scrollTo(n) {
 		viewportEl.scrollLeft = n;
-		updateProperties();
+		updateDimensions();
+		containerEl.dispatchEvent(new CustomEvent('scrollend', {
+			x: n
+		}));
 	}
 
 	function destroy() {
-		galleryDom.unwrapElement(viewportEl);
+		if (containerEl.querySelector('.o-gallery__viewport')) {
+			galleryDom.unwrapElement(allItemsEl);
+		}
 	}
 
 	allItemsEl = containerEl.querySelector('.o-gallery__items');
 	viewportEl = galleryDom.createElement('div', '', 'o-gallery__viewport');
-	containerEl.appendChild(viewportEl);
 	galleryDom.wrapElement(allItemsEl, viewportEl);
-	updateProperties();
+	updateDimensions();
 
 	this.contentContainerNode = allItemsEl;
 	this.scrollTo = scrollTo;
+	this.updateDimensions = updateDimensions;
 	this.destroy = destroy;
-
 }
 
 module.exports = SimpleScroller;

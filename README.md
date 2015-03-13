@@ -180,24 +180,13 @@ Default: `24`, `52`
 
 The height constraints of the caption area. The min value is used to position the caption area below the gallery item. If the content of the caption forces the caption height to increase, then it will increase upwards, in front of the gallery item, up to the maximum height set.
 
-### Window resize
-
-HTML source: attribute `data-o-gallery-windowresize` on root element
-
-JS property: `windowResize`
-
-Type: `Boolean`
-
-Default: `true`
-
-Galleries have to reset their display widths when their size changes. By default this will be done by listening to the window onResize event, but this can be turned off in favour of calling the `onResize()` method when necessary.
-
 ## Events
 
 The following events will be dispatched on the Gallery's root DOM element:
 
 * `oGallery.ready`: The Gallery has initialised and made all required DOM changes
 * `oGallery.itemSelect`: The selected item in the gallery has changed. Passes two properties: the index of the newly active item, and the source of the change ('user' or 'api').
+* `oGallery.scrollEnd`: A scroll has finished and passes the scrolling distance in the property `x`.
 
 In IE8, these events will only be dispatched if the [EventTarget API](https://developer.mozilla.org/en/docs/Web/API/EventTarget) has been polyfilled.
 
@@ -218,6 +207,9 @@ Each gallery _item_ has an index number. _Pages_ do not have index numbers as th
 * `selectNextItem(show)`: Selects next item, and optionally shows it too.
 * `selectPrevItem(show)`: Selects previous item, and optionally shows it too.
 * `getSelectedItem()`: Returns the index of the currently selected item (integer)
+* `getSyncID()`: Returns the sync ID of that gallery
+* `syncWith(galleryInstance)`: Sets the syncID to that of the gallery instance that's passed to the function
+* `onResize()`: Resizes the gallery. This is executed when the viewport is resized. It should also be manually executed when the gallery is in a container element that's resized.
 
 When a next/prev method is called, if there is no next or previous, then it will do nothing.
 
@@ -257,13 +249,13 @@ Two themes are provided: for slideshows and thumbnails.
 To use the slideshow theme, set a 'o-gallery--slideshow' class on the root Gallery element:
 
 ```html
-<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-version="1.0.0">
+<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery">
 ```
 
 To use the thumbnails theme, set a `o-gallery--thumbnails` class on the Gallery root element:
 
 ```html
-<div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery" data-o-version="1.0.0">
+<div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery">
 ```
 
 If creating your own theme, see the [Origami section on themes](http://origami.ft.com/docs/component-spec/modules/#themes).

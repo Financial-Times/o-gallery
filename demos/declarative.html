@@ -3,16 +3,17 @@
 <!--[if IE 8]>         <html class="o-useragent-ie8 o-hoverable-on"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="o-hoverable-on"> <!--<![endif]-->
 <head>
-    <meta charset="utf-8" />
-    <title>o-gallery: declarative demo</title>
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <script src="//polyfill.webservices.ft.com/v1/polyfill.min.js"></script>
-    <style>body { margin: 0; }.demo-js .o--if-nojs { display: none; }</style>
-    <link rel="stylesheet" href="/bundles/css?modules=o-gallery:/demos/src/demo.scss" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<title>o-gallery: declarative demo</title>
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+	<script src="//polyfill.webservices.ft.com/v1/polyfill.min.js?features=modernizr:queryselector,modernizr:css-boxsizing,modernizr:addeventlistener,modernizr:classList,modernizr:matches,modernizr:csstransforms,modernizr:csstransforms3d,modernizr:csstransitions,modernizr:customevent,default"></script>
+	<style>body { margin: 0; } .demo-js .o--if-nojs { display: none; }</style>
+	<script>(function(d) { d.className = d.className + ' demo-js'; })(document.documentElement);</script>
+	<link rel="stylesheet" href="/bundles/css?modules=o-gallery:/demos/src/demo.scss,o-fonts@^1.5.0" />
 </head>
 <body class="">
-    <script>(function(d) {var b = d.getElementsByTagName('body')[0];b.className = b.className + ' demo-js';})(document);</script>
-    <div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
+<div class="o-gallery o-gallery--slideshow" data-o-component="o-gallery" data-o-gallery-syncid="declarative-slideshow-with-thumbnails" data-o-gallery-captionminheight="30" data-o-gallery-captionmaxheight="50">
 	<h1 class="o-gallery__title">Ukraine: diplomacy and tension</h1>
 	<ol class="o-gallery__items">
 			<li class="o-gallery__item" aria-selected="true">
@@ -71,7 +72,7 @@
 	</ol>
 </div>
 
-    <script src="/bundles/js?modules=o-gallery:/demos/src/declarative.js"></script>
-    <script src="//registry.origami.ft.com/embedapi?autoload=resize"></script>
+<script src="/bundles/js?modules=o-gallery:/demos/src/declarative.js,o-fonts@^1.5.0"></script>
+<script src="//registry.origami.ft.com/embedapi?autoload=resize"></script>
 </body>
 </html>
