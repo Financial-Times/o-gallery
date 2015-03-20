@@ -491,7 +491,7 @@ Gallery.init = function(el, config) {
 	if (el.querySelectorAll) {
 		gEls = el.querySelectorAll("[data-o-component~=o-gallery]");
 		for (var i = 0; i < gEls.length; i++) {
-			if (!gEls[i].getAttribute('data-o-gallery--js')) {
+			if (!gEls[i].hasAttribute('data-o-gallery--js')) {
 				galleries.push(new Gallery(gEls[i], conf));
 			}
 		}
