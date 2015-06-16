@@ -226,11 +226,11 @@ The following simplified methods are provided to handle this logic:
 
 These method may be useful for adding keyboard control to a Gallery.
 
-## SASS
+## Sass
 
-By default the SASS is in silent mode, meaning there will be no CSS output.
+By default the Sass is in silent mode, meaning there will be no CSS output.
 
-If you're `@import`ing the SASS into your product or component, and you want to turn off silent mode, then set the following SASS variable:
+If you're `@import`ing the Sass into your product or component, and you want to turn off silent mode, then set the following Sass variable:
 
 ```scss
 $o-gallery-is-silent: false;
@@ -238,7 +238,7 @@ $o-gallery-is-silent: false;
 
 If requesting the CSS from the build service, silent mode will automatically be switched off.
 
-In silent mode, instead of the CSS classes listed below, there will be SASS placeholders using the same name: e.g. `%o-gallery` instead of an `.o-gallery` selector. These placeholders can then be `@extend`ed into selectors of your choice.
+In silent mode, instead of the CSS classes listed below, use the [mixins documented here](sassdoc.webservices.ft.com/v1/sassdoc/o-gallery).
 
 ## Themes
 
@@ -276,3 +276,11 @@ Themes must only be used with the default `o-gallery` classes.
 ### Hover styles
 
 Gallery uses `:hover` styles. These can be enabled by products adding the `o-hoverable-on` class to the document body.
+
+----
+
+## License
+
+Copyright (c) 2015 Financial Times Ltd. All rights reserved.
+
+This software is published under the [MIT licence](http://opensource.org/licenses/MIT).
