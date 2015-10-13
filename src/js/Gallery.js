@@ -2,7 +2,7 @@
 'use strict';
 
 var oDom = require('o-dom'),
-	DomDelegate = require('dom-delegate'),
+	DomDelegate = require('ftdomdelegate'),
 	FTScroller = require('ftscroller'),
 	oViewport = require('o-viewport'),
 	galleryDom = require('./galleryDom'),
