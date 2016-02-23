@@ -5,17 +5,14 @@
 
 /// Mixin to be applied to the gallery controls
 @mixin oGalleryControl {
-	@include oFtIconsBaseIconStyles();
 	@include oGalleryOverlayBackground();
 	position: absolute;
 	top: 50%;
 	margin-top: ($_o-gallery-control-height / 2) * -1;
 	width: $_o-gallery-control-width;
 	height: $_o-gallery-control-height;
-	font-size: 60px;
-	line-height: $_o-gallery-control-height;
-	text-align: center;
-	color: oColorsGetColorFor(o-gallery-overlay, text);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
 	overflow: hidden;
 	cursor: pointer;
 	@at-root #{$o-hoverable-if-hover-enabled} &:hover {
@@ -28,12 +25,20 @@
 	}
 
 	&--prev {
-		@extend %o-ft-icons-icon--arrow-left;
+		@include oFtIconsGetSvg('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false);
 		left: 0;
+
+		&:hover {
+			@include oFtIconsGetSvg('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+		}
 	}
 
 	&--next {
-		@extend %o-ft-icons-icon--arrow-right;
+		@include oFtIconsGetSvg('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false);
 		right: 0;
+
+		&:hover {
+			@include oFtIconsGetSvg('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+		}
 	}
 }
