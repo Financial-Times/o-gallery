@@ -28,6 +28,8 @@ Gallery content can come from either HTML already in the DOM, or data passed exp
 
 In both cases there must be an root element already in the DOM to construct the Gallery in. The root element must not be set to `display: none`, either directly or via an ancestor element, otherwise the Gallery will be unable to calculate its item widths and will not work correctly.
 
+*Note*: a Gallery may behave oddly when an ancestor element is set to `display: table` causing issues with the Gallery sizing (see https://github.com/Financial-Times/o-gallery/issues/44 for more details).
+
 Galleries can be constructed in three ways:
 
 1. Declaratively from HTML source
@@ -49,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
 });
 ```
-    
+
 Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
     var galleries = Gallery.init(document.getElementByClassName(".ft-article-body")[0]);
-    
+
 ### 2. Imperatively from HTML source
 
 With the HTML already in the page, a Gallery object can be constructed like so:
