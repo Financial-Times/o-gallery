@@ -3,7 +3,7 @@
 
 var oDom = require('o-dom'),
 	DomDelegate = require('ftdomdelegate'),
-	FTScroller = require('ftscroller'),
+	FTScroller = require('ftscroller').FTScroller,
 	oViewport = require('o-viewport'),
 	galleryDom = require('./galleryDom'),
 	SimpleScroller = require('./SimpleScroller');
