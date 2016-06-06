@@ -11,4 +11,3 @@ dependencies:
 test:
   override:
     - obt test
-    - obt verify
