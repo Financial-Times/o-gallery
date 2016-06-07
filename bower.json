@@ -12,8 +12,5 @@
     "o-viewport": ">=0.1.1 <2.0.0",
     "o-hoverable": ">=0.1.1 <2.0.0",
     "o-icons": "^4.1.0"
-  },
-  "ci": {
-    "travis": "https://api.travis-ci.org/repos/Financial-Times/o-gallery/builds.json"
   }
 }
