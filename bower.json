@@ -10,7 +10,7 @@
     "o-dom": ">=0.3.0 <2.0.0",
     "ftdomdelegate": "^2.0.0",
     "o-viewport": ">=0.1.1 <2.0.0",
-    "o-hoverable": ">=0.1.1 <4",
+    "o-hoverable": ">=0.1.1 <4 ",
     "o-icons": "^4.1.0"
   }
 }
