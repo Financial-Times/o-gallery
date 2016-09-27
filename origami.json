@@ -34,5 +34,6 @@
 			"name": "base",
 			"template": "demos/src/base.mustache",
 			"description": ""
-		}	]
+		}
+	]
 }
