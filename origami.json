@@ -33,20 +33,6 @@
 		{
 			"name": "base",
 			"template": "demos/src/base.mustache",
-			"expanded": false,
-			"description": ""
-		},
-		{
-			"name": "declarative",
-			"template": "demos/src/declarative.mustache",
-			"expanded": true,
-			"description": ""
-		},
-		{
-			"name": "imperative",
-			"js": "demos/src/imperative.js",
-			"template": "demos/src/imperative.mustache",
-			"expanded": false,
 			"description": ""
 		}
 	]
