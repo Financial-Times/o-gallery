@@ -1,5 +1,6 @@
-/*global module*/
-'use strict';
+const BowerPlugin = require('bower-webpack-plugin');
+const path = require('path');
+const cwd = process.cwd();
 
 module.exports = function(config) {
 	config.set({
@@ -10,7 +11,14 @@ module.exports = function(config) {
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha', 'browserify'],
+		frameworks: ['mocha'],
+
+		plugins: [
+			'karma-mocha',
+			'karma-phantomjs-launcher',
+			'karma-webpack',
+			'karma-coverage'
+		],
 
 
 		// list of files / patterns to load in the browser
@@ -29,15 +37,18 @@ module.exports = function(config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'test/*.test.js': ['browserify']
+			'test/*.test.js': ['webpack']
 		},
 
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress'],
+		reporters: ['progress', 'coverage'],
 
+		coverageReporter: {
+			type : 'text-summary'
+		},
 
 		// web server port
 		port: 9876,
@@ -65,9 +76,40 @@ module.exports = function(config) {
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: true,
 
-		browserify: {
-			debug: true,
-			transform: [ 'debowerify' ]
+		webpack: {
+			quiet: true,
+			module: {
+				loaders: [
+					{
+						test: /\.js$/,
+						exclude: /node_modules/,
+						loaders: [
+							'babel?optional[]=runtime',
+							'imports?define=>false'
+						]
+					}
+				],
+				postLoaders: [
+					{ //delays coverage til after tests are run, fixing transpiled source coverage error
+						test: /\.js$/,
+						exclude: /(test|node_modules|bower_components)\//,
+						loader: 'istanbul-instrumenter'
+					}
+				]
+			},
+			resolve: {
+				root: [path.join(cwd, 'bower_components')]
+			},
+			plugins: [
+				new BowerPlugin({
+					includes:  /\.js$/
+				})
+			]
+		},
+
+		// Hide webpack output logging
+		webpackMiddleware: {
+			noInfo: true
 		}
 
 	});
