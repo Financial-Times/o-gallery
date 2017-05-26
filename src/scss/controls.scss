@@ -23,34 +23,34 @@
 	}
 
 	&--prev {
-		@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false);
+		@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		left: 0;
 
 		// Preload hover icon
 		&:before {
-			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 			content: '';
 		}
 
 		&:focus,
 		#{$o-hoverable-if-hover-enabled} &:hover {
-			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		}
 	}
 
 	&--next {
-		@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false);
+		@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		right: 0;
 
 		// Preload hover icon
 		&:before {
-			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 			content: '';
 		}
 
 		&:focus,
 		#{$o-hoverable-if-hover-enabled} &:hover {
-			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false);
+			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		}
 	}
 }
