@@ -11,7 +11,6 @@
 @import "src/scss/controls";
 @import "src/scss/themes/slideshow";
 @import "src/scss/themes/thumbnails";
-@import "src/scss/deprecated";
 
 @if (not $o-gallery-is-silent) {
 	@include oGalleryBase(o-gallery);
