@@ -279,10 +279,14 @@ Themes must only be used with the default `o-gallery` classes.
 
 Gallery uses `:hover` styles. These can be enabled by products adding the `o-hoverable-on` class to the document body.
 
+## Migration Guide
+
+### Migrating from v2.x.x -> v3.x.x
+This update introduces the new major of o-colors. Updating to this new version will mean updating any other components that you have which are using o-colors. There are no other breaking changes in this release.
+
+
 ----
 
 ## License
-
-Copyright (c) 2016 Financial Times Ltd. All rights reserved.
 
 This software is published under the [MIT licence](http://opensource.org/licenses/MIT).
