@@ -2,7 +2,7 @@ $o-gallery-is-silent: false;
 @import "../../main";
 
 body {
-	font-family: BentonSans, sans-serif;
+	font-family: Metric, sans-serif;
 }
 
 .o-gallery {
@@ -24,8 +24,8 @@ body {
 	font-size: 24px;
 	text-align: center;
 	overflow: hidden;
-	color: oColorsGetPaletteColor(grey-tint4);
-	background-color: oColorsGetPaletteColor(grey-tint3);
+	color: oColorsGetPaletteColor(black-70);
+	background-color: oColorsGetPaletteColor(black-50);
 	height: 400px;
 	line-height: 400px;
 }
