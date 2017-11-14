@@ -27,7 +27,7 @@
 		"sass": "demos/src/demo.scss",
 		"js": "demos/src/declarative.js",
 		"data": "demos/src/data.json",
-		"dependencies": ["o-fonts@^3.0.0"]
+		"dependencies": ["o-fonts@^3.0.0","o-normalise"]
 	},
 	"demos": [
 		{
