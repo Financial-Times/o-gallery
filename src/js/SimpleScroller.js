@@ -1,7 +1,6 @@
 /*global require,module */
-'use strict';
 
-var galleryDom = require('./galleryDom');
+const galleryDom = require('./galleryDom');
 
 /**
  * Mimics FTScroller without touch interface, transitions or events
@@ -9,9 +8,9 @@ var galleryDom = require('./galleryDom');
  */
 function SimpleScroller(containerEl) {
 
-	var scroller = this;
-	var allItemsEl;
-	var viewportEl;
+	const scroller = this;
+	let allItemsEl;
+	let viewportEl;
 
 	function updateDimensions() {
 		scroller.scrollLeft = viewportEl.scrollLeft;

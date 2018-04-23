@@ -1,26 +1,25 @@
 /*global require, module*/
-'use strict';
 
-var oDom = require('o-dom'),
-	DomDelegate = require('ftdomdelegate'),
-	FTScroller = require('ftscroller').FTScroller,
-	oViewport = require('o-viewport'),
-	galleryDom = require('./galleryDom'),
-	SimpleScroller = require('./SimpleScroller');
+const oDom = require('o-dom');
+const DomDelegate = require('ftdomdelegate');
+const FTScroller = require('ftscroller').FTScroller;
+const oViewport = require('o-viewport');
+const galleryDom = require('./galleryDom');
+const SimpleScroller = require('./SimpleScroller');
 
 function Gallery(containerEl, config) {
 
-	var viewportEl;
-	var titleEl;
-	var allItemsEl;
-	var itemEls;
-	var selectedItemIndex;
-	var shownItemIndex;
-	var scroller;
-	var debounceScroll;
-	var prevControlDiv;
-	var nextControlDiv;
-	var propertyAttributeMap = {
+	let viewportEl;
+	let titleEl;
+	let allItemsEl;
+	let itemEls;
+	let selectedItemIndex;
+	let shownItemIndex;
+	let scroller;
+	let debounceScroll;
+	let prevControlDiv;
+	let nextControlDiv;
+	const propertyAttributeMap = {
 		component: "data-o-component",
 		syncID: "data-o-gallery-syncid",
 		multipleItemsPerPage: "data-o-gallery-multipleitemsperpage",
@@ -30,7 +29,7 @@ function Gallery(containerEl, config) {
 		captionMaxHeight: "data-o-gallery-captionmaxheight",
 		title: "data-o-gallery-title"
 	};
-	var defaultConfig = {
+	const defaultConfig = {
 		component: "o-gallery",
 		multipleItemsPerPage: false,
 		captions: true,
@@ -39,16 +38,20 @@ function Gallery(containerEl, config) {
 		touch: false,
 		syncID: "o-gallery-" + new Date().getTime()
 	};
-	var allowTransitions = false;
-	var bodyDomDelegate;
-	var containerDomDelegate;
+	let allowTransitions = false;
+	let bodyDomDelegate;
+	let containerDomDelegate;
 
 	function supportsCssTransforms() {
-		var b = document.body || document.documentElement, s = b.style, p = 'Transition';
-		var v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+		const b = document.body || document.documentElement;
+		const s = b.style;
+		const p = 'Transition';
+		const v = ['', 'Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
 
-		for (var i = 0; i < v.length; i++) {
-			if (typeof s[v[i] + p] === 'string' || typeof s[v[i] + p.toLowerCase()] === 'string') return true;
+		for (let i = 0; i < v.length; i++) {
+			if (typeof s[v[i] + p] === 'string' || typeof s[v[i] + p.toLowerCase()] === 'string') {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -58,15 +61,15 @@ function Gallery(containerEl, config) {
 	}
 
 	function setWidths() {
-		var totalWidth = 0;
-		var itemWidth;
+		let totalWidth = 0;
+		let itemWidth;
 
 		if (config.multipleItemsPerPage) {
 			itemWidth = parseInt(itemEls[selectedItemIndex].clientWidth, 10);
 		} else {
 			itemWidth = containerEl.clientWidth;
 		}
-		for (var i = 0; i < itemEls.length; i++) {
+		for (let i = 0; i < itemEls.length; i++) {
 			itemEls[i].style.width = itemWidth + "px";
 			totalWidth += itemWidth;
 		}
@@ -80,8 +83,8 @@ function Gallery(containerEl, config) {
 	}
 
 	function getSelectedItem() {
-		var selectedItem = 0;
-		for (var i = 0; i < itemEls.length; i++) {
+		let selectedItem = 0;
+		for (let i = 0; i < itemEls.length; i++) {
 			if (itemEls[i].getAttribute('aria-selected') === 'true') {
 				selectedItem = i;
 				break;
@@ -91,7 +94,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function selectOnClick(evt) {
-		var clickedItemNum = oDom.getIndex(oDom.getClosestMatch(evt.srcElement, ".o-gallery__item"));
+		const clickedItemNum = oDom.getIndex(oDom.getClosestMatch(evt.srcElement, ".o-gallery__item"));
 		selectItem(clickedItemNum, true, "user");
 	}
 
@@ -125,10 +128,10 @@ function Gallery(containerEl, config) {
 	}
 
 	function setCaptionSizes() {
-		for (var i = 0; i < itemEls.length; i++) {
-			var itemEl = itemEls[i];
+		for (let i = 0; i < itemEls.length; i++) {
+			const itemEl = itemEls[i];
 			itemEl.style.paddingBottom = config.captionMinHeight + "px";
-			var captionEl = itemEl.querySelector(".o-gallery__item__caption");
+			const captionEl = itemEl.querySelector(".o-gallery__item__caption");
 			if (captionEl) {
 				captionEl.style.minHeight = config.captionMinHeight + "px";
 				captionEl.style.maxHeight = config.captionMaxHeight + "px";
@@ -137,10 +140,10 @@ function Gallery(containerEl, config) {
 	}
 
 	function insertItemContent(n) {
-		var itemNums = (n instanceof Array) ? n : [n];
+		const itemNums = (n instanceof Array) ? n : [n];
 		if (config.items) {
-			for (var i = 0; i < itemNums.length; i++) {
-				var itemNum = itemNums[i];
+			for (let i = 0; i < itemNums.length; i++) {
+				const itemNum = itemNums[i];
 				if (isValidItem(itemNum) && !config.items[itemNum].inserted) {
 					galleryDom.insertItemContent(config, config.items[itemNum], itemEls[itemNum]);
 					config.items[itemNum].inserted = true;
@@ -159,9 +162,9 @@ function Gallery(containerEl, config) {
 	}
 
 	function getItemsInPageView(l, r, whole) {
-		var itemsInView = [];
-		var onlyWhole = (typeof whole !== "boolean") ? true : whole;
-		for (var i = 0; i < itemEls.length; i++) {
+		const itemsInView = [];
+		const onlyWhole = (typeof whole !== "boolean") ? true : whole;
+		for (let i = 0; i < itemEls.length; i++) {
 			if ((onlyWhole && isWholeItemInPageView(i, l, r)) || (!onlyWhole && isAnyPartOfItemInPageView(i, l, r))) {
 				itemsInView.push(i);
 			}
@@ -181,7 +184,7 @@ function Gallery(containerEl, config) {
 
 	function triggerEvent(name, data) {
 		data.syncID = config.syncID;
-		var event = new CustomEvent(name, {
+		const event = new CustomEvent(name, {
 			'bubbles': true,
 			'cancelable': true,
 			'detail': data || {}
@@ -199,7 +202,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function alignItemRight(n) {
-		var newScrollLeft = itemEls[n].offsetLeft - (viewportEl.clientWidth - itemEls[n].clientWidth);
+		const newScrollLeft = itemEls[n].offsetLeft - (viewportEl.clientWidth - itemEls[n].clientWidth);
 		moveViewport(newScrollLeft);
 	}
 
@@ -207,10 +210,10 @@ function Gallery(containerEl, config) {
 		if (!isValidItem(n)) {
 			return;
 		}
-		var viewportL = scroller.scrollLeft;
-		var viewportR = viewportL + viewportEl.clientWidth;
-		var itemL = itemEls[n].offsetLeft;
-		var itemR = itemL + itemEls[n].clientWidth;
+		let viewportL = scroller.scrollLeft;
+		let viewportR = viewportL + viewportEl.clientWidth;
+		let itemL = itemEls[n].offsetLeft;
+		let itemR = itemL + itemEls[n].clientWidth;
 		if (itemL > viewportL && itemR < viewportR) {
 			return;
 		}
@@ -230,27 +233,27 @@ function Gallery(containerEl, config) {
 	}
 
 	function showPrevItem() {
-		var prev = (shownItemIndex - 1 >= 0) ? shownItemIndex - 1 : itemEls.length - 1;
+		let prev = (shownItemIndex - 1 >= 0) ? shownItemIndex - 1 : itemEls.length - 1;
 		showItem(prev);
 	}
 
 	function showNextItem() {
-		var next = (shownItemIndex + 1 < itemEls.length) ? shownItemIndex + 1 : 0;
+		let next = (shownItemIndex + 1 < itemEls.length) ? shownItemIndex + 1 : 0;
 		showItem(next);
 	}
 
 	function showPrevPage() {
 		if (scroller.scrollLeft > 0) {
-			var prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft);
-			var prevPageItem = prevPageWholeItems.pop() || 0;
+			let prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft);
+			let prevPageItem = prevPageWholeItems.pop() || 0;
 			alignItemRight(prevPageItem);
 		}
 	}
 
 	function showNextPage() {
 		if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-			var currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth);
-			var lastWholeItemInView = currentWholeItemsInView.pop();
+			let currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth);
+			let lastWholeItemInView = currentWholeItemsInView.pop();
 			alignItemLeft(lastWholeItemInView + 1);
 		}
 	}
@@ -276,12 +279,12 @@ function Gallery(containerEl, config) {
 	}
 
 	function selectPrevItem(show, source) {
-		var prev = (selectedItemIndex - 1 >= 0) ? selectedItemIndex - 1 : itemEls.length - 1;
+		let prev = (selectedItemIndex - 1 >= 0) ? selectedItemIndex - 1 : itemEls.length - 1;
 		selectItem(prev, show, source);
 	}
 
 	function selectNextItem(show, source) {
-		var next = (selectedItemIndex + 1 < itemEls.length) ? selectedItemIndex + 1 : 0;
+		let next = (selectedItemIndex + 1 < itemEls.length) ? selectedItemIndex + 1 : 0;
 		selectItem(next, show, source);
 	}
 
@@ -306,16 +309,16 @@ function Gallery(containerEl, config) {
 		if (!config.multipleItemsPerPage) { // correct the alignment of item in view
 			showItem(shownItemIndex);
 		} else {
-			var newScrollLeft = scroller.scrollLeft;
+			let newScrollLeft = scroller.scrollLeft;
 			insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
 		}
 	}
 
 	function extendObjects(objs) {
-		var newObj = {};
-		for (var i = 0; i < objs.length; i++) {
-			var obj = objs[i];
-			for (var prop in obj) {
+		let newObj = {};
+		for (let i = 0; i < objs.length; i++) {
+			let obj = objs[i];
+			for (let prop in obj) {
 				if (obj.hasOwnProperty(prop)) {
 					newObj[prop] = obj[prop];
 				}
@@ -354,7 +357,7 @@ function Gallery(containerEl, config) {
 		prevControlDiv = null;
 		nextControlDiv.parentNode.removeChild(nextControlDiv);
 		nextControlDiv = null;
-		for (var prop in propertyAttributeMap) {
+		for (let prop in propertyAttributeMap) {
 			if (propertyAttributeMap.hasOwnProperty(prop)) {
 				containerEl.removeAttribute(propertyAttributeMap[prop]);
 			}
@@ -441,7 +444,7 @@ function Gallery(containerEl, config) {
 
 	// If it's the thumbnails gallery, check that the thumbnails' clientwidth has been set before resizing
 	// as this takes time in IE8
-	var resizeLimit = 50;
+	let resizeLimit = 50;
 	function forceResize() {
 		if (!config.multipleItemsPerPage || parseInt(itemEls[selectedItemIndex].clientWidth, 10) !== 0) {
 			onResize();
@@ -480,9 +483,9 @@ function Gallery(containerEl, config) {
 }
 
 Gallery.init = function(el, config) {
-	var conf = config || {};
-	var gEls;
-	var galleries = [];
+	let conf = config || {};
+	let gEls;
+	let galleries = [];
 	if (!el) {
 		el = document.body;
 	} else if (el.nodeType !== 1) {
@@ -490,7 +493,7 @@ Gallery.init = function(el, config) {
 	}
 	if (el.querySelectorAll) {
 		gEls = el.querySelectorAll("[data-o-component~=o-gallery]");
-		for (var i = 0; i < gEls.length; i++) {
+		for (let i = 0; i < gEls.length; i++) {
 			if (!gEls[i].hasAttribute('data-o-gallery--js')) {
 				galleries.push(new Gallery(gEls[i], conf));
 			}
