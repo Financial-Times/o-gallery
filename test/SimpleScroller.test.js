@@ -1,23 +1,20 @@
 /*global describe, it, before, beforeEach, afterEach*/
-'use strict';
 
-var expect = require('expect.js');
-
-var SimpleScroller = require('./../src/js/SimpleScroller');
+const expect = require('expect.js');
+const SimpleScroller = require('./../src/js/SimpleScroller');
 
 describe('SimpleScroller', function() {
-
-	var containerEl;
-	var scroller;
+	let containerEl;
+	let scroller;
 
 	before(function() {
+		const items = document.createElement('ol');
 		containerEl = document.createElement('div');
-		var items = document.createElement('ol');
 		items.classList.add('o-gallery__items');
 		items.style.width = '120px';
 		containerEl.appendChild(items);
-		for (var i = 0; i < 3; i++) {
-			var item = document.createElement('li');
+		for (let i = 0; i < 3; i++) {
+			const item = document.createElement('li');
 			item.classList.add('o-gallery__item');
 			item.style.width = '40px';
 			item.style.height = '40px';
@@ -47,7 +44,7 @@ describe('SimpleScroller', function() {
 	});
 
 	it('#scrollTo', function() {
-		var viewportEl = containerEl.querySelector('.o-gallery__viewport');
+		const viewportEl = containerEl.querySelector('.o-gallery__viewport');
 		viewportEl.style.width = '40px';
 		viewportEl.style.overflow = 'hidden';
 		scroller.scrollTo(80);

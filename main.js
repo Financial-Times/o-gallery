@@ -1,8 +1,7 @@
 /*global require, module*/
-'use strict';
 
-var oGallery = require('./src/js/Gallery');
-var constructAll = function() {
+const oGallery = require('./src/js/Gallery');
+const constructAll = function() {
 	oGallery.init();
 	document.removeEventListener('o.DOMContentLoaded', constructAll);
 };

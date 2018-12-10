@@ -4,6 +4,10 @@
 	"origamiCategory": "components",
 	"origamiVersion": 1,
 	"support": "https://github.com/Financial-Times/o-gallery/issues",
+	"supportContact": {
+		"email": "origami.support@ft.com",
+		"slack": "financialtimes/ft-origami"
+	},
 	"supportStatus": "active",
 	"browserFeatures": {
 		"required": [
@@ -27,10 +31,14 @@
 		"sass": "demos/src/demo.scss",
 		"js": "demos/src/declarative.js",
 		"data": "demos/src/data.json",
-		"dependencies": ["o-fonts@^3.0.0","o-normalise"]
+		"dependencies": [
+			"o-fonts@^3.0.0",
+      "o-normalise@^1.0.0"
+		]
 	},
 	"demos": [
 		{
+			"title": "Base",
 			"name": "base",
 			"template": "demos/src/base.mustache",
 			"description": ""
