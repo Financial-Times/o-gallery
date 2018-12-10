@@ -59,12 +59,12 @@ describe('galleryDom', function() {
 		var list = galleryDom.createItemsList(document.body);
 		var items = galleryDom.createItems(list, [
 			{
-				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 				caption: '<p>Slideshow caption text.</p>',
 				selected: true
 			},
 			{
-				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 				caption: '<p>Slideshow caption text.</p>',
 				selected: false
 			}
@@ -81,13 +81,13 @@ describe('galleryDom', function() {
 		galleryDom.insertItemContent({
 			captions: true
 		}, {
-			content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+			content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 			caption: '<p>Slideshow caption text.</p>',
 			selected: false
 		}, item);
 		expect(item.children.length).to.be(2);
 		expect(item.children[0].classList.contains('o-gallery__item__content')).to.be(true);
-		expect(item.children[0].innerHTML).to.be('<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />');
+		expect(item.children[0].innerHTML).to.be('<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">');
 		expect(item.children[1].classList.contains('o-gallery__item__caption')).to.be(true);
 		expect(item.children[1].innerHTML).to.be('<p>Slideshow caption text.</p>');
 	});
