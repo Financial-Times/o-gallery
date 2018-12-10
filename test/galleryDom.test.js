@@ -1,16 +1,15 @@
 /*global describe, it*/
-'use strict';
 
-var expect = require('expect.js');
+const expect = require('expect.js');
 
-var galleryDom = require('./../src/js/galleryDom');
+const galleryDom = require('./../src/js/galleryDom');
 
 describe('galleryDom', function() {
 
 	it('#emptyElement', function() {
-		var div = document.createElement('div');
+		const div = document.createElement('div');
 		div.classList.add('parent');
-		var child = document.createElement('p');
+		const child = document.createElement('p');
 		child.classList.add('child');
 		div.appendChild(child);
 		document.body.appendChild(div);
@@ -20,15 +19,15 @@ describe('galleryDom', function() {
 	});
 
 	it('#createElement', function() {
-		var el = galleryDom.createElement('div', '<p>Test</p>', 'o-gallery');
+		const el = galleryDom.createElement('div', '<p>Test</p>', 'o-gallery');
 		expect(el.tagName).to.be('DIV');
 		expect(el.innerHTML).to.be('<p>Test</p>');
 		expect(el.classList.contains('o-gallery')).to.be(true);
 	});
 
 	it('#wrapElement', function() {
-		var el = document.createElement('p');
-		var wrapper = document.createElement('div');
+		const el = document.createElement('p');
+		const wrapper = document.createElement('div');
 		document.body.appendChild(el);
 		expect(el.parentNode).to.be(document.body);
 		galleryDom.wrapElement(el, wrapper);
@@ -38,8 +37,8 @@ describe('galleryDom', function() {
 	});
 
 	it('#unwrapElement', function() {
-		var el = document.createElement('p');
-		var wrapper = document.createElement('div');
+		const el = document.createElement('p');
+		const wrapper = document.createElement('div');
 		document.body.appendChild(el);
 		galleryDom.wrapElement(el, wrapper);
 		expect(el.parentNode).to.be(wrapper);
@@ -49,22 +48,22 @@ describe('galleryDom', function() {
 	});
 
 	it('#createItemsList', function() {
-		var itemsList = galleryDom.createItemsList(document.body);
+		const itemsList = galleryDom.createItemsList(document.body);
 		expect(itemsList.parentNode).to.be(document.body);
 		expect(itemsList.tagName).to.be('OL');
 		expect(itemsList.classList.contains('o-gallery__items')).to.be(true);
 	});
 
 	it('#createItems', function() {
-		var list = galleryDom.createItemsList(document.body);
-		var items = galleryDom.createItems(list, [
+		const list = galleryDom.createItemsList(document.body);
+		const items = galleryDom.createItems(list, [
 			{
-				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 				caption: '<p>Slideshow caption text.</p>',
 				selected: true
 			},
 			{
-				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+				content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 				caption: '<p>Slideshow caption text.</p>',
 				selected: false
 			}
@@ -77,27 +76,27 @@ describe('galleryDom', function() {
 	});
 
 	it('#insertItemContent', function() {
-		var item = galleryDom.createElement('li', '', 'item-test');
+		const item = galleryDom.createElement('li', '', 'item-test');
 		galleryDom.insertItemContent({
 			captions: true
 		}, {
-			content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+			content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 			caption: '<p>Slideshow caption text.</p>',
 			selected: false
 		}, item);
 		expect(item.children.length).to.be(2);
 		expect(item.children[0].classList.contains('o-gallery__item__content')).to.be(true);
-		expect(item.children[0].innerHTML).to.be('<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />');
+		expect(item.children[0].innerHTML).to.be('<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">');
 		expect(item.children[1].classList.contains('o-gallery__item__caption')).to.be(true);
 		expect(item.children[1].innerHTML).to.be('<p>Slideshow caption text.</p>');
 	});
 
 	it('#getPropertiesFromAttributes', function() {
-		var element = galleryDom.createElement('div', '', '');
+		const element = galleryDom.createElement('div', '', '');
 		element.setAttribute('aOne', 'true');
 		element.setAttribute('aTwo', 'false');
 		element.setAttribute('aThree', 'test');
-		var object = galleryDom.getPropertiesFromAttributes(element, {
+		const object = galleryDom.getPropertiesFromAttributes(element, {
 			propOne: 'aOne',
 			propTwo: 'aTwo',
 			propThree: 'aThree'
@@ -108,14 +107,14 @@ describe('galleryDom', function() {
 	});
 
 	it('#setAttributesFromProperties', function() {
-		var element = galleryDom.createElement('div', '', '');
-		var properties = {
+		const element = galleryDom.createElement('div', '', '');
+		const properties = {
 			propOne: 'aOne',
 			propTwo: 'aTwo',
 			propThree: 'aThree'
 		};
 
-		var config = {
+		const config = {
 			propOne: true,
 			propTwo: false,
 			propThree: 'test'

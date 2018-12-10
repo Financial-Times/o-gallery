@@ -1,4 +1,4 @@
-# o-gallery [![Build Status](https://circleci.com/gh/Financial-Times/o-gallery.png?style=shield&circle-token=32b0aa62a8d36b918e65e4d9de05e20c24648fe7)](https://circleci.com/gh/Financial-Times/o-gallery)
+# o-gallery [![Build Status](https://circleci.com/gh/Financial-Times/o-gallery.png?style=shield&circle-token=32b0aa62a8d36b918e65e4d9de05e20c24648fe7)](https://circleci.com/gh/Financial-Times/o-gallery) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](#licence)
 
 A configurable content gallery. For carousels, slideshows and thumbnail strips.
 
@@ -101,7 +101,7 @@ Whether this item is selected. If more than one item is set to be selected, then
 For example:
 
 	{
-		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 		caption: '<p>Slideshow caption text.</p>',
 		selected: true
 	}
