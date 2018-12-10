@@ -101,7 +101,7 @@ Whether this item is selected. If more than one item is set to be selected, then
 For example:
 
 	{
-		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1" />',
+		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
 		caption: '<p>Slideshow caption text.</p>',
 		selected: true
 	}
