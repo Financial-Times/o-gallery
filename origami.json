@@ -33,7 +33,7 @@
 		"data": "demos/src/data.json",
 		"dependencies": [
 			"o-fonts@^3.0.0",
-      "o-normalise@^1.0.0"
+			"o-normalise@^1.0.0"
 		]
 	},
 	"demos": [
