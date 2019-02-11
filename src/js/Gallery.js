@@ -1,6 +1,5 @@
 /*global require, module*/
 
-const oDom = require('o-dom');
 const DomDelegate = require('ftdomdelegate');
 const FTScroller = require('ftscroller').FTScroller;
 const oViewport = require('o-viewport');
@@ -94,7 +93,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function selectOnClick(evt) {
-		const clickedItemNum = oDom.getIndex(oDom.getClosestMatch(evt.srcElement, ".o-gallery__item"));
+		const clickedItemNum = Array.from(containerEl.children).indexOf(evt.srcElement.closest(".o-gallery__item"));
 		selectItem(clickedItemNum, true, "user");
 	}
 
