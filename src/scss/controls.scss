@@ -32,15 +32,16 @@
 			content: '';
 		}
 
+		&:hover,
 		&:focus {
 			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		}
 
-		// Only show the hover state if the primary device input supports hover.
-		// i.e. don't change the button on tap.
-		@media (hover) {
+		// Reset the hover state for primarily touch based devices, so hover has no visual effect.
+		// IE11 does not support `@media (hover)`, which is why the hover state is applied by default.
+		@media (hover: none) {
 			&:hover {
-				@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+				@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 			}
 		}
 	}
@@ -55,15 +56,16 @@
 			content: '';
 		}
 
+		&:hover,
 		&:focus {
 			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 		}
 
-		// Only show the hover state if the primary device input supports hover.
-		// i.e. don't change the button on tap.
-		@media (hover) {
+		// Reset the hover state for primarily touch based devices, so hover has no visual effect.
+		// IE11 does not support `@media (hover)`, which is why the hover state is applied by default.
+		@media (hover: none) {
 			&:hover {
-				@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+				@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
 			}
 		}
 	}
