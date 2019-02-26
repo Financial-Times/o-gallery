@@ -275,10 +275,6 @@ In addition to this, a `aria-selected="true"` attribute is set on the _selected_
 
 Themes must only be used with the default `o-gallery` classes.
 
-### Hover styles
-
-Gallery uses `:hover` styles. These can be enabled by products adding the `o-hoverable-on` class to the document body.
-
 ## Migration Guide
 
 ### Migrating from v2.x.x -> v3.x.x
