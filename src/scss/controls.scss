@@ -32,9 +32,16 @@
 			content: '';
 		}
 
-		&:focus,
-		#{$o-hoverable-if-hover-enabled} &:hover {
+		&:focus {
 			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+		}
+
+		// Only show the hover state if the primary device input supports hover.
+		// i.e. don't change the button on tap.
+		@media (hover) {
+			&:hover {
+				@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			}
 		}
 	}
 
@@ -48,9 +55,16 @@
 			content: '';
 		}
 
-		&:focus,
-		#{$o-hoverable-if-hover-enabled} &:hover {
+		&:focus {
 			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+		}
+
+		// Only show the hover state if the primary device input supports hover.
+		// i.e. don't change the button on tap.
+		@media (hover) {
+			&:hover {
+				@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			}
 		}
 	}
 }
