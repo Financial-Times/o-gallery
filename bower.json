@@ -7,7 +7,7 @@
   "dependencies": {
     "o-colors": "^4.0.0",
     "ftscroller": "https://github.com/ftlabs/ftscroller.git#^0.6.0",
-    "ftdomdelegate": "^2.0.0",
+    "ftdomdelegate": ">=2.2.0 <4.0.0",
     "o-viewport": ">=0.1.1 <4.0.0",
     "o-icons": "^4.1.0 <6"
   }
