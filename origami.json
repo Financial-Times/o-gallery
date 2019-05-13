@@ -1,5 +1,6 @@
 {
-	"description": "Slideshow gallery component",
+	"description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
+	"keywords": ["gallery", "carousel"],
 	"origamiType": "module",
 	"origamiCategory": "components",
 	"origamiVersion": 1,
