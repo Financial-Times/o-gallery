@@ -1,8 +1,5 @@
-/*global describe, it*/
-
-const expect = require('expect.js');
-
-const galleryDom = require('./../src/js/galleryDom');
+import proclaim from 'proclaim';
+import galleryDom from './../src/js/galleryDom';
 
 describe('galleryDom', function() {
 
@@ -13,27 +10,27 @@ describe('galleryDom', function() {
 		child.classList.add('child');
 		div.appendChild(child);
 		document.body.appendChild(div);
-		expect(document.body.querySelector('.child')).to.not.be(null);
+		proclaim.isNotNull(document.body.querySelector('.child'));
 		galleryDom.emptyElement(document.querySelector('.parent'));
-		expect(document.body.querySelector('.child')).to.be(null);
+		proclaim.isNull(document.body.querySelector('.child'));
 	});
 
 	it('#createElement', function() {
 		const el = galleryDom.createElement('div', '<p>Test</p>', 'o-gallery');
-		expect(el.tagName).to.be('DIV');
-		expect(el.innerHTML).to.be('<p>Test</p>');
-		expect(el.classList.contains('o-gallery')).to.be(true);
+		proclaim.equal(el.tagName, 'DIV');
+		proclaim.equal(el.innerHTML, '<p>Test</p>');
+		proclaim.isTrue(el.classList.contains('o-gallery'));
 	});
 
 	it('#wrapElement', function() {
 		const el = document.createElement('p');
 		const wrapper = document.createElement('div');
 		document.body.appendChild(el);
-		expect(el.parentNode).to.be(document.body);
+		proclaim.equal(el.parentNode, document.body);
 		galleryDom.wrapElement(el, wrapper);
-		expect(el.parentNode).to.not.be(document.body);
-		expect(el.parentNode).to.be(wrapper);
-		expect(wrapper.parentNode).to.be(document.body);
+		proclaim.notEqual(el.parentNode, document.body);
+		proclaim.equal(el.parentNode, wrapper);
+		proclaim.equal(wrapper.parentNode, document.body);
 	});
 
 	it('#unwrapElement', function() {
@@ -41,17 +38,17 @@ describe('galleryDom', function() {
 		const wrapper = document.createElement('div');
 		document.body.appendChild(el);
 		galleryDom.wrapElement(el, wrapper);
-		expect(el.parentNode).to.be(wrapper);
+		proclaim.equal(el.parentNode, wrapper);
 		galleryDom.unwrapElement(el);
-		expect(wrapper.parentNode).to.be(null);
-		expect(el.parentNode).to.be(document.body);
+		proclaim.isNull(wrapper.parentNode);
+		proclaim.equal(el.parentNode, document.body);
 	});
 
 	it('#createItemsList', function() {
 		const itemsList = galleryDom.createItemsList(document.body);
-		expect(itemsList.parentNode).to.be(document.body);
-		expect(itemsList.tagName).to.be('OL');
-		expect(itemsList.classList.contains('o-gallery__items')).to.be(true);
+		proclaim.equal(itemsList.parentNode, document.body);
+		proclaim.equal(itemsList.tagName, 'OL');
+		proclaim.isTrue(itemsList.classList.contains('o-gallery__items'));
 	});
 
 	it('#createItems', function() {
@@ -68,11 +65,11 @@ describe('galleryDom', function() {
 				selected: false
 			}
 		]);
-		expect(items[0].tagName).to.be('LI');
-		expect(items[0].parentNode).to.be(list);
-		expect(items[0].classList.contains('o-gallery__item')).to.be(true);
-		expect(items[0].getAttribute('aria-selected')).to.be('true');
-		expect(items[1].getAttribute('aria-selected')).to.be(null);
+		proclaim.equal(items[0].tagName, 'LI');
+		proclaim.equal(items[0].parentNode, list);
+		proclaim.isTrue(items[0].classList.contains('o-gallery__item'));
+		proclaim.equal(items[0].getAttribute('aria-selected'), 'true');
+		proclaim.isNull(items[1].getAttribute('aria-selected'));
 	});
 
 	it('#insertItemContent', function() {
@@ -84,11 +81,11 @@ describe('galleryDom', function() {
 			caption: '<p>Slideshow caption text.</p>',
 			selected: false
 		}, item);
-		expect(item.children.length).to.be(2);
-		expect(item.children[0].classList.contains('o-gallery__item__content')).to.be(true);
-		expect(item.children[0].innerHTML).to.be('<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">');
-		expect(item.children[1].classList.contains('o-gallery__item__caption')).to.be(true);
-		expect(item.children[1].innerHTML).to.be('<p>Slideshow caption text.</p>');
+		proclaim.equal(item.children.length, 2);
+		proclaim.isTrue(item.children[0].classList.contains('o-gallery__item__content'));
+		proclaim.equal(item.children[0].innerHTML, '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">');
+		proclaim.isTrue(item.children[1].classList.contains('o-gallery__item__caption'));
+		proclaim.equal(item.children[1].innerHTML, '<p>Slideshow caption text.</p>');
 	});
 
 	it('#getPropertiesFromAttributes', function() {
@@ -101,9 +98,9 @@ describe('galleryDom', function() {
 			propTwo: 'aTwo',
 			propThree: 'aThree'
 		});
-		expect(object.propOne).to.be(true);
-		expect(object.propTwo).to.be(false);
-		expect(object.propThree).to.be('test');
+		proclaim.isTrue(object.propOne);
+		proclaim.equal(object.propTwo, false);
+		proclaim.equal(object.propThree, 'test');
 	});
 
 	it('#setAttributesFromProperties', function() {
@@ -121,8 +118,8 @@ describe('galleryDom', function() {
 		};
 
 		galleryDom.setAttributesFromProperties(element, config, properties, ['propTwo']);
-		expect(element.getAttribute('aOne')).to.be('true');
-		expect(element.getAttribute('aTwo')).to.be(null);
-		expect(element.getAttribute('aThree')).to.be('test');
+		proclaim.equal(element.getAttribute('aOne'), 'true');
+		proclaim.isNull(element.getAttribute('aTwo'));
+		proclaim.equal(element.getAttribute('aThree'), 'test');
 	});
 });

@@ -1,10 +1,8 @@
-/*global require, module*/
-
-const DomDelegate = require('ftdomdelegate');
-const FTScroller = require('ftscroller').FTScroller;
-const oViewport = require('o-viewport');
-const galleryDom = require('./galleryDom');
-const SimpleScroller = require('./SimpleScroller');
+import DomDelegate from 'ftdomdelegate';
+import { FTScroller } from 'ftscroller';
+import oViewport from 'o-viewport';
+import galleryDom from './galleryDom';
+import SimpleScroller from './SimpleScroller';
 
 function Gallery(containerEl, config) {
 

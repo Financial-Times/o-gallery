@@ -4,13 +4,13 @@
 ////
 
 /// Styling for the thumbnail gallery theme
-@mixin oGalleryThumbnails {
+@mixin _oGalleryThumbnails {
 	display: none;
 	color: blue;
 	width: 100%;
 	height: 74px;
 	overflow: hidden;
-	background-color: oColorsGetColorFor(o-gallery-thumbnails, background);
+	background-color: oColorsByName('black-30');
 	.o-gallery--slideshow + & {
 		margin-top: -4px;
 	}

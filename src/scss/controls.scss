@@ -4,8 +4,8 @@
 ////
 
 /// Mixin to be applied to the gallery controls
-@mixin oGalleryControl {
-	@include oGalleryOverlayBackground();
+@mixin _oGalleryControl {
+	@include _oGalleryOverlayBackground();
 	position: absolute;
 	top: 50%;
 	margin-top: ($_o-gallery-control-height / 2) * -1;
@@ -23,49 +23,49 @@
 	}
 
 	&--prev {
-		@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+		@include oIconsContent('arrow-left', $_o-gallery-overlay-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 		left: 0;
 
 		// Preload hover icon
 		&:before {
-			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			@include oIconsContent('arrow-left', $_o-gallery-overlay-hover-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 			content: '';
 		}
 
 		&:hover,
 		&:focus {
-			@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			@include oIconsContent('arrow-left', $_o-gallery-overlay-hover-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 		}
 
 		// Reset the hover state for primarily touch based devices, so hover has no visual effect.
 		// IE11 does not support `@media (hover)`, which is why the hover state is applied by default.
 		@media (hover: none) {
 			&:hover {
-				@include oIconsGetIcon('arrow-left', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+				@include oIconsContent('arrow-left', $_o-gallery-overlay-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 			}
 		}
 	}
 
 	&--next {
-		@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+		@include oIconsContent('arrow-right', $_o-gallery-overlay-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 		right: 0;
 
 		// Preload hover icon
 		&:before {
-			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			@include oIconsContent('arrow-right', $_o-gallery-overlay-hover-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 			content: '';
 		}
 
 		&:hover,
 		&:focus {
-			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay-hover, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+			@include oIconsContent('arrow-right', $_o-gallery-overlay-hover-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 		}
 
 		// Reset the hover state for primarily touch based devices, so hover has no visual effect.
 		// IE11 does not support `@media (hover)`, which is why the hover state is applied by default.
 		@media (hover: none) {
 			&:hover {
-				@include oIconsGetIcon('arrow-right', oColorsGetColorFor(o-gallery-overlay, text), $_o-gallery-control-width, $apply-base-styles: false, $iconset-version: 1);
+				@include oIconsContent('arrow-right', $_o-gallery-overlay-text, $size: $_o-gallery-control-width, $include-base-styles: false);
 			}
 		}
 	}
