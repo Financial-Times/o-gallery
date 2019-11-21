@@ -1,6 +1,5 @@
-/*global require, module*/
+import oGallery from './src/js/Gallery';
 
-const oGallery = require('./src/js/Gallery');
 const constructAll = function() {
 	oGallery.init();
 	document.removeEventListener('o.DOMContentLoaded', constructAll);
@@ -8,4 +7,4 @@ const constructAll = function() {
 
 document.addEventListener('o.DOMContentLoaded', constructAll);
 
-module.exports = oGallery;
+export default oGallery;

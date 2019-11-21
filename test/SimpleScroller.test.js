@@ -1,7 +1,5 @@
-/*global describe, it, before, beforeEach, afterEach*/
-
-const expect = require('expect.js');
-const SimpleScroller = require('./../src/js/SimpleScroller');
+import proclaim from 'proclaim';
+import SimpleScroller from './../src/js/SimpleScroller';
 
 describe('SimpleScroller', function() {
 	let containerEl;
@@ -33,14 +31,14 @@ describe('SimpleScroller', function() {
 	});
 
 	it('should initialise and #destroy', function() {
-		expect(containerEl.children[0].classList.contains('o-gallery__viewport')).to.be(true);
-		expect(scroller.scrollLeft).to.be(0);
+		proclaim.isTrue(containerEl.children[0].classList.contains('o-gallery__viewport'));
+		proclaim.equal(scroller.scrollLeft, 0);
 		scroller.destroy();
-		expect(containerEl.children[0].classList.contains('o-gallery__items')).to.be(true);
+		proclaim.isTrue(containerEl.children[0].classList.contains('o-gallery__items'));
 	});
 
 	it('#contentContainerNode', function() {
-		expect(scroller.contentContainerNode.classList.contains('o-gallery__items')).to.be(true);
+		proclaim.isTrue(scroller.contentContainerNode.classList.contains('o-gallery__items'));
 	});
 
 	it('#scrollTo', function() {
@@ -48,7 +46,7 @@ describe('SimpleScroller', function() {
 		viewportEl.style.width = '40px';
 		viewportEl.style.overflow = 'hidden';
 		scroller.scrollTo(80);
-		expect(scroller.scrollLeft).to.be(80);
-		expect(viewportEl.scrollLeft).to.be(80);
+		proclaim.equal(scroller.scrollLeft, 80);
+		proclaim.equal(viewportEl.scrollLeft, 80);
 	});
 });

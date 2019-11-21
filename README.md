@@ -230,23 +230,23 @@ These method may be useful for adding keyboard control to a Gallery.
 
 ## Sass
 
-By default the Sass is in silent mode, meaning there will be no CSS output.
-
-If you're `@import`ing the Sass into your product or component, and you want to turn off silent mode, then set the following Sass variable:
+Include all o-gallery CSS by including the `oGallery` mixin:
 
 ```scss
-$o-gallery-is-silent: false;
+@include oGallery();
 ```
 
-If requesting the CSS from the build service, silent mode will automatically be switched off.
+To reduce your CSS bundle size, styles for [themes](#Themes) may be included granularly using the options `$opts` argument:
 
-In silent mode, instead of the CSS classes listed below, use the [mixins documented here](sassdoc.webservices.ft.com/v1/sassdoc/o-gallery).
+```scss
+@include oGallery($opts: ('themes': ('slideshow', 'thumbnails')));
+```
 
 ## Themes
 
 By default, _Gallery_ only provides the minimum styling for a Gallery to be functional - e.g. mostly just positioning, and the previous/next UI controls.
 
-Two themes are provided: for slideshows and thumbnails.
+Two themes are provided: for `slideshows` and `thumbnails`.
 
 To use the slideshow theme, set a 'o-gallery--slideshow' class on the root Gallery element:
 
@@ -259,8 +259,6 @@ To use the thumbnails theme, set a `o-gallery--thumbnails` class on the Gallery 
 ```html
 <div class="o-gallery o-gallery--thumbnails" data-o-component="o-gallery">
 ```
-
-If creating your own theme, see the [Origami section on themes](http://origami.ft.com/docs/component-spec/modules/#themes).
 
 The following Gallery classes are applied to elements in the Gallery structure:
 
@@ -275,14 +273,19 @@ In addition to this, a `aria-selected="true"` attribute is set on the _selected_
 
 Themes must only be used with the default `o-gallery` classes.
 
-## Migration Guide
+## Migration
 
-### Migrating from v2.x.x -> v3.x.x
-This update introduces the new major of o-colors. Updating to this new version will mean updating any other components that you have which are using o-colors. There are no other breaking changes in this release.
+State | Major Version | Last Minor Release | Migration guide |
+:---: | :---: | :---: | :---:
+⚠ maintained | 4 | N/A  | [migrate to v4](MIGRATION.md#migrating-from-v3-to-v4) |
+╳ deprecated | 3 | 3.0  | [migrate to v3](MIGRATION.md#migrating-from-v2-to-v3) |
+╳ deprecated | 2 | 2.1  | - |
+╳ deprecated | 1 | 1.7  | - |
 
+## Contact
 
-----
+If you have any questions or comments about this component, or need help using it, please either [raise an issue](https://github.com/Financial-Times/o-teaser/issues), visit [#ft-origami](https://financialtimes.slack.com/messages/ft-origami/) or email [Origami Support](mailto:origami-support@ft.com).
 
-## License
+## Licence
 
-This software is published under the [MIT licence](http://opensource.org/licenses/MIT).
+This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).

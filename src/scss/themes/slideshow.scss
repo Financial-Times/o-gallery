@@ -4,17 +4,17 @@
 ////
 
 /// Styling for the slideshow gallery theme
-@mixin oGallerySlideshow {
+@mixin _oGallerySlideshow {
 	width: 100%;
 	overflow: hidden;
 	.o-gallery__title {
-		@include oGalleryOverlayBackground();
+		@include _oGalleryOverlayBackground();
 		margin: 0;
 		padding: 10px;
 		font-weight: normal;
 		font-size: 20px;
 		line-height: 24px;
-		color: oColorsGetColorFor(o-gallery-overlay, text);
+		color: $_o-gallery-overlay-text;
 	}
 	.o-gallery__item__caption {
 		position: absolute;
@@ -26,7 +26,7 @@
 		font-weight: normal;
 		font-size: 12px;
 		line-height: 14px;
-		color: oColorsGetColorFor(o-gallery-overlay, text);
-		background-color: oColorsGetColorFor(o-gallery-overlay, background);
+		color: $_o-gallery-overlay-text;
+		background-color: $_o-gallery-overlay-background;
 	}
 }

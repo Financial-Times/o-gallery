@@ -4,7 +4,7 @@
 ////
 
 /// General styling for the gallery
-@mixin oGallery {
+@mixin _oGalleryBase {
 	user-select: none;
 	position: relative;
 	ol,
@@ -24,7 +24,7 @@
 }
 
 /// Styling for the gallery title
-@mixin oGalleryTitle {
+@mixin _oGalleryTitle {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -32,14 +32,14 @@
 }
 
 /// To be applied to the viewport element
-@mixin oGalleryViewport {
+@mixin _oGalleryViewport {
 	position: relative;
 	overflow: hidden;
 	z-index: 1;
 }
 
 /// Styles the element the holds the different items
-@mixin oGalleryItems {
+@mixin _oGalleryItems {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -51,7 +51,7 @@
 }
 
 /// Styles each gallery item
-@mixin oGalleryItem {
+@mixin _oGalleryItem {
 	position: relative;
 	margin: 0 0 20px;
 	padding: 0;
@@ -65,7 +65,7 @@
 }
 
 /// Sets the styling for the content of each item
-@mixin oGalleryItemContent {
+@mixin _oGalleryItemContent {
 	img {
 		display: block;
 		width: 100%;

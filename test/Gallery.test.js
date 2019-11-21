@@ -1,8 +1,5 @@
-/*global describe, it*/
-
-const expect = require('expect.js');
-
-const Gallery = require('./../src/js/Gallery');
+import proclaim from 'proclaim';
+import Gallery from './../src/js/Gallery';
 
 describe('Gallery', function() {
 
@@ -57,11 +54,11 @@ describe('Gallery', function() {
 		let gallery;
 
 		galleryEl.addEventListener('oGallery.ready', function(e) {
-			expect(e.detail.gallery instanceof Gallery).to.be(true);
-			expect(galleryEl.classList.contains('o-gallery')).to.be(true);
-			expect(galleryEl.getAttribute('data-o-gallery--js')).to.not.be(null);
-			expect(galleryEl.querySelector('.o-gallery__viewport')).to.not.be(null);
-			expect(galleryEl.querySelector('.o-gallery__control')).to.not.be(null);
+			proclaim.isTrue(e.detail.gallery instanceof Gallery);
+			proclaim.isTrue(galleryEl.classList.contains('o-gallery'));
+			proclaim.isNotNull(galleryEl.getAttribute('data-o-gallery--js'));
+			proclaim.isNotNull(galleryEl.querySelector('.o-gallery__viewport'));
+			proclaim.isNotNull(galleryEl.querySelector('.o-gallery__control'));
 			done();
 		});
 		gallery = new Gallery(galleryEl, galleryConfig);
@@ -73,9 +70,9 @@ describe('Gallery', function() {
 	it('#showItem', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
+		proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 608);
 		galleryEl.addEventListener('oGallery.scrollEnd', function() {
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(8);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 8);
 
 			destroyGallery(gallery);
 			done();
@@ -86,9 +83,9 @@ describe('Gallery', function() {
 	it('#showPrevItem', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
+		proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 608);
 		galleryEl.addEventListener('oGallery.scrollEnd', function() {
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(8);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 8);
 
 			destroyGallery(gallery);
 			done();
@@ -99,9 +96,9 @@ describe('Gallery', function() {
 	it('#showNextItem', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
+		proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 608);
 		galleryEl.addEventListener('oGallery.scrollEnd', function() {
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(8);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 8);
 
 			destroyGallery(gallery);
 			done();
@@ -116,7 +113,7 @@ describe('Gallery', function() {
 		myConfig.items[1].selected = true;
 		const gallery = new Gallery(galleryEl, myConfig);
 		galleryEl.addEventListener('oGallery.scrollEnd', function() {
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 608);
 
 			destroyGallery(gallery);
 			done();
@@ -127,9 +124,9 @@ describe('Gallery', function() {
 	it('#showNextPage', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(608);
+		proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 608);
 		galleryEl.addEventListener('oGallery.scrollEnd', function() {
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left).to.be(8);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getBoundingClientRect().left, 8);
 
 			destroyGallery(gallery);
 			done();
@@ -140,7 +137,7 @@ describe('Gallery', function() {
 	it('#getSelectedItem', function() {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(gallery.getSelectedItem()).to.be(0);
+		proclaim.equal(gallery.getSelectedItem(), 0);
 		destroyGallery(gallery);
 	});
 
@@ -148,9 +145,9 @@ describe('Gallery', function() {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
-			expect(e.detail.source).to.be('test');
-			expect(e.detail.itemID).to.be(1);
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[1].getAttribute('aria-selected')).to.be('true');
+			proclaim.equal(e.detail.source, 'test');
+			proclaim.equal(e.detail.itemID, 1);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[1].getAttribute('aria-selected'), 'true');
 
 			destroyGallery(gallery);
 			done();
@@ -163,9 +160,9 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		const expectedSelectedItem = (gallery.getSelectedItem() - 1 >= 0) ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
-			expect(e.detail.source).to.be('test');
-			expect(e.detail.itemID).to.be(expectedSelectedItem);
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected')).to.be('true');
+			proclaim.equal(e.detail.source, 'test');
+			proclaim.equal(e.detail.itemID, expectedSelectedItem);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected'), 'true');
 
 			destroyGallery(gallery);
 			done();
@@ -178,9 +175,9 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		const expectedSelectedItem = (gallery.getSelectedItem() + 1 > 1) ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
-			expect(e.detail.source).to.be('test');
-			expect(e.detail.itemID).to.be(expectedSelectedItem);
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected')).to.be('true');
+			proclaim.equal(e.detail.source, 'test');
+			proclaim.equal(e.detail.itemID, expectedSelectedItem);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected'), 'true');
 
 			destroyGallery(gallery);
 			done();
@@ -193,9 +190,9 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		const expectedSelectedItem = (gallery.getSelectedItem() + 1 > 1) ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
-			expect(e.detail.source).to.be('user');
-			expect(e.detail.itemID).to.be(expectedSelectedItem);
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected')).to.be('true');
+			proclaim.equal(e.detail.source, 'user');
+			proclaim.equal(e.detail.itemID, expectedSelectedItem);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected'), 'true');
 
 			destroyGallery(gallery);
 			done();
@@ -208,9 +205,9 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		const expectedSelectedItem = (gallery.getSelectedItem() - 1 >= 0) ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
-			expect(e.detail.source).to.be('user');
-			expect(e.detail.itemID).to.be(expectedSelectedItem);
-			expect(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected')).to.be('true');
+			proclaim.equal(e.detail.source, 'user');
+			proclaim.equal(e.detail.itemID, expectedSelectedItem);
+			proclaim.equal(galleryEl.querySelectorAll('.o-gallery__item')[expectedSelectedItem].getAttribute('aria-selected'), 'true');
 
 			destroyGallery(gallery);
 			done();
@@ -223,7 +220,7 @@ describe('Gallery', function() {
 		const myConfig = JSON.parse(JSON.stringify(galleryConfig));
 		myConfig.syncID = 'testId';
 		const gallery = new Gallery(galleryEl, myConfig);
-		expect(gallery.getSyncID()).to.be('testId');
+		proclaim.equal(gallery.getSyncID(), 'testId');
 		destroyGallery(gallery);
 	});
 
@@ -234,7 +231,7 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		thumbnail.syncWith(gallery);
 		gallery.selectItem(1, true, 'user');
-		expect(thumbnailEl.querySelectorAll('.o-gallery__item')[1].getAttribute('aria-selected')).to.be('true');
+		proclaim.equal(thumbnailEl.querySelectorAll('.o-gallery__item')[1].getAttribute('aria-selected'), 'true');
 		destroyGallery(gallery);
 		destroyGallery(thumbnail);
 	});
@@ -244,14 +241,14 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		galleryEl.style.maxWidth = '400px';
 		gallery.onResize();
-		expect(galleryEl.querySelector('.o-gallery__item').style.width).to.be('400px');
+		proclaim.equal(galleryEl.querySelector('.o-gallery__item').style.width, '400px');
 		destroyGallery(gallery);
 	});
 
 	it('#getGalleryElement', function() {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		expect(gallery.getGalleryElement()).to.be(galleryEl);
+		proclaim.equal(gallery.getGalleryElement(), galleryEl);
 		destroyGallery(gallery);
 	});
 
@@ -260,16 +257,16 @@ describe('Gallery', function() {
 		const gallery = new Gallery(galleryEl, galleryConfig);
 		gallery.destroy();
 
-		expect(galleryEl.getAttribute('data-o-gallery--js')).to.be(null);
-		expect(galleryEl.querySelector('.o-gallery__viewport')).to.be(null);
-		expect(galleryEl.querySelector('.o-gallery__control')).to.be(null);
+		proclaim.equal(galleryEl.getAttribute('data-o-gallery--js'), null);
+		proclaim.equal(galleryEl.querySelector('.o-gallery__viewport'), null);
+		proclaim.equal(galleryEl.querySelector('.o-gallery__control'), null);
 
 		const thumbnailEl = generateGallery();
 		const thumbnail = new Gallery(thumbnailEl, thumbnailConfig);
 		thumbnail.destroy();
 
-		expect(thumbnailEl.getAttribute('data-o-gallery--js')).to.be(null);
-		expect(thumbnailEl.querySelector('.o-gallery__viewport')).to.be(null);
-		expect(thumbnailEl.querySelector('.o-gallery__control')).to.be(null);
+		proclaim.equal(thumbnailEl.getAttribute('data-o-gallery--js'), null);
+		proclaim.equal(thumbnailEl.querySelector('.o-gallery__viewport'), null);
+		proclaim.equal(thumbnailEl.querySelector('.o-gallery__control'), null);
 	});
 });

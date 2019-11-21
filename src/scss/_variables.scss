@@ -21,3 +21,15 @@ $_o-gallery-control-width: 50px;
 ///
 /// @type {Number}
 $_o-gallery-control-height: 110px;
+
+/// @type {Color}
+/// @access private
+$_o-gallery-overlay-background: oColorsByName('black-80');
+
+/// @type {Color}
+/// @access private
+$_o-gallery-overlay-text: oColorsByName('white');
+
+/// @type {Color}
+/// @access private
+$_o-gallery-overlay-hover-text: oColorsByName('black-30');

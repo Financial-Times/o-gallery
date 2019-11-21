@@ -1,5 +1,6 @@
-$o-gallery-is-silent: false;
 @import "../../main";
+
+@include oGallery();
 
 body {
 	font-family: Metric, sans-serif;

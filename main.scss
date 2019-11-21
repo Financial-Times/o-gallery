@@ -11,6 +11,50 @@
 @import "src/scss/themes/slideshow";
 @import "src/scss/themes/thumbnails";
 
-@if (not $o-gallery-is-silent) {
-	@include oGalleryBase(o-gallery);
+/// Output all o-gallery css.
+/// @param {Map} $opts [('themes': ('slideshow', 'thumbnails'))] - A map of options to indicate which gallery themes to output.
+@mixin oGallery($opts: (
+	'themes': ('slideshow', 'thumbnails')
+)) {
+	$themes: map-get($opts, 'themes');
+	$themes: if($themes, $themes, ());
+
+	.o-gallery {
+		@include _oGalleryBase;
+	}
+	.o-gallery__title {
+		@include _oGalleryTitle;
+	}
+	.o-gallery__viewport {
+		@include _oGalleryViewport;
+	}
+	.o-gallery__items {
+		@include _oGalleryItems;
+	}
+	.o-gallery__item {
+		@include _oGalleryItem;
+	}
+	.o-gallery__item__content {
+		@include _oGalleryItemContent;
+	}
+	.o-gallery__control {
+		@include _oGalleryControl;
+	}
+
+	@if index($themes, 'slideshow') {
+		.o-gallery--slideshow {
+			@include _oGallerySlideshow;
+		}
+	}
+
+	@if index($themes, 'thumbnails') {
+		.o-gallery--thumbnails {
+			@include _oGalleryThumbnails;
+		}
+	}
+}
+
+@if ($o-gallery-is-silent == false) {
+	@include oGallery();
+	$o-gallery-is-silent: true !global;
 }

@@ -4,40 +4,7 @@
 ////
 
 /// Applies background colour for gallery overlays like title and controls
-@mixin oGalleryOverlayBackground() {
-	background: oColorsGetColorFor(o-gallery-overlay, background);
-	background-color: transparentize(oColorsGetColorFor(o-gallery-overlay, background), 0.2);
-}
-
-/// Applies all styling to default classes
-///
-/// @param {String} class - base selector class that the styles should be applied to
-@mixin oGalleryBase($class: o-gallery) {
-	.#{$class} {
-		@include oGallery;
-	}
-	.#{$class}--slideshow {
-		@include oGallerySlideshow;
-	}
-	.#{$class}--thumbnails {
-		@include oGalleryThumbnails;
-	}
-	.#{$class}__title {
-		@include oGalleryTitle;
-	}
-	.#{$class}__viewport {
-		@include oGalleryViewport;
-	}
-	.#{$class}__items {
-		@include oGalleryItems;
-	}
-	.#{$class}__item {
-		@include oGalleryItem;
-	}
-	.#{$class}__item__content {
-		@include oGalleryItemContent;
-	}
-	.#{$class}__control {
-		@include oGalleryControl;
-	}
+@mixin _oGalleryOverlayBackground() {
+	background: $_o-gallery-overlay-background;
+	background-color: transparentize($_o-gallery-overlay-background, 0.2);
 }
