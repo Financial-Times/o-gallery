@@ -2,6 +2,12 @@
 
 ## Migrating from v3 to v4
 
+### Updated dependencies
+
+The dependencies for this component have all been updated to the latest major versions.
+If you have any conflicts while installing this version, you'll need to first update
+its dependencies. See [the Bower config for these](./bower.json).
+
 ### JavaScript
 
 o-gallery v4 uses [ES Modules over CommonJS](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/) syntax.
