@@ -83,7 +83,7 @@ function getPropertiesFromAttributes(el, map) {
 
 function setAttributesFromProperties(el, obj, map, excl) {
 	const exclude = excl || [];
-	for (let prop in obj) {
+	for (const prop in obj) {
 		if (obj.hasOwnProperty(prop) && exclude.indexOf(prop) < 0) {
 			el.setAttribute(map[prop], obj[prop]);
 		}

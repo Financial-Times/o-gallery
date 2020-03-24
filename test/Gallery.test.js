@@ -158,7 +158,7 @@ describe('Gallery', function() {
 	it('#selectPrevItem', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		const expectedSelectedItem = (gallery.getSelectedItem() - 1 >= 0) ? 0 : 1;
+		const expectedSelectedItem = gallery.getSelectedItem() - 1 >= 0 ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
 			proclaim.equal(e.detail.source, 'test');
 			proclaim.equal(e.detail.itemID, expectedSelectedItem);
@@ -173,7 +173,7 @@ describe('Gallery', function() {
 	it('#selectNextItem', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		const expectedSelectedItem = (gallery.getSelectedItem() + 1 > 1) ? 0 : 1;
+		const expectedSelectedItem = gallery.getSelectedItem() + 1 > 1 ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
 			proclaim.equal(e.detail.source, 'test');
 			proclaim.equal(e.detail.itemID, expectedSelectedItem);
@@ -188,7 +188,7 @@ describe('Gallery', function() {
 	it('#next', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		const expectedSelectedItem = (gallery.getSelectedItem() + 1 > 1) ? 0 : 1;
+		const expectedSelectedItem = gallery.getSelectedItem() + 1 > 1 ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
 			proclaim.equal(e.detail.source, 'user');
 			proclaim.equal(e.detail.itemID, expectedSelectedItem);
@@ -203,7 +203,7 @@ describe('Gallery', function() {
 	it('#prev', function(done) {
 		const galleryEl = generateGallery();
 		const gallery = new Gallery(galleryEl, galleryConfig);
-		const expectedSelectedItem = (gallery.getSelectedItem() - 1 >= 0) ? 0 : 1;
+		const expectedSelectedItem = gallery.getSelectedItem() - 1 >= 0 ? 0 : 1;
 		galleryEl.addEventListener('oGallery.itemSelect', function(e) {
 			proclaim.equal(e.detail.source, 'user');
 			proclaim.equal(e.detail.itemID, expectedSelectedItem);

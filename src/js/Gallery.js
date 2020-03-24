@@ -54,7 +54,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function isDataSource() {
-		return (config.items && config.items.length > 0);
+		return config.items && config.items.length > 0;
 	}
 
 	function setWidths() {
@@ -76,7 +76,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function isValidItem(n) {
-		return (typeof n === "number" && n > -1 && n < itemEls.length);
+		return typeof n === "number" && n > -1 && n < itemEls.length;
 	}
 
 	function getSelectedItem() {
@@ -137,7 +137,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function insertItemContent(n) {
-		const itemNums = (n instanceof Array) ? n : [n];
+		const itemNums = n instanceof Array ? n : [n];
 		if (config.items) {
 			for (let i = 0; i < itemNums.length; i++) {
 				const itemNum = itemNums[i];
@@ -155,14 +155,14 @@ function Gallery(containerEl, config) {
 	}
 
 	function isAnyPartOfItemInPageView(itemNum, l, r) {
-		return (itemEls[itemNum].offsetLeft >= l - itemEls[itemNum].clientWidth && itemEls[itemNum].offsetLeft <= r);
+		return itemEls[itemNum].offsetLeft >= l - itemEls[itemNum].clientWidth && itemEls[itemNum].offsetLeft <= r;
 	}
 
 	function getItemsInPageView(l, r, whole) {
 		const itemsInView = [];
-		const onlyWhole = (typeof whole !== "boolean") ? true : whole;
+		const onlyWhole = typeof whole !== "boolean" ? true : whole;
 		for (let i = 0; i < itemEls.length; i++) {
-			if ((onlyWhole && isWholeItemInPageView(i, l, r)) || (!onlyWhole && isAnyPartOfItemInPageView(i, l, r))) {
+			if (onlyWhole && isWholeItemInPageView(i, l, r) || !onlyWhole && isAnyPartOfItemInPageView(i, l, r)) {
 				itemsInView.push(i);
 			}
 		}
@@ -190,7 +190,7 @@ function Gallery(containerEl, config) {
 	}
 
 	function moveViewport(left) {
-		scroller.scrollTo(left, 0, (allowTransitions) ? true : 0);
+		scroller.scrollTo(left, 0, allowTransitions ? true : 0);
 		insertItemContent(getItemsInPageView(left, left + viewportEl.clientWidth, false));
 	}
 
@@ -207,10 +207,10 @@ function Gallery(containerEl, config) {
 		if (!isValidItem(n)) {
 			return;
 		}
-		let viewportL = scroller.scrollLeft;
-		let viewportR = viewportL + viewportEl.clientWidth;
-		let itemL = itemEls[n].offsetLeft;
-		let itemR = itemL + itemEls[n].clientWidth;
+		const viewportL = scroller.scrollLeft;
+		const viewportR = viewportL + viewportEl.clientWidth;
+		const itemL = itemEls[n].offsetLeft;
+		const itemR = itemL + itemEls[n].clientWidth;
 		if (itemL > viewportL && itemR < viewportR) {
 			return;
 		}
@@ -230,27 +230,27 @@ function Gallery(containerEl, config) {
 	}
 
 	function showPrevItem() {
-		let prev = (shownItemIndex - 1 >= 0) ? shownItemIndex - 1 : itemEls.length - 1;
+		const prev = shownItemIndex - 1 >= 0 ? shownItemIndex - 1 : itemEls.length - 1;
 		showItem(prev);
 	}
 
 	function showNextItem() {
-		let next = (shownItemIndex + 1 < itemEls.length) ? shownItemIndex + 1 : 0;
+		const next = shownItemIndex + 1 < itemEls.length ? shownItemIndex + 1 : 0;
 		showItem(next);
 	}
 
 	function showPrevPage() {
 		if (scroller.scrollLeft > 0) {
-			let prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft);
-			let prevPageItem = prevPageWholeItems.pop() || 0;
+			const prevPageWholeItems = getItemsInPageView(scroller.scrollLeft - viewportEl.clientWidth, scroller.scrollLeft);
+			const prevPageItem = prevPageWholeItems.pop() || 0;
 			alignItemRight(prevPageItem);
 		}
 	}
 
 	function showNextPage() {
 		if (scroller.scrollLeft < allItemsEl.clientWidth - viewportEl.clientWidth) {
-			let currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth);
-			let lastWholeItemInView = currentWholeItemsInView.pop();
+			const currentWholeItemsInView = getItemsInPageView(scroller.scrollLeft, scroller.scrollLeft + viewportEl.clientWidth);
+			const lastWholeItemInView = currentWholeItemsInView.pop();
 			alignItemLeft(lastWholeItemInView + 1);
 		}
 	}
@@ -276,12 +276,12 @@ function Gallery(containerEl, config) {
 	}
 
 	function selectPrevItem(show, source) {
-		let prev = (selectedItemIndex - 1 >= 0) ? selectedItemIndex - 1 : itemEls.length - 1;
+		const prev = selectedItemIndex - 1 >= 0 ? selectedItemIndex - 1 : itemEls.length - 1;
 		selectItem(prev, show, source);
 	}
 
 	function selectNextItem(show, source) {
-		let next = (selectedItemIndex + 1 < itemEls.length) ? selectedItemIndex + 1 : 0;
+		const next = selectedItemIndex + 1 < itemEls.length ? selectedItemIndex + 1 : 0;
 		selectItem(next, show, source);
 	}
 
@@ -306,16 +306,16 @@ function Gallery(containerEl, config) {
 		if (!config.multipleItemsPerPage) { // correct the alignment of item in view
 			showItem(shownItemIndex);
 		} else {
-			let newScrollLeft = scroller.scrollLeft;
+			const newScrollLeft = scroller.scrollLeft;
 			insertItemContent(getItemsInPageView(newScrollLeft, newScrollLeft + viewportEl.clientWidth, false));
 		}
 	}
 
 	function extendObjects(objs) {
-		let newObj = {};
+		const newObj = {};
 		for (let i = 0; i < objs.length; i++) {
-			let obj = objs[i];
-			for (let prop in obj) {
+			const obj = objs[i];
+			for (const prop in obj) {
 				if (obj.hasOwnProperty(prop)) {
 					newObj[prop] = obj[prop];
 				}
@@ -354,7 +354,7 @@ function Gallery(containerEl, config) {
 		prevControlDiv = null;
 		nextControlDiv.parentNode.removeChild(nextControlDiv);
 		nextControlDiv = null;
-		for (let prop in propertyAttributeMap) {
+		for (const prop in propertyAttributeMap) {
 			if (propertyAttributeMap.hasOwnProperty(prop)) {
 				containerEl.removeAttribute(propertyAttributeMap[prop]);
 			}
@@ -480,9 +480,9 @@ function Gallery(containerEl, config) {
 }
 
 Gallery.init = function(el, config) {
-	let conf = config || {};
+	const conf = config || {};
 	let gEls;
-	let galleries = [];
+	const galleries = [];
 	if (!el) {
 		el = document.body;
 	} else if (el.nodeType !== 1) {
