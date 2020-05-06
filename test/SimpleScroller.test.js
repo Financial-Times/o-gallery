@@ -1,4 +1,5 @@
-import proclaim from 'proclaim';
+/* eslint-env mocha */
+/* global proclaim */
 import SimpleScroller from './../src/js/SimpleScroller';
 
 describe('SimpleScroller', function() {

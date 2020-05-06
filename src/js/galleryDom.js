@@ -1,5 +1,3 @@
-
-/*global exports*/
 function emptyElement(targetEl) {
 	for (let i = 0; i < targetEl.children.length; i++) {
 		targetEl.removeChild(targetEl.children[i]);
@@ -90,12 +88,14 @@ function setAttributesFromProperties(el, obj, map, excl) {
 	}
 }
 
-exports.emptyElement = emptyElement;
-exports.createElement = createElement;
-exports.wrapElement = wrapElement;
-exports.unwrapElement = unwrapElement;
-exports.createItemsList = createItemsList;
-exports.createItems = createItems;
-exports.insertItemContent = insertItemContent;
-exports.setAttributesFromProperties = setAttributesFromProperties;
-exports.getPropertiesFromAttributes = getPropertiesFromAttributes;
+export default {
+	emptyElement,
+	createElement,
+	wrapElement,
+	unwrapElement,
+	createItemsList,
+	createItems,
+	insertItemContent,
+	setAttributesFromProperties,
+	getPropertiesFromAttributes,
+};

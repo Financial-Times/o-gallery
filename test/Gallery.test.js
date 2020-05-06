@@ -1,4 +1,5 @@
-import proclaim from 'proclaim';
+/* eslint-env mocha */
+/* global proclaim */
 import Gallery from './../src/js/Gallery';
 
 describe('Gallery', function() {

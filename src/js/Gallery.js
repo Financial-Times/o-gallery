@@ -1,5 +1,5 @@
 import DomDelegate from 'ftdomdelegate';
-import { FTScroller } from 'ftscroller';
+import { default as FTScroller } from 'ftscroller';
 import oViewport from 'o-viewport';
 import galleryDom from './galleryDom';
 import SimpleScroller from './SimpleScroller';
@@ -499,4 +499,4 @@ Gallery.init = function(el, config) {
 	return galleries;
 };
 
-module.exports = Gallery;
+export default Gallery;

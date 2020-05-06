@@ -1,6 +1,4 @@
-/*global require,module */
-
-const galleryDom = require('./galleryDom');
+import galleryDom from './galleryDom';
 
 /**
  * Mimics FTScroller without touch interface, transitions or events
@@ -41,4 +39,4 @@ function SimpleScroller(containerEl) {
 	this.destroy = destroy;
 }
 
-module.exports = SimpleScroller;
+export default SimpleScroller;
