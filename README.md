@@ -28,7 +28,7 @@ Gallery content can come from either HTML already in the DOM, or data passed exp
 
 In both cases there must be an root element already in the DOM to construct the Gallery in. The root element must not be set to `display: none`, either directly or via an ancestor element, otherwise the Gallery will be unable to calculate its item widths and will not work correctly.
 
-*Note*: a Gallery may behave oddly when an ancestor element is set to `display: table` causing issues with the Gallery sizing (see https://github.com/Financial-Times/o-gallery/issues/44 for more details).
+_Note_: a Gallery may behave oddly when an ancestor element is set to `display: table` causing issues with the Gallery sizing (see <https://github.com/Financial-Times/o-gallery/issues/44> for more details).
 
 Galleries can be constructed in three ways:
 
@@ -40,11 +40,13 @@ Galleries can be constructed in three ways:
 
 With the HTML already in the page, the following method can be called to search for Gallery HTML elements and automatically construct a Gallery for each one:
 
-	var galleries = Gallery.init();
+```js
+var galleries = Gallery.init();
+```
 
 Any gallery objects that are constructed will be returned.
 
-Alternatively, a `o.DOMContentLoaded` event can be dispatched on the `document` to auto-construct a __o-gallery__ object for each element with a `data-o-component="o-gallery"` attribute:
+Alternatively, a `o.DOMContentLoaded` event can be dispatched on the `document` to auto-construct a **o-gallery** object for each element with a `data-o-component="o-gallery"` attribute:
 
 ```javascript
 document.addEventListener("DOMContentLoaded", function() {
@@ -54,27 +56,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
 Optionally, a DOM element can be passed to limit the search to a particular area of the page:
 
-    var galleries = Gallery.init(document.getElementByClassName(".ft-article-body")[0]);
+```js
+	var galleries = Gallery.init(document.getElementByClassName(".ft-article-body")[0]);
+```
 
 ### 2. Imperatively from HTML source
 
 With the HTML already in the page, a Gallery object can be constructed like so:
 
-	var gallery1 = new Gallery(document.getElementById('#gallery1');
+```js
+var gallery1 = new Gallery(document.getElementById('#gallery1');
+```
 
 An optional configuration object can be passed as second argument:
 
-	var gallery2 = new Gallery(document.getElementById('#gallery2', {
-		// config options
-	});
+```js
+var gallery2 = new Gallery(document.getElementById('#gallery2', {
+	// config options
+});
+```
 
 ### 3. Imperatively from JS data
 
 With just an HTML container element already in the page, a Gallery object can be constructed by passing the content as data via the config object:
 
-	var gallery = new Gallery(document.getElementById('#gallery', {
-		items: [ <itemObject>, <itemObject>, <itemObject> ...]
-	});
+```js
+var gallery = new Gallery(document.getElementById('#gallery', {
+	items: [ <itemObject>, <itemObject>, <itemObject> ...]
+});
+```
 
 Where an itemObject can consist of the following properties:
 
@@ -100,11 +110,13 @@ Whether this item is selected. If more than one item is set to be selected, then
 
 For example:
 
-	{
-		content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
-		caption: '<p>Slideshow caption text.</p>',
-		selected: true
-	}
+```js
+{
+	content: '<img src="http://ft-static.com/image1.jpg" alt="Slideshow image 1">',
+	caption: '<p>Slideshow caption text.</p>',
+	selected: true
+}
+```
 
 ## Configuration
 
@@ -156,7 +168,7 @@ JS property: `title`
 
 Type: `String`
 
-The [optional] Gallery title. Displayed in the top left of the viewport and remains in place for all items.
+The `[optional]` Gallery title. Displayed in the top left of the viewport and remains in place for all items.
 
 ### Captions
 
@@ -220,11 +232,11 @@ The desired behaviour of the left & right UI controls for single- and multiple-i
 The following simplified methods are provided to handle this logic:
 
 * `next()`:
-	* multiple: false - `selectNextItem(true); // select & show`
-	* multiple: true - `showNextPage(); // doesn't affect selection`
+	- multiple: false - `selectNextItem(true); // select & show`
+	- multiple: true - `showNextPage(); // doesn't affect selection`
 * `prev()`:
-	* multiple: false - `selectPrevItem(true); // select & show`
-	* multiple: true - `showPrevPage(); // doesn't affect selection`
+	- multiple: false - `selectPrevItem(true); // select & show`
+	- multiple: true - `showPrevPage(); // doesn't affect selection`
 
 These method may be useful for adding keyboard control to a Gallery.
 
