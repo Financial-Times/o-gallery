@@ -2,6 +2,10 @@
 
 A configurable content gallery. For carousels, slideshows and thumbnail strips.
 
+## Usage
+
+Check out [how to include Origami components in your project](https://origami.ft.com/docs/components/#including-origami-components-in-your-project) to get started with `o-gallery`.
+
 ## Definitions
 
 * **Item**: One of many objects to be displayed in the gallery.  Likely to be an image.  Must support being forcibly scaled to any size.
