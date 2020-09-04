@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* global proclaim */
-import Gallery from './../src/js/Gallery';
+import Gallery from './../src/js/Gallery.js';
 
 describe('Gallery', function() {
 

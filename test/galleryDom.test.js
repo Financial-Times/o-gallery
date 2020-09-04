@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* global proclaim */
-import galleryDom from './../src/js/galleryDom';
+import galleryDom from './../src/js/galleryDom.js';
 
 describe('galleryDom', function() {
 

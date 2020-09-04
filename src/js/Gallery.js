@@ -1,8 +1,8 @@
 import DomDelegate from 'ftdomdelegate';
 import { default as FTScroller } from 'ftscroller';
 import oViewport from 'o-viewport';
-import galleryDom from './galleryDom';
-import SimpleScroller from './SimpleScroller';
+import galleryDom from './galleryDom.js';
+import SimpleScroller from './SimpleScroller.js';
 
 function Gallery(containerEl, config) {
 

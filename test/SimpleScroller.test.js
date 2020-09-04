@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* global proclaim */
-import SimpleScroller from './../src/js/SimpleScroller';
+import SimpleScroller from './../src/js/SimpleScroller.js';
 
 describe('SimpleScroller', function() {
 	let containerEl;

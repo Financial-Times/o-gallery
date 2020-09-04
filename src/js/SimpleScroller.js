@@ -1,4 +1,4 @@
-import galleryDom from './galleryDom';
+import galleryDom from './galleryDom.js';
 
 /**
  * Mimics FTScroller without touch interface, transitions or events

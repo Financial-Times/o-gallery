@@ -1,4 +1,4 @@
-import oGallery from './src/js/Gallery';
+import oGallery from './src/js/Gallery.js';
 
 const constructAll = function() {
 	oGallery.init();
