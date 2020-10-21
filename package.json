@@ -12,15 +12,15 @@
     },
     "main": "main.js",
     "peerDependencies": {
-        "@financial-times/o-colors": "^100.0.0-4",
-        "@financial-times/o-icons": "^100.0.0-4",
-        "@financial-times/o-viewport": "^100.0.0-4",
-        "ftdomdelegate": "^100.0.0-4",
+        "@financial-times/o-colors": "^100.0.0-5",
+        "@financial-times/o-icons": "^100.0.0-5",
+        "@financial-times/o-viewport": "^100.0.0-5",
+        "ftdomdelegate": "^100.0.0-5",
         "ftscroller": "^0.6.0"
     },
     "description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
     "publishConfig": {
         "registry": "http://localhost:4873"
     },
-    "version": "100.0.0-4"
+    "version": "100.0.0-5"
 }

@@ -1,6 +1,6 @@
 import DomDelegate from 'ftdomdelegate';
 import { default as FTScroller } from 'ftscroller';
-import oViewport from 'o-viewport';
+import oViewport from '@financial-times/o-viewport';
 import galleryDom from './galleryDom.js';
 import SimpleScroller from './SimpleScroller.js';
 
