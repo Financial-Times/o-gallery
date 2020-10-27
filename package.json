@@ -2,7 +2,15 @@
     "name": "@financial-times/o-gallery",
     "version": "100.0.0-7",
     "description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
-    "browser": "main.js",
+    "license": "MIT",
+    "type": "module",
+    "exports": {
+        ".": {
+            "browser": "./main.js"
+        }
+    },
+    "browser": "./main.js",
+    "types": "types",
     "devDependencies": {
         "eslint": "^7.8.1",
         "eslint-config-origami-component": "^2.1.0",
