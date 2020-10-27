@@ -1,5 +1,8 @@
 {
     "name": "@financial-times/o-gallery",
+    "version": "100.0.0-7",
+    "description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
+    "browser": "main.js",
     "devDependencies": {
         "eslint": "^7.8.1",
         "eslint-config-origami-component": "^2.1.0",
@@ -10,7 +13,6 @@
         "stylelint": "^13.7.0",
         "stylelint-config-origami-component": "^1.0.4"
     },
-    "browser": "main.js",
     "peerDependencies": {
         "@financial-times/o-colors": "^100.0.0-7",
         "@financial-times/o-icons": "^100.0.0-7",
@@ -18,9 +20,7 @@
         "ftdomdelegate": "^100.0.0-7",
         "ftscroller": "^0.6.0"
     },
-    "description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
     "publishConfig": {
         "registry": "http://localhost:4873"
-    },
-    "version": "100.0.0-7"
+    }
 }
