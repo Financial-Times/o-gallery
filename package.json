@@ -22,13 +22,13 @@
         "stylelint-config-origami-component": "^1.0.4"
     },
     "peerDependencies": {
-        "@financial-times/o-colors": "^100.0.0-8",
-        "@financial-times/o-icons": "^100.0.0-8",
-        "@financial-times/o-viewport": "^100.0.0-8",
-        "ftdomdelegate": "^100.0.0-8",
+        "@financial-times/o-colors": "^100.0.0-9",
+        "@financial-times/o-icons": "^100.0.0-9",
+        "@financial-times/o-viewport": "^100.0.0-9",
+        "ftdomdelegate": "^100.0.0-9",
         "ftscroller": "^0.6.0"
     },
     "publishConfig": {
-        "registry": "http://localhost:4873"
+        "registry": "https://origami-npm-registry-prototype.herokuapp.com"
     }
 }
