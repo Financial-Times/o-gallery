@@ -1,6 +1,6 @@
 {
   "name": "@financial-times/o-gallery",
-  "version": "100.0.0-12",
+  "version": "100.0.0-13",
   "description": "A configurable content gallery. For carousels, slideshows and thumbnail strips.",
   "keywords": [],
   "homepage": "https://github.com/Financial-Times/o-gallery#readme",
@@ -33,10 +33,10 @@
     "typescript": "^4.0.5"
   },
   "peerDependencies": {
-    "@financial-times/o-colors": "^100.0.0-12",
-    "@financial-times/o-icons": "^100.0.0-12",
-    "@financial-times/o-viewport": "^100.0.0-12",
-    "ftdomdelegate": "^100.0.0-12",
+    "@financial-times/o-colors": "^100.0.0-13",
+    "@financial-times/o-icons": "^100.0.0-13",
+    "@financial-times/o-viewport": "^100.0.0-13",
+    "ftdomdelegate": "^100.0.0-13",
     "ftscroller": "^0.6.0"
   },
   "publishConfig": {
